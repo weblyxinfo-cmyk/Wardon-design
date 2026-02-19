@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1400">
+<title>Studio — Thumbnail Design</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#0a0a0c;--card:#161619;--white:#fff;--gray:#8a8a9a;--gray2:#55555f;--border:rgba(255,255,255,.06);--accent:#10b981;--glow:rgba(16,185,129,.12);--green:#22c55e;--r:12px}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(--white);overflow-x:hidden;-webkit-font-smoothing:antialiased}
+::selection{background:var(--accent);color:#fff}
+a{color:inherit;text-decoration:none}
+.nav{position:fixed;top:0;left:0;right:0;z-index:9999;padding:16px 40px;display:flex;align-items:center;justify-content:space-between;background:rgba(10,10,12,.7);backdrop-filter:blur(24px);border-bottom:1px solid var(--border)}
+.nav-logo{font-weight:800;font-size:1.2rem}.nav-logo span{color:var(--accent)}
+.nav-links{display:flex;gap:28px;list-style:none}.nav-links a{font-size:.78rem;font-weight:500;color:var(--gray);transition:color .3s}.nav-links a:hover{color:#fff}
+.nav-cta{font-size:.78rem;font-weight:700;background:var(--accent);color:#fff;padding:10px 22px;border-radius:100px;transition:all .3s}.nav-cta:hover{filter:brightness(1.2)}
+.hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:120px 40px 40px;position:relative}
+.hero::before{content:'';position:absolute;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,var(--glow),transparent 70%);top:-80px;left:50%;transform:translateX(-50%);pointer-events:none}
+.badge{display:inline-flex;align-items:center;gap:8px;padding:7px 16px;border-radius:100px;border:1px solid var(--border);font-size:.72rem;font-weight:600;color:var(--green);margin-bottom:28px;background:rgba(34,197,94,.05)}
+.badge .dot{width:7px;height:7px;border-radius:50%;background:var(--green);animation:pu 2s infinite}
+@keyframes pu{0%,100%{box-shadow:0 0 0 0 rgba(34,197,94,.4)}50%{box-shadow:0 0 0 6px transparent}}
+.hero h1{font-size:4.2rem;font-weight:800;line-height:.98;letter-spacing:-.04em;margin-bottom:18px}.hero h1 .acc{color:var(--accent)}
+.hero-sub{font-size:.95rem;color:var(--gray);max-width:440px;line-height:1.65;margin-bottom:32px}
+.hero-btns{display:flex;gap:12px;margin-bottom:40px}
+.btn{padding:14px 32px;border-radius:100px;font-weight:700;font-size:.85rem;border:none;cursor:pointer;transition:all .3s;display:inline-flex;align-items:center;gap:8px}
+.btn-fill{background:var(--accent);color:#fff}.btn-fill:hover{filter:brightness(1.15);transform:translateY(-2px);box-shadow:0 8px 30px var(--glow)}
+.btn-ghost{background:transparent;color:#fff;border:1px solid var(--border)}.btn-ghost:hover{border-color:var(--gray2)}
+.avatar-band{overflow:hidden;margin-bottom:12px}.avatar-row{display:flex;gap:10px;width:max-content;animation:sL 30s linear infinite}.avatar-row:hover{animation-play-state:paused}
+.av{width:42px;height:42px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.6rem;color:#fff;border:2px solid var(--bg);transition:transform .3s}.av:hover{transform:scale(1.15)}
+.trusted-label{font-size:.68rem;font-weight:600;color:var(--gray2);text-transform:uppercase;letter-spacing:.12em}
+.gallery-section{padding:40px 0}.gallery-band{overflow:hidden;padding:6px 0}
+.gr{display:flex;gap:14px;width:max-content}
+.gr.sL{animation:sL 60s linear infinite}.gr.sR{animation:sR 50s linear infinite}.gr.s3{animation:sL 65s linear infinite}.gr.s4{animation:sR 55s linear infinite}.gr.s5{animation:sL 70s linear infinite}
+.gr:hover{animation-play-state:paused}
+@keyframes sL{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+@keyframes sR{0%{transform:translateX(-50%)}100%{transform:translateX(0)}}
+.thumb-card{flex-shrink:0;width:300px;border-radius:var(--r);overflow:hidden;border:1px solid var(--border);background:var(--card);transition:all .4s cubic-bezier(.23,1,.32,1);cursor:pointer}
+.thumb-card:hover{transform:scale(1.03);border-color:rgba(16,185,129,.3);box-shadow:0 8px 30px rgba(0,0,0,.4)}
+.thumb-card .tc-img{width:100%;height:170px;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.thumb-card .tc-meta{padding:10px 14px;display:flex;align-items:center;gap:10px}
+.thumb-card .tc-av{width:30px;height:30px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:.55rem;font-weight:800;color:#fff}
+.thumb-card .tc-name{font-size:.7rem;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.thumb-card .tc-views{font-size:.6rem;color:var(--gray2)}
+.thumb{flex-shrink:0;width:300px;height:170px;border-radius:var(--r);overflow:hidden;border:1px solid var(--border);transition:all .4s cubic-bezier(.23,1,.32,1);cursor:pointer;display:flex;align-items:center;justify-content:center;position:relative}
+.thumb:hover{transform:scale(1.03);border-color:rgba(16,185,129,.3);box-shadow:0 8px 30px rgba(0,0,0,.4)}
+.stats-band{padding:32px 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border);overflow:hidden;margin:40px 0}
+.stats-row{display:flex;gap:48px;width:max-content;animation:sL 25s linear infinite;align-items:center}.stats-row:hover{animation-play-state:paused}
+.stat-item{white-space:nowrap}.stat-item .num{font-size:2rem;font-weight:800;letter-spacing:-.03em}.stat-item .lbl{font-size:.85rem;color:var(--gray);font-weight:500}.stat-sep{color:var(--accent);font-size:1.4rem}
+.sec{padding:100px 40px;max-width:1320px;margin:0 auto}.sec-head{text-align:center;margin-bottom:48px}
+.tag{display:inline-block;font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:var(--accent);margin-bottom:10px;padding:6px 14px;border-radius:100px;border:1px solid rgba(16,185,129,.15);background:rgba(16,185,129,.04)}
+.sec-title{font-size:clamp(1.8rem,3.5vw,2.8rem);font-weight:800;letter-spacing:-.03em;line-height:1.08;margin-bottom:12px}
+.sec-sub{font-size:.9rem;color:var(--gray);max-width:460px;margin:0 auto;line-height:1.65}
+.process-card{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:48px;margin-top:20px}
+.process-steps{display:grid;grid-template-columns:repeat(3,1fr);gap:32px}
+.step{text-align:center;padding:24px}.step-num{width:48px;height:48px;border-radius:50%;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:1.1rem;margin:0 auto 16px}
+.step h3{font-size:1rem;font-weight:700;margin-bottom:8px}.step p{font-size:.82rem;color:var(--gray);line-height:1.6}
+.about-card{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:60px;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
+.about-visual{aspect-ratio:4/3;border-radius:16px;overflow:hidden;display:flex;align-items:center;justify-content:center;position:relative}
+.about-text h2{font-size:2.2rem;font-weight:800;letter-spacing:-.03em;margin-bottom:16px}
+.about-text p{font-size:.9rem;color:var(--gray);line-height:1.75;margin-bottom:12px}
+.about-stats{display:flex;gap:32px;margin-top:24px}.about-stat .n{font-size:1.8rem;font-weight:800}.about-stat .l{font-size:.65rem;color:var(--gray2);text-transform:uppercase;letter-spacing:.08em;margin-top:2px}
+.test-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
+.tc2{padding:28px;border-radius:var(--r);background:var(--card);border:1px solid var(--border);transition:all .4s}.tc2:hover{border-color:rgba(16,185,129,.15);transform:translateY(-4px)}
+.tc2 .stars{color:#fbbf24;font-size:.8rem;letter-spacing:3px;margin-bottom:12px}
+.tc2 blockquote{font-size:.88rem;line-height:1.65;color:rgba(255,255,255,.75);margin-bottom:20px;font-style:italic}
+.tc2 .au{display:flex;align-items:center;gap:10px}.tc2 .aa{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.6rem;flex-shrink:0;color:#fff}
+.tc2 .ai h4{font-size:.82rem;font-weight:700}.tc2 .ai p{font-size:.65rem;color:var(--gray2)}
+.faq-wrap{max-width:700px;margin:0 auto}.fi{border-bottom:1px solid var(--border)}
+.fq{width:100%;background:none;border:none;font-family:inherit;font-size:.95rem;font-weight:600;text-align:left;padding:22px 0;cursor:pointer;color:#fff;display:flex;justify-content:space-between;align-items:center;gap:20px;transition:color .3s}.fq:hover{color:var(--accent)}
+.fic{width:28px;height:28px;border-radius:50%;border:1.5px solid var(--border);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:1rem;transition:all .3s;color:var(--gray)}
+.fi.open .fic{background:var(--accent);border-color:var(--accent);color:#fff;transform:rotate(45deg)}
+.fa{max-height:0;overflow:hidden;transition:max-height .4s cubic-bezier(.23,1,.32,1)}.fi.open .fa{max-height:160px}
+.fa p{padding-bottom:20px;font-size:.85rem;color:var(--gray);line-height:1.65}
+.cta-sec{text-align:center;padding:100px 40px}.cta-sec h2{font-size:clamp(2rem,4vw,3.5rem);font-weight:800;letter-spacing:-.03em;margin-bottom:16px}.cta-sec h2 .acc{color:var(--accent)}
+.cta-sec p{color:var(--gray);max-width:400px;margin:0 auto 32px;font-size:.92rem;line-height:1.65}
+.socials{display:flex;gap:12px;justify-content:center;margin-top:24px}
+.social-pill{padding:10px 20px;border-radius:100px;border:1px solid var(--border);font-size:.78rem;font-weight:600;color:var(--gray);transition:all .3s}.social-pill:hover{border-color:var(--accent);color:var(--accent)}
+footer{border-top:1px solid var(--border);padding:32px 40px;display:flex;justify-content:space-between;align-items:center;max-width:1320px;margin:0 auto}
+footer .fl{font-weight:800;font-size:.9rem}footer .fl span{color:var(--accent)}footer .fc{font-size:.7rem;color:var(--gray2)}
+.sr{opacity:0;transform:translateY(30px);transition:all .7s cubic-bezier(.23,1,.32,1)}.sr.v{opacity:1;transform:none}
+</style>
+</head>
+<body>
+
+<nav class="nav"><div class="nav-logo">Studio<span>.</span></div><ul class="nav-links"><li><a href="#showcase">Thumbnails</a></li><li><a href="#about">About Me</a></li><li><a href="#test">Testimonials</a></li><li><a href="#faq">FAQ</a></li></ul><a href="#cta" class="nav-cta">Get Started</a></nav>
+
+<section class="hero">
+  <div class="badge"><span class="dot"></span> Available Now</div>
+  <h1>Crafting <span class="acc">Instant</span><br>Clicks.</h1>
+  <p class="hero-sub">My work isn't just good-looking — it's about making visuals that pull people in and get real engagement.</p>
+  <div class="hero-btns"><a href="#cta" class="btn btn-fill">Get Started</a><a href="#showcase" class="btn btn-ghost">View Portfolio</a></div>
+  <div class="avatar-band"><div class="avatar-row" id="avRow"></div></div>
+  <div class="trusted-label">Trusted by 200+ creators</div>
+</section>
+
+<!-- SHOWCASE #1: 2 rows with profile + video name -->
+<section class="gallery-section">
+  <div class="gallery-band"><div class="gr sL" id="s1r1"></div></div>
+  <div class="gallery-band"><div class="gr sR" id="s1r2"></div></div>
+</section>
+
+<!-- STATS MARQUEE -->
+<div class="stats-band"><div class="stats-row" id="statsRow"></div></div>
+
+<!-- PROCESS -->
+<section class="sec" id="process">
+  <div class="sec-head sr"><div class="tag">Process</div><h2 class="sec-title">Our Thumbnail Design Process<br>in 3 Simple Steps</h2><p class="sec-sub">From idea to impact, every thumbnail crafted with purpose, precision, and performance in mind.</p></div>
+  <div class="process-card sr"><div class="process-steps">
+    <div class="step"><div class="step-num">1</div><h3>Brief & Research</h3><p>Understanding your channel, audience, and visual style to create thumbnails that fit perfectly.</p></div>
+    <div class="step"><div class="step-num">2</div><h3>Design & Iteration</h3><p>Crafting multiple concepts and A/B variants optimized for maximum click-through rate.</p></div>
+    <div class="step"><div class="step-num">3</div><h3>Delivery & Optimization</h3><p>Final delivery within 48h with CTR tracking and ongoing performance optimization.</p></div>
+  </div></div>
+</section>
+
+<!-- SHOWCASE #2: 5 rows, thumbnails only -->
+<section class="sec" id="showcase">
+  <div class="sec-head sr"><div class="tag">Showcase</div><h2 class="sec-title">Thumbnails That Speak<br>for Themselves</h2><p class="sec-sub">Every design here is built to capture attention and convert views.</p></div>
+  <div id="bigShowcase"></div>
+</section>
+
+<!-- ABOUT -->
+<section class="sec" id="about">
+  <div class="sec-head sr"><div class="tag">About Me</div><h2 class="sec-title">Built for Creators</h2></div>
+  <div class="about-card sr">
+    <div class="about-visual" style="background:linear-gradient(160deg,#0e2a1e,#10b981,#0a0a0c)">
+      <div style="font-size:10rem;font-weight:900;opacity:.05;position:absolute">S</div>
+      <div style="text-align:center;z-index:1"><div style="width:100px;height:100px;border-radius:50%;background:rgba(255,255,255,.08);margin:0 auto 14px;display:flex;align-items:center;justify-content:center;font-size:2.2rem">👨‍🎨</div><div style="font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:rgba(255,255,255,.4)">Creative Designer</div></div>
+    </div>
+    <div class="about-text">
+      <h2>Design that<br>drives results.</h2>
+      <p>I specialize in YouTube thumbnails, branding, and visual design. Every pixel has a purpose — to grab attention, build trust, and deliver results.</p>
+      <p>Working with creators from 10K to 5M+ subscribers. I understand algorithms, CTR optimization, and what stops the scroll.</p>
+      <div class="about-stats">
+        <div class="about-stat"><div class="n">5+</div><div class="l">Years</div></div>
+        <div class="about-stat"><div class="n">98%</div><div class="l">Satisfaction</div></div>
+        <div class="about-stat"><div class="n">200M+</div><div class="l">Views</div></div>
+        <div class="about-stat"><div class="n">48h</div><div class="l">Turnaround</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="sec" id="test">
+  <div class="sec-head sr"><div class="tag">Testimonials</div><h2 class="sec-title">Here's What Our Amazing<br>Clients Think</h2><p class="sec-sub">Trusted by leading creators.</p></div>
+  <div class="test-grid sr">
+    <div class="tc2"><div class="stars">★★★★★</div><blockquote>"Absolutely incredible work. CTR jumped 340% the first month. Would recommend to anyone looking for reliable, fast and quality work."</blockquote><div class="au"><div class="aa" style="background:linear-gradient(135deg,#10b981,#34d399)">MK</div><div class="ai"><h4>Martin Kovář</h4><p>@MartinK · 1.2M subs</p></div></div></div>
+    <div class="tc2"><div class="stars">★★★★★</div><blockquote>"Finally someone who understands not just design but YouTube itself. Thumbnails completely changed engagement on my channel."</blockquote><div class="au"><div class="aa" style="background:linear-gradient(135deg,#ec4899,#f472b6)">TP</div><div class="ai"><h4>Tereza P.</h4><p>@TerezaP · 580K subs</p></div></div></div>
+    <div class="tc2"><div class="stars">★★★★★</div><blockquote>"Fast delivery, amazing communication, results speak for themselves. Super understanding and great attitude about everything."</blockquote><div class="au"><div class="aa" style="background:linear-gradient(135deg,#3b82f6,#60a5fa)">JN</div><div class="ai"><h4>Jan Novotný</h4><p>@JanN · 340K subs</p></div></div></div>
+    <div class="tc2"><div class="stars">★★★★★</div><blockquote>"Best investment in our brand. New identity helped us land dream clients. Exceptional results every single time."</blockquote><div class="au"><div class="aa" style="background:linear-gradient(135deg,#f59e0b,#fbbf24)">LS</div><div class="ai"><h4>Lucie S.</h4><p>@LucieS · 210K subs</p></div></div></div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="sec" id="faq">
+  <div class="sec-head sr"><div class="tag">FAQ</div><h2 class="sec-title">Got Questions?</h2></div>
+  <div class="faq-wrap sr">
+    <div class="fi"><button class="fq">How fast do you deliver?<span class="fic">+</span></button><div class="fa"><p>Standard 24-48 hours. Express within 12 hours.</p></div></div>
+    <div class="fi"><button class="fq">What are your prices?<span class="fic">+</span></button><div class="fa"><p>Thumbnails from $50. Monthly packages from $300. Full branding from $800.</p></div></div>
+    <div class="fi"><button class="fq">How many revisions?<span class="fic">+</span></button><div class="fa"><p>2-3 rounds. Most clients approve first version.</p></div></div>
+    <div class="fi"><button class="fq">Do you do A/B testing?<span class="fic">+</span></button><div class="fa"><p>Yes — 2-3 variants for premium packages.</p></div></div>
+    <div class="fi"><button class="fq">Work with international creators?<span class="fic">+</span></button><div class="fa"><p>Yes — English, Czech, German.</p></div></div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-sec" id="cta"><div class="sr"><div class="tag">Let's Work Together</div><h2>Ready to level up<br>your <span class="acc">thumbnails?</span></h2><p>Let's create something that stops the scroll.</p><a href="mailto:hello@studio.com" class="btn btn-fill">Get Started →</a><div class="socials"><a href="#" class="social-pill">Instagram</a><a href="#" class="social-pill">Twitter / X</a><a href="#" class="social-pill">Behance</a><a href="#" class="social-pill">YouTube</a></div></div></section>
+
+<footer><div class="fl">Studio<span>.</span></div><div class="fc">© 2026</div></footer>
+
+<script>
+// DATA
+var C=['linear-gradient(135deg,#1a1040,#4a20a0)','linear-gradient(135deg,#a01020,#e04060)','linear-gradient(135deg,#0a3060,#1070c0)','linear-gradient(135deg,#405010,#80a020)','linear-gradient(135deg,#103020,#208050)','linear-gradient(135deg,#501050,#a030a0)','linear-gradient(135deg,#4a2a0a,#a06020)','linear-gradient(135deg,#0a3a3a,#109090)','linear-gradient(135deg,#3a0a2a,#801060)','linear-gradient(135deg,#2a3a0a,#607010)','linear-gradient(135deg,#0a1a40,#2040a0)','linear-gradient(135deg,#401a0a,#a04020)','linear-gradient(135deg,#1a1a30,#3030a0)','linear-gradient(135deg,#301020,#802040)','linear-gradient(135deg,#102a10,#208040)'];
+var AC=['#6366f1','#ec4899','#f59e0b','#10b981','#ef4444','#3b82f6','#8b5cf6','#14b8a6','#f97316','#06b6d4','#a855f7','#22c55e','#e11d48','#0ea5e9','#d946ef'];
+var N=['MK','TP','JN','LS','PH','AV','KD','EF','RH','MS','DL','NK','VB','TC','ZD'];
+var CH=['GamerPro','TechDaily','NatureVlogs','FitLife','MusicBox','CookMaster','SciShow','CrimeHour','DIYKing','SpaceNerd','TravelBee','AITutor','StyleGuru','CryptoHub','DocuWorld'];
+var VD=['TOP 10 PLAYS','iPhone 16 Review','Hidden Waterfalls','30 Day Transform','NEW ALBUM REACTION','Gordon Ramsay CRIES','Black Holes Explained','Case That Shocked All','$50 Room Makeover','James Webb Discovery','48h in Tokyo','GPT-5 Changes All','Fall Fashion 2025','Bitcoin Prediction','Inside North Korea'];
+var IC=['🎮','💻','🌿','💪','🎵','🍳','🔬','🔍','🛠️','🚀','✈️','🤖','👗','📈','🎬'];
+var VW=['1.2M','2.1M','450K','670K','3.4M','1.8M','920K','1.5M','340K','2.8M','760K','1.1M','530K','980K','840K'];
+
+// AVATARS
+var ah='';for(var j=0;j<3;j++)N.forEach(function(n,i){ah+='<div class="av" style="background:'+AC[i]+'">'+n+'</div>'});
+document.getElementById('avRow').innerHTML=ah;
+
+// SHOWCASE #1: thumb cards with profile+name
+function tc(i){return '<div class="thumb-card"><div class="tc-img" style="background:'+C[i%15]+'"><div style="font-size:4rem;opacity:.06;font-weight:900;position:absolute">'+IC[i%15]+'</div><div style="font-size:1.8rem;z-index:1;filter:drop-shadow(0 2px 8px rgba(0,0,0,.4))">'+IC[i%15]+'</div></div><div class="tc-meta"><div class="tc-av" style="background:'+AC[i%15]+'">'+N[i%15]+'</div><div><div class="tc-name">'+CH[i%15]+'</div><div class="tc-views">'+VD[i%15]+' · '+VW[i%15]+' views</div></div></div></div>';}
+var r1='',r2='';for(var i=0;i<11;i++)r1+=tc(i);r1+=r1;
+for(var i=4;i<15;i++)r2+=tc(i);r2+=r2;
+document.getElementById('s1r1').innerHTML=r1;
+document.getElementById('s1r2').innerHTML=r2;
+
+// STATS MARQUEE
+var sh='';for(var j=0;j<5;j++)sh+='<div class="stat-item"><span class="num">200M+</span> <span class="lbl">Views Generated.</span></div><div class="stat-item"><span class="stat-sep">✦</span></div><div class="stat-item"><span class="num">1500+</span> <span class="lbl">Thumbnails Made.</span></div><div class="stat-item"><span class="stat-sep">✦</span></div><div class="stat-item"><span class="num">200+</span> <span class="lbl">Happy Creators.</span></div><div class="stat-item"><span class="stat-sep">✦</span></div>';
+document.getElementById('statsRow').innerHTML=sh;
+
+// SHOWCASE #2: 5 rows, simple thumbs
+function st(i){return '<div class="thumb" style="background:'+C[i%15]+'"><div style="font-size:5rem;opacity:.06;font-weight:900;position:absolute">'+IC[i%15]+'</div><div style="font-size:2rem;z-index:1;filter:drop-shadow(0 2px 8px rgba(0,0,0,.4))">'+IC[i%15]+'</div></div>';}
+var cls=['sL','sR','s3','s4','s5'];
+var bh='';
+for(var row=0;row<5;row++){
+  var rh='';
+  for(var i=0;i<11;i++)rh+=st((i+row*3)%15);
+  rh+=rh; // duplicate for seamless
+  bh+='<div class="gallery-band"><div class="gr '+cls[row]+'">'+rh+'</div></div>';
+}
+document.getElementById('bigShowcase').innerHTML=bh;
+
+// SCROLL REVEAL
+var obs=new IntersectionObserver(function(e){e.forEach(function(x){if(x.isIntersecting){x.target.classList.add('v');obs.unobserve(x.target)}})},{threshold:.08,rootMargin:'0px 0px -40px 0px'});
+document.querySelectorAll('.sr').forEach(function(el){obs.observe(el)});
+
+// FAQ
+document.querySelectorAll('.fq').forEach(function(b){b.addEventListener('click',function(){var i=b.parentElement,o=i.classList.contains('open');document.querySelectorAll('.fi').forEach(function(x){x.classList.remove('open')});if(!o)i.classList.add('open')})});
+
+// SMOOTH SCROLL
+document.querySelectorAll('a[href^="#"]').forEach(function(a){a.addEventListener('click',function(e){e.preventDefault();var t=document.querySelector(a.getAttribute('href'));if(t)t.scrollIntoView({behavior:'smooth'})})});
+</script>
+</body>
+</html>
