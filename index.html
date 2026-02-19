@@ -1081,12 +1081,22 @@ function animateCount(el) {
 (function() {
   var btn = document.getElementById('hamburger');
   var nav = document.getElementById('navLinks');
-  if (btn && nav) {
-    btn.addEventListener('click', function() {
-      btn.classList.toggle('active');
-      nav.classList.toggle('open');
-    });
+  if (!btn || !nav) return;
+
+  function toggleMenu() {
+    btn.classList.toggle('active');
+    nav.classList.toggle('open');
+    document.body.style.overflow = nav.classList.contains('open') ? 'hidden' : '';
   }
+
+  btn.addEventListener('click', toggleMenu);
+
+  // Close menu when clicking a link
+  nav.querySelectorAll('a').forEach(function(a) {
+    a.addEventListener('click', function() {
+      if (nav.classList.contains('open')) toggleMenu();
+    });
+  });
 })();
 
 // ===== NAV SCROLL EFFECT =====
