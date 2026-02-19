@@ -61,20 +61,22 @@ img{display:block;max-width:100%}
 
 /* ===== NAVIGATION ===== */
 .nav{
-  position:fixed;top:0;left:0;right:0;z-index:9999;
-  padding:18px 48px;
-  display:flex;align-items:center;justify-content:space-between;
-  background:rgba(12,12,14,.72);
+  position:fixed;top:16px;left:50%;transform:translateX(-50%);z-index:9999;
+  padding:8px 10px 8px 8px;
+  display:flex;align-items:center;gap:24px;
+  background:rgba(12,12,14,.82);
   backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
-  border-bottom:1px solid rgba(255,255,255,.04);
-  transition:background .3s;
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:100px;
+  transition:all .3s;
+  max-width:90vw;
 }
-.nav-logo{font-weight:900;font-size:1.3rem;letter-spacing:-.02em}
-.nav-logo span{color:var(--accent)}
-.nav-links{display:flex;gap:32px;list-style:none}
+.nav-pfp{width:36px;height:36px;border-radius:50%;object-fit:cover;flex-shrink:0;border:2px solid var(--accent)}
+.nav-logo{display:none}
+.nav-links{display:flex;gap:24px;list-style:none}
 .nav-links a{
-  font-size:.8rem;font-weight:500;color:var(--gray);
-  transition:color .3s;position:relative;
+  font-size:.78rem;font-weight:500;color:var(--gray);
+  transition:color .3s;position:relative;white-space:nowrap;
 }
 .nav-links a:hover{color:#fff}
 .nav-links a::after{
@@ -83,10 +85,10 @@ img{display:block;max-width:100%}
 }
 .nav-links a:hover::after{width:100%}
 .nav-cta{
-  font-size:.8rem;font-weight:700;
+  font-size:.78rem;font-weight:700;
   background:rgba(0,235,0,.12);color:#fff;
-  padding:11px 26px;border-radius:100px;
-  transition:all .3s;border:1.5px solid #00eb00;cursor:pointer;
+  padding:9px 22px;border-radius:100px;
+  transition:all .3s;border:1.5px solid #00eb00;cursor:pointer;white-space:nowrap;
 }
 .nav-cta:hover{background:rgba(0,235,0,.22);transform:translateY(-1px);box-shadow:0 6px 24px var(--accent-glow)}
 
@@ -437,7 +439,8 @@ footer .footer-links a:hover{color:var(--accent)}
 /* ===== MOBILE ===== */
 @media(max-width:768px){
   /* Nav */
-  .nav{padding:14px 20px}
+  .nav{top:10px;padding:6px 10px 6px 6px;gap:12px}
+  .nav-pfp{width:30px;height:30px}
   .nav-links{
     position:fixed;top:0;left:0;right:0;bottom:0;
     background:rgba(12,12,14,.97);backdrop-filter:blur(20px);
@@ -524,6 +527,7 @@ footer .footer-links a:hover{color:var(--accent)}
 
 <!-- ===== NAVIGATION ===== -->
 <nav class="nav">
+  <img class="nav-pfp" src="/img/pfp.png" alt="Profile">
   <div class="nav-logo" id="navBrand">Studio<span>.</span></div>
   <ul class="nav-links" id="navLinks">
     <li><a href="#hero">Home</a></li>
@@ -533,7 +537,7 @@ footer .footer-links a:hover{color:var(--accent)}
     <li><a href="#faq">FAQ</a></li>
     <li><a href="#cta">Socials</a></li>
   </ul>
-  <a href="https://docs.google.com/forms/d/e/1FAIpQLSeQvCfQAVdHnhB4Ui5TGVFLtOypq8UZsbGEAaf-St-GYP2g6g/viewform" target="_blank" rel="noopener" class="nav-cta">Get Started</a>
+  <a href="https://docs.google.com/forms/d/e/1FAIpQLSeQvCfQAVdHnhB4Ui5TGVFLtOypq8UZsbGEAaf-St-GYP2g6g/viewform" target="_blank" rel="noopener" class="nav-cta">Get Started →</a>
   <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
 </nav>
 
