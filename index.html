@@ -224,22 +224,21 @@ img{display:block;max-width:100%}
   border-color:rgba(16,185,129,.3);
 }
 
-/* ===== STATS MARQUEE ===== */
-.stats-band{
-  padding:36px 0;
+/* ===== STATS SECTION ===== */
+.stats-section{
+  padding:64px 48px;
   border-top:1px solid var(--border);border-bottom:1px solid var(--border);
-  overflow:hidden;margin:50px 0;
+  margin:50px 0;
 }
-.stats-row{
-  display:flex;gap:48px;width:max-content;
-  animation:scrollL 28s linear infinite;align-items:center;
-  will-change:transform;backface-visibility:hidden;-webkit-backface-visibility:hidden;
+.stats-grid{
+  display:flex;justify-content:center;gap:64px;max-width:800px;margin:0 auto;
 }
-.stats-row:hover,.stats-row.paused{animation-play-state:paused}
-.stat-item{white-space:nowrap}
-.stat-item .num{font-size:2.4rem;font-weight:900;letter-spacing:-.035em}
-.stat-item .lbl{font-size:.9rem;color:var(--gray);font-weight:500;margin-left:6px}
-.stat-sep{color:var(--accent);font-size:1.2rem;opacity:.5}
+.stat-block{text-align:center}
+.stat-icon{margin-bottom:12px;color:var(--accent)}
+.stat-icon svg{width:28px;height:28px}
+.stat-block .num{font-size:3.2rem;font-weight:900;letter-spacing:-.04em;line-height:1}
+.stat-block .lbl{font-size:.82rem;color:var(--gray);font-weight:500;margin-top:6px;text-transform:uppercase;letter-spacing:.08em}
+.stat-divider{width:1px;background:var(--border);align-self:stretch}
 
 /* ===== SECTIONS ===== */
 .sec{padding:100px 48px;max-width:1320px;margin:0 auto}
@@ -414,8 +413,16 @@ footer .footer-links a:hover{color:var(--accent)}
   <div class="gallery-band"><div class="gr sR" id="s1r2"></div></div>
 </section>
 
-<!-- ===== STATS MARQUEE ===== -->
-<div class="stats-band"><div class="stats-row" id="statsRow"></div></div>
+<!-- ===== STATS ===== -->
+<section class="stats-section">
+  <div class="stats-grid sr">
+    <div class="stat-block"><div class="stat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></div><div class="num count-up" data-target="3" data-suffix="M+">0</div><div class="lbl">Views</div></div>
+    <div class="stat-divider"></div>
+    <div class="stat-block"><div class="stat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div><div class="num count-up" data-target="20" data-suffix="+">0</div><div class="lbl">Clients</div></div>
+    <div class="stat-divider"></div>
+    <div class="stat-block"><div class="stat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg></div><div class="num count-up" data-target="40" data-suffix="+">0</div><div class="lbl">Projects</div></div>
+  </div>
+</section>
 
 <!-- ===== PROCESS ===== -->
 <section class="sec" id="process">
@@ -655,19 +662,6 @@ function makeThumbCard(i) {
   document.getElementById('s1r2').innerHTML = r2;
 })();
 
-// ===== STATS MARQUEE =====
-(function() {
-  var h = '';
-  for (var j = 0; j < 3; j++) {
-    h += '<div class="stat-item"><span class="num">3M+</span><span class="lbl">Views</span></div>';
-    h += '<div class="stat-item"><span class="stat-sep">✦</span></div>';
-    h += '<div class="stat-item"><span class="num">20+</span><span class="lbl">Clients</span></div>';
-    h += '<div class="stat-item"><span class="stat-sep">✦</span></div>';
-    h += '<div class="stat-item"><span class="num">40+</span><span class="lbl">Projects</span></div>';
-    h += '<div class="stat-item"><span class="stat-sep">✦</span></div>';
-  }
-  document.getElementById('statsRow').innerHTML = h;
-})();
 
 // ===== SHOWCASE #2: 6 rows, simple thumbs only =====
 function makeThumb(i) {
@@ -708,56 +702,56 @@ function makeThumb(i) {
 })();
 
 // ===== COUNT-UP ANIMATION =====
-(function() {
-  function easeOutExpo(t) {
-    return t === 1 ? 1 : 1 - Math.pow(2, -10 * t);
-  }
+function easeOutExpo(t) {
+  return t === 1 ? 1 : 1 - Math.pow(2, -10 * t);
+}
 
-  function animateCount(el) {
-    if (el.dataset.counted) return;
-    el.dataset.counted = '1';
+function animateCount(el) {
+  if (el.dataset.counted) return;
+  el.dataset.counted = '1';
 
-    var target = parseFloat(el.dataset.target);
-    var suffix = el.dataset.suffix || '';
-    var duration = 2000;
-    var start = performance.now();
-    var isDecimal = target % 1 !== 0;
+  var target = parseFloat(el.dataset.target);
+  var suffix = el.dataset.suffix || '';
+  var duration = 2000;
+  var start = performance.now();
+  var isDecimal = target % 1 !== 0;
 
-    function update(now) {
-      var elapsed = now - start;
-      var progress = Math.min(elapsed / duration, 1);
-      var eased = easeOutExpo(progress);
-      var current = eased * target;
+  function update(now) {
+    var elapsed = now - start;
+    var progress = Math.min(elapsed / duration, 1);
+    var eased = easeOutExpo(progress);
+    var current = eased * target;
 
-      if (isDecimal) {
-        el.textContent = current.toFixed(1) + suffix;
-      } else {
-        el.textContent = Math.floor(current) + suffix;
-      }
-
-      if (progress < 1) {
-        requestAnimationFrame(update);
-      } else {
-        el.textContent = target + suffix;
-      }
+    if (isDecimal) {
+      el.textContent = current.toFixed(1) + suffix;
+    } else {
+      el.textContent = Math.floor(current) + suffix;
     }
 
-    requestAnimationFrame(update);
+    if (progress < 1) {
+      requestAnimationFrame(update);
+    } else {
+      el.textContent = target + suffix;
+    }
   }
 
-  // Observe about stats
-  var aboutStats = document.querySelector('.about-stats');
-  if (aboutStats) {
-    var aboutObs = new IntersectionObserver(function(entries) {
-      entries.forEach(function(entry) {
-        if (entry.isIntersecting) {
-          entry.target.querySelectorAll('.count-up').forEach(animateCount);
-          aboutObs.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.3 });
-    aboutObs.observe(aboutStats);
-  }
+  requestAnimationFrame(update);
+}
+
+// Observe all sections with count-up elements
+(function() {
+  var countObs = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        entry.target.querySelectorAll('.count-up').forEach(animateCount);
+        countObs.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.3 });
+
+  document.querySelectorAll('.stats-grid, .about-stats').forEach(function(el) {
+    countObs.observe(el);
+  });
 })();
 
 // ===== FAQ ACCORDION =====
@@ -816,7 +810,7 @@ function makeThumb(i) {
     });
   }, { rootMargin: '100px 0px' });
 
-  document.querySelectorAll('.gallery-band, .stats-band, .avatar-band').forEach(function(band) {
+  document.querySelectorAll('.gallery-band, .avatar-band').forEach(function(band) {
     bandObs.observe(band);
   });
 })();
