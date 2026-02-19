@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=600">
-<title>Studio — Thumbnail Design</title>
+<title>Wardon Visuals — Thumbnail Design</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -462,16 +462,27 @@ footer .footer-links a:hover{color:var(--accent)}
   .nav{top:10px;padding:6px 14px 6px 6px;gap:0;justify-content:space-between;width:auto;min-width:0}
   .nav-pfp{width:32px;height:32px}
   .nav-links{
-    position:fixed;top:0;left:0;right:0;bottom:0;
-    background:#0a0a0c;
-    flex-direction:column;align-items:center;justify-content:center;
-    gap:36px;opacity:0;pointer-events:none;transition:opacity .3s;
-    z-index:10000;
+    display:none;
   }
-  .nav-links.open{opacity:1;pointer-events:all}
   .nav-links a{font-size:1.4rem;font-weight:700;color:#fff}
   .nav-cta{display:none}
   .hamburger{display:flex;margin-left:10px}
+  /* Menu open: nav becomes fullscreen overlay */
+  .nav.menu-open{
+    position:fixed;top:0;left:0;right:0;bottom:0;
+    transform:none;max-width:100%;width:100%;
+    border-radius:0;padding:0;
+    flex-direction:column;align-items:center;justify-content:center;
+    background:#0a0a0c;
+    z-index:9999;
+  }
+  .nav.menu-open .nav-pfp{display:none}
+  .nav.menu-open .nav-links{
+    display:flex;flex-direction:column;align-items:center;gap:36px;
+  }
+  .nav.menu-open .hamburger{
+    position:absolute;top:16px;right:16px;
+  }
 
   /* Hero */
   .hero{padding:100px 20px 30px}
@@ -548,7 +559,7 @@ footer .footer-links a:hover{color:var(--accent)}
 <!-- ===== NAVIGATION ===== -->
 <nav class="nav">
   <img class="nav-pfp" src="/img/pfp.png" alt="Profile">
-  <div class="nav-logo" id="navBrand">Studio<span>.</span></div>
+  <div class="nav-logo" id="navBrand">Wardon Visuals<span>.</span></div>
   <ul class="nav-links" id="navLinks">
     <li><a href="#hero">Home</a></li>
     <li><a href="#showcase1">Thumbnails</a></li>
@@ -565,7 +576,7 @@ footer .footer-links a:hover{color:var(--accent)}
 <section class="hero" id="hero">
   <div class="badge"><span class="dot"></span> Available Now</div>
   <h1 id="heroHeadline">Thumbnails that drive<br><span class="rotate-word"><span>clicks.</span><span>money.</span><span>curiosity.</span><span>attention.</span></span></h1>
-  <p class="hero-sub" id="heroSub">My work isn't just good-looking — it's about making visuals that pull people in and get real engagement.</p>
+  <p class="hero-sub" id="heroSub">As a creator, you need as many people as possible to click on your video. A professional thumbnail is the first step to success.</p>
   <div class="hero-btns">
     <a href="https://docs.google.com/forms/d/e/1FAIpQLSeQvCfQAVdHnhB4Ui5TGVFLtOypq8UZsbGEAaf-St-GYP2g6g/viewform" target="_blank" rel="noopener" class="btn btn-fill">Get Started</a>
     <a href="#showcase2" class="btn btn-ghost">View Portfolio</a>
@@ -654,7 +665,7 @@ footer .footer-links a:hover{color:var(--accent)}
 
 <!-- ===== FOOTER ===== -->
 <footer>
-  <div class="fl" id="footerBrand">Studio<span>.</span></div>
+  <div class="fl" id="footerBrand">Wardon Visuals<span>.</span></div>
   <ul class="footer-links">
     <li><a href="#hero">Home</a></li>
     <li><a href="#showcase2">Portfolio</a></li>
@@ -662,7 +673,7 @@ footer .footer-links a:hover{color:var(--accent)}
     <li><a href="#faq">FAQ</a></li>
     <li><a href="#cta">Contact</a></li>
   </ul>
-  <div class="fc" id="footerCopy">&copy; 2026 Studio. All rights reserved.</div>
+  <div class="fc" id="footerCopy">&copy; 2026 Wardon Visuals. All rights reserved.</div>
 </footer>
 
 <script>
@@ -719,9 +730,9 @@ var DEFAULT_DATA = {
     { id: "p3", title: "Finished work", desc: "At the end I will finish the final version that brings clicks on your video. We can also A/B test the thumbnail.", img: "/img/process-3.png" },
   ],
   faq: [
-    { id: "f1", q: "How fast do you deliver?", a: "Standard delivery is 24-48 hours. Express delivery within 12 hours for urgent projects." },
-    { id: "f4", q: "Do you do A/B testing?", a: "Yes \u2014 we create 2-3 thumbnail variants for premium packages, optimized for maximum CTR." },
-    { id: "f5", q: "Do you work with international creators?", a: "Absolutely. We work with creators worldwide in English, Czech, and German." },
+    { id: "f1", q: "How fast do you deliver?", a: "Standard delivery is 24-48 hours." },
+    { id: "f4", q: "Do you do A/B testing?", a: "Yes i do." },
+    { id: "f5", q: "Do you work with international creators?", a: "Absolutely. I work with creators worldwide." },
   ],
   about: { headline: "Design that drives results.", text1: "I specialize in YouTube thumbnails, branding, and visual design.", text2: "Working with creators from 10K to 5M+ subscribers." },
   socials: [
@@ -729,7 +740,7 @@ var DEFAULT_DATA = {
     { id: "so2", platform: "Twitter / X", url: "https://x.com/" },
     { id: "so3", platform: "Behance", url: "https://behance.net/" },
   ],
-  siteSettings: { brandName: "Studio", heroHeadline: "Crafting *Instant*|Clicks.", heroSub: "My work isn't just good-looking \u2014 it's about making visuals that pull people in and get real engagement.", email: "wardondesign@gmail.com" },
+  siteSettings: { brandName: "Wardon Visuals", heroHeadline: "Crafting *Instant*|Clicks.", heroSub: "As a creator, you need as many people as possible to click on your video. A professional thumbnail is the first step to success.", email: "wardondesign@gmail.com" },
 };
 
 // ===== HELPER: escape HTML =====
@@ -1028,11 +1039,12 @@ function initInteractions() {
       var target = document.querySelector(a.getAttribute('href'));
       if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
       // Close mobile menu if open
+      var navBar = document.querySelector('.nav');
       var hamburger = document.getElementById('hamburger');
-      var navLinks = document.getElementById('navLinks');
-      if (hamburger && navLinks) {
+      if (navBar && hamburger) {
+        navBar.classList.remove('menu-open');
         hamburger.classList.remove('active');
-        navLinks.classList.remove('open');
+        document.body.style.overflow = '';
       }
     });
   });
@@ -1082,21 +1094,22 @@ function animateCount(el) {
 // ===== HAMBURGER MENU =====
 (function() {
   var btn = document.getElementById('hamburger');
-  var nav = document.getElementById('navLinks');
-  if (!btn || !nav) return;
+  var navEl = document.querySelector('.nav');
+  var navLinks = document.getElementById('navLinks');
+  if (!btn || !navEl || !navLinks) return;
 
   function toggleMenu() {
+    var isOpen = navEl.classList.toggle('menu-open');
     btn.classList.toggle('active');
-    nav.classList.toggle('open');
-    document.body.style.overflow = nav.classList.contains('open') ? 'hidden' : '';
+    document.body.style.overflow = isOpen ? 'hidden' : '';
   }
 
   btn.addEventListener('click', toggleMenu);
 
   // Close menu when clicking a link
-  nav.querySelectorAll('a').forEach(function(a) {
+  navLinks.querySelectorAll('a').forEach(function(a) {
     a.addEventListener('click', function() {
-      if (nav.classList.contains('open')) toggleMenu();
+      if (navEl.classList.contains('menu-open')) toggleMenu();
     });
   });
 })();
