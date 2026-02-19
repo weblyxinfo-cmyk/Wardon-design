@@ -100,7 +100,7 @@ img{display:block;max-width:100%}
 /* ===== NAVIGATION ===== */
 .nav{
   position:fixed;top:16px;left:50%;transform:translateX(-50%);z-index:9999;
-  padding:8px 10px 8px 8px;
+  padding:8px 8px 8px 8px;
   display:flex;align-items:center;gap:24px;
   background:rgba(12,12,14,.82);
   backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
@@ -125,8 +125,9 @@ img{display:block;max-width:100%}
 .nav-cta{
   font-size:.78rem;font-weight:700;
   background:rgba(0,235,0,.12);color:#fff;
-  padding:9px 22px;border-radius:100px;
+  padding:8px 20px;border-radius:100px;
   transition:all .3s;border:1.5px solid #00eb00;cursor:pointer;white-space:nowrap;
+  flex-shrink:0;
 }
 .nav-cta:hover{background:rgba(0,235,0,.22);transform:translateY(-1px);box-shadow:0 6px 24px var(--accent-glow)}
 
