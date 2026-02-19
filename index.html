@@ -152,6 +152,24 @@ img{display:block;max-width:100%}
   animation:fadeUp .8s .4s cubic-bezier(.23,1,.32,1) forwards;
 }
 .hero h1 .acc{color:var(--accent)}
+.rotate-word{display:inline-block;position:relative;overflow:hidden;vertical-align:bottom;height:1.05em;min-width:2ch}
+.rotate-word span{
+  display:block;color:var(--accent);
+  animation:rotateWords 8s infinite;
+  position:absolute;left:0;width:max-content;
+  opacity:0;transform:translateY(100%);
+}
+.rotate-word span:nth-child(1){animation-delay:0s}
+.rotate-word span:nth-child(2){animation-delay:2s}
+.rotate-word span:nth-child(3){animation-delay:4s}
+.rotate-word span:nth-child(4){animation-delay:6s}
+@keyframes rotateWords{
+  0%{opacity:0;transform:translateY(100%)}
+  3%{opacity:1;transform:translateY(0)}
+  22%{opacity:1;transform:translateY(0)}
+  25%{opacity:0;transform:translateY(-100%)}
+  100%{opacity:0;transform:translateY(-100%)}
+}
 
 .hero-sub{
   font-size:1rem;color:var(--gray);
@@ -544,7 +562,7 @@ footer .footer-links a:hover{color:var(--accent)}
 <!-- ===== HERO ===== -->
 <section class="hero" id="hero">
   <div class="badge"><span class="dot"></span> Available Now</div>
-  <h1 id="heroHeadline">Crafting <span class="acc">Instant</span><br>Clicks.</h1>
+  <h1 id="heroHeadline">Thumbnails that drive<br><span class="rotate-word"><span>clicks.</span><span>money.</span><span>curiosity.</span><span>attention.</span></span></h1>
   <p class="hero-sub" id="heroSub">My work isn't just good-looking — it's about making visuals that pull people in and get real engagement.</p>
   <div class="hero-btns">
     <a href="https://docs.google.com/forms/d/e/1FAIpQLSeQvCfQAVdHnhB4Ui5TGVFLtOypq8UZsbGEAaf-St-GYP2g6g/viewform" target="_blank" rel="noopener" class="btn btn-fill">Get Started</a>
@@ -737,7 +755,7 @@ function renderBrandName(data) {
 }
 
 function renderHero(data) {
-  document.getElementById('heroHeadline').innerHTML = parseHeadline(data.siteSettings.heroHeadline);
+  // Keep the rotating headline as-is (hardcoded in HTML), only update subtitle
   document.getElementById('heroSub').textContent = data.siteSettings.heroSub;
 }
 
