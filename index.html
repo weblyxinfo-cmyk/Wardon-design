@@ -874,8 +874,7 @@ function renderAbout(data) {
       statsHtml += '<div class="about-stat"><div class="n">' + esc(raw) + '</div><div class="l">' + esc(stats[i].label) + '</div></div>';
     }
   }
-  // Add turnaround stat
-  statsHtml += '<div class="about-stat"><div class="n count-up" data-target="48" data-suffix="h">0</div><div class="l">Turnaround</div></div>';
+  // Same stats as the main stats section — no extra hardcoded ones
 
   var html = '<div class="about-card sr">' +
     '<div class="about-visual" style="background:linear-gradient(160deg,#0e2a1e,#028b00 50%,#0c0c0e)">' +
