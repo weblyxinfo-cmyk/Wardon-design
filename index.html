@@ -536,9 +536,12 @@ footer .footer-links a:hover{color:var(--accent)}
 
 /* ===== MOBILE ===== */
 @media(max-width:768px){
-  /* Nav - keep desktop style, just slightly smaller */
-  .nav{top:10px}
-  .nav-pfp{width:30px;height:30px}
+  /* Nav - same as desktop, scaled to fit */
+  .nav{top:10px;padding:6px 6px;gap:12px;max-width:96vw}
+  .nav-pfp{width:28px;height:28px}
+  .nav-links{gap:12px}
+  .nav-links a{font-size:.65rem}
+  .nav-cta{font-size:.65rem;padding:6px 14px}
 
   /* Hero */
   .hero{padding:100px 20px 30px}
