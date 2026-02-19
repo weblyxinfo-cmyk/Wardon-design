@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=1000">
 <title>Studio — Thumbnail Design</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -527,7 +527,7 @@ footer .footer-links a:hover{color:var(--accent)}
     <li><a href="#faq">FAQ</a></li>
     <li><a href="#cta">Socials</a></li>
   </ul>
-  <a href="#cta" class="nav-cta">Get Started</a>
+  <a href="https://docs.google.com/forms/d/e/1FAIpQLSeQvCfQAVdHnhB4Ui5TGVFLtOypq8UZsbGEAaf-St-GYP2g6g/viewform" target="_blank" rel="noopener" class="nav-cta">Get Started</a>
   <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
 </nav>
 
@@ -537,7 +537,7 @@ footer .footer-links a:hover{color:var(--accent)}
   <h1 id="heroHeadline">Crafting <span class="acc">Instant</span><br>Clicks.</h1>
   <p class="hero-sub" id="heroSub">My work isn't just good-looking — it's about making visuals that pull people in and get real engagement.</p>
   <div class="hero-btns">
-    <a href="#cta" class="btn btn-fill">Get Started</a>
+    <a href="https://docs.google.com/forms/d/e/1FAIpQLSeQvCfQAVdHnhB4Ui5TGVFLtOypq8UZsbGEAaf-St-GYP2g6g/viewform" target="_blank" rel="noopener" class="btn btn-fill">Get Started</a>
     <a href="#showcase2" class="btn btn-ghost">View Portfolio</a>
   </div>
   <div class="trusted-label">Trusted by 20+ clients</div>
@@ -617,7 +617,7 @@ footer .footer-links a:hover{color:var(--accent)}
     <div class="tag">Let's Work Together</div>
     <h2>Ready to level up<br>your <span class="acc">thumbnails?</span></h2>
     <p>Let's create something that stops the scroll and drives real results.</p>
-    <a id="ctaEmail" href="mailto:hello@studio.com" class="btn btn-fill" style="font-size:1rem;padding:16px 40px">Get Started →</a>
+    <a id="ctaEmail" href="https://docs.google.com/forms/d/e/1FAIpQLSeQvCfQAVdHnhB4Ui5TGVFLtOypq8UZsbGEAaf-St-GYP2g6g/viewform" target="_blank" rel="noopener" class="btn btn-fill" style="font-size:1rem;padding:16px 40px">Get Started →</a>
     <div class="socials" id="socialsContainer"></div>
   </div>
 </section>
@@ -931,9 +931,7 @@ function renderSocials(data) {
     h += '<a href="' + esc(socials[i].url) + '" class="social-pill" target="_blank" rel="noopener">' + esc(socials[i].platform) + '</a>';
   }
   document.getElementById('socialsContainer').innerHTML = h;
-  // Update CTA email
-  var email = data.siteSettings.email;
-  document.getElementById('ctaEmail').href = 'mailto:' + email;
+  // CTA link stays as Google Form (hardcoded)
 }
 
 function renderFooter(data) {
