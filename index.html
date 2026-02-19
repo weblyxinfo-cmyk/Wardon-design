@@ -149,9 +149,9 @@ img{display:block;max-width:100%}
 .avatar-row{
   display:flex;gap:10px;width:max-content;
   animation:scrollL 35s linear infinite;
-  will-change:transform;transform:translateZ(0);
+  will-change:transform;backface-visibility:hidden;-webkit-backface-visibility:hidden;
 }
-.avatar-row:hover{animation-play-state:paused}
+.avatar-row:hover,.avatar-row.paused{animation-play-state:paused}
 .av{
   width:44px;height:44px;border-radius:50%;flex-shrink:0;
   display:flex;align-items:center;justify-content:center;
@@ -169,31 +169,32 @@ img{display:block;max-width:100%}
 
 /* ===== GALLERY / SHOWCASE ===== */
 .gallery-section{padding:30px 0}
-.gallery-band{overflow:hidden;padding:7px 0}
+.gallery-band{overflow:hidden;padding:7px 0;contain:content}
 
-.gr{display:flex;gap:14px;width:max-content;will-change:transform;transform:translateZ(0)}
+.gr{display:flex;gap:14px;width:max-content;will-change:transform;backface-visibility:hidden;-webkit-backface-visibility:hidden}
 .gr.sL{animation:scrollL 60s linear infinite}
 .gr.sR{animation:scrollR 50s linear infinite}
 .gr.s3{animation:scrollL 65s linear infinite}
 .gr.s4{animation:scrollR 55s linear infinite}
 .gr.s5{animation:scrollL 70s linear infinite}
 .gr.s6{animation:scrollR 40s linear infinite}
+.gr.paused{animation-play-state:paused}
 .gr:hover{animation-play-state:paused}
 
-@keyframes scrollL{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
-@keyframes scrollR{0%{transform:translateX(-50%)}100%{transform:translateX(0)}}
+@keyframes scrollL{0%{transform:translate3d(0,0,0)}100%{transform:translate3d(-50%,0,0)}}
+@keyframes scrollR{0%{transform:translate3d(-50%,0,0)}100%{transform:translate3d(0,0,0)}}
 
 /* Showcase #1 — thumb cards with profile */
 .thumb-card{
   flex-shrink:0;width:310px;border-radius:var(--r);
   overflow:hidden;border:1px solid var(--border);
   background:var(--card);
-  transition:all .45s cubic-bezier(.23,1,.32,1);cursor:pointer;
+  transition:border-color .3s,transform .3s;cursor:pointer;
+  contain:layout style;
 }
 .thumb-card:hover{
-  transform:scale(1.04);
-  border-color:rgba(16,185,129,.35);
-  box-shadow:0 12px 40px rgba(0,0,0,.5),0 0 0 1px rgba(16,185,129,.1);
+  transform:scale(1.03);
+  border-color:rgba(16,185,129,.3);
 }
 .thumb-card .tc-img{
   width:100%;height:175px;position:relative;overflow:hidden;
@@ -214,13 +215,13 @@ img{display:block;max-width:100%}
 .thumb{
   flex-shrink:0;width:310px;height:175px;border-radius:var(--r);
   overflow:hidden;border:1px solid var(--border);
-  transition:all .45s cubic-bezier(.23,1,.32,1);cursor:pointer;
+  transition:border-color .3s,transform .3s;cursor:pointer;
   display:flex;align-items:center;justify-content:center;position:relative;
+  contain:layout style;
 }
 .thumb:hover{
-  transform:scale(1.04);
-  border-color:rgba(16,185,129,.35);
-  box-shadow:0 12px 40px rgba(0,0,0,.5),0 0 0 1px rgba(16,185,129,.1);
+  transform:scale(1.03);
+  border-color:rgba(16,185,129,.3);
 }
 
 /* ===== STATS MARQUEE ===== */
@@ -232,9 +233,9 @@ img{display:block;max-width:100%}
 .stats-row{
   display:flex;gap:48px;width:max-content;
   animation:scrollL 28s linear infinite;align-items:center;
-  will-change:transform;transform:translateZ(0);
+  will-change:transform;backface-visibility:hidden;-webkit-backface-visibility:hidden;
 }
-.stats-row:hover{animation-play-state:paused}
+.stats-row:hover,.stats-row.paused{animation-play-state:paused}
 .stat-item{white-space:nowrap}
 .stat-item .num{font-size:2.4rem;font-weight:900;letter-spacing:-.035em}
 .stat-item .lbl{font-size:.9rem;color:var(--gray);font-weight:500;margin-left:6px}
@@ -632,7 +633,7 @@ function makeThumbCard(i) {
   return '<div class="thumb-card">' +
     '<div class="tc-img" style="background:' + C[i % 15] + '">' +
       '<div style="font-size:4.5rem;opacity:.05;font-weight:900;position:absolute">' + IC[i % 15] + '</div>' +
-      '<div style="font-size:2rem;z-index:1;filter:drop-shadow(0 4px 12px rgba(0,0,0,.5))">' + IC[i % 15] + '</div>' +
+      '<div style="font-size:2rem;z-index:1;">' + IC[i % 15] + '</div>' +
     '</div>' +
     '<div class="tc-meta">' +
       '<div class="tc-av" style="background:' + AC[i % 15] + '">' + N[i % 15] + '</div>' +
@@ -672,7 +673,7 @@ function makeThumbCard(i) {
 function makeThumb(i) {
   return '<div class="thumb" style="background:' + C[i % 15] + '">' +
     '<div style="font-size:5.5rem;opacity:.04;font-weight:900;position:absolute">' + IC[i % 15] + '</div>' +
-    '<div style="font-size:2.2rem;z-index:1;filter:drop-shadow(0 4px 12px rgba(0,0,0,.5))">' + IC[i % 15] + '</div>' +
+    '<div style="font-size:2.2rem;z-index:1;">' + IC[i % 15] + '</div>' +
   '</div>';
 }
 
@@ -791,17 +792,32 @@ function makeThumb(i) {
 // ===== NAV SCROLL EFFECT =====
 (function() {
   var nav = document.querySelector('.nav');
-  var lastScroll = 0;
   window.addEventListener('scroll', function() {
-    var scroll = window.pageYOffset;
-    if (scroll > 100) {
+    if (window.pageYOffset > 100) {
       nav.style.background = 'rgba(12,12,14,.88)';
-      nav.style.borderBottomColor = 'rgba(255,255,255,.06)';
     } else {
       nav.style.background = 'rgba(12,12,14,.72)';
-      nav.style.borderBottomColor = 'rgba(255,255,255,.04)';
     }
-    lastScroll = scroll;
+  }, { passive: true });
+})();
+
+// ===== PAUSE OFF-SCREEN ANIMATIONS =====
+(function() {
+  var bandObs = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      var row = entry.target.querySelector('.gr, .stats-row, .avatar-row');
+      if (row) {
+        if (entry.isIntersecting) {
+          row.classList.remove('paused');
+        } else {
+          row.classList.add('paused');
+        }
+      }
+    });
+  }, { rootMargin: '100px 0px' });
+
+  document.querySelectorAll('.gallery-band, .stats-band, .avatar-band').forEach(function(band) {
+    bandObs.observe(band);
   });
 })();
 </script>
