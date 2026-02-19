@@ -1,4 +1,4 @@
-const { put, list, del } = require("@vercel/blob");
+const { db } = require("./_db");
 
 const REQUIRED_KEYS = [
   "thumbnails",
@@ -11,6 +11,17 @@ const REQUIRED_KEYS = [
   "socials",
   "siteSettings",
 ];
+
+async function getCurrentPassword(client) {
+  try {
+    const result = await client.execute({
+      sql: "SELECT value FROM admin_settings WHERE key = ?",
+      args: ["admin_password"],
+    });
+    if (result.rows.length > 0) return result.rows[0].value;
+  } catch (e) {}
+  return process.env.ADMIN_PASSWORD || "wardon2024";
+}
 
 module.exports = async function handler(req, res) {
   // CORS preflight
@@ -28,19 +39,21 @@ module.exports = async function handler(req, res) {
     return res.status(405).json({ error: "Method not allowed" });
   }
 
-  // Auth check
-  const authHeader = req.headers.authorization;
-  const password = process.env.ADMIN_PASSWORD;
-
-  if (!password) {
-    return res.status(500).json({ error: "ADMIN_PASSWORD not configured" });
-  }
-
-  if (!authHeader || authHeader !== `Bearer ${password}`) {
-    return res.status(401).json({ error: "Unauthorized" });
-  }
-
   try {
+    const client = await db();
+
+    // Auth check — DB password first, then env var fallback
+    const authHeader = req.headers.authorization;
+    const password = await getCurrentPassword(client);
+
+    if (!password) {
+      return res.status(500).json({ error: "ADMIN_PASSWORD not configured" });
+    }
+
+    if (!authHeader || authHeader !== `Bearer ${password}`) {
+      return res.status(401).json({ error: "Unauthorized" });
+    }
+
     const data = req.body;
 
     // Validate required keys
@@ -50,19 +63,11 @@ module.exports = async function handler(req, res) {
       }
     }
 
-    // Delete old blob if exists
-    const { blobs } = await list({ prefix: "data.json" });
-    for (const blob of blobs) {
-      if (blob.pathname === "data.json") {
-        await del(blob.url);
-      }
-    }
-
-    // Write new data
-    await put("data.json", JSON.stringify(data), {
-      contentType: "application/json",
-      access: "public",
-      addRandomSuffix: false,
+    // Upsert site data (INSERT or REPLACE — id is always 1)
+    await client.execute({
+      sql: `INSERT INTO site_data (id, data, updated_at) VALUES (1, ?, datetime('now'))
+            ON CONFLICT(id) DO UPDATE SET data = excluded.data, updated_at = excluded.updated_at`,
+      args: [JSON.stringify(data)],
     });
 
     res.setHeader("Access-Control-Allow-Origin", "*");

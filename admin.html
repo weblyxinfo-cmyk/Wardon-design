@@ -428,10 +428,53 @@ function AboutTab({ data, save }) {
 // ===== SETTINGS TAB =====
 function SettingsTab({ data, save }) {
   const [form, setForm] = useState(data.siteSettings);
+  const [pwForm, setPwForm] = useState({ current: "", newPw: "", confirm: "" });
+  const [pwMsg, setPwMsg] = useState(null);
+  const [pwLoading, setPwLoading] = useState(false);
+
   const resetAll = () => {
     save(DEFAULT_DATA);
     setForm(DEFAULT_DATA.siteSettings);
   };
+
+  const changePassword = async () => {
+    setPwMsg(null);
+    if (!pwForm.newPw || pwForm.newPw.length < 4) {
+      setPwMsg({ type: "err", text: "Heslo musí mít alespoň 4 znaky" });
+      return;
+    }
+    if (pwForm.newPw !== pwForm.confirm) {
+      setPwMsg({ type: "err", text: "Hesla se neshodují" });
+      return;
+    }
+    setPwLoading(true);
+    try {
+      const res = await fetch("/api/change-password", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "Authorization": "Bearer " + getToken() },
+        body: JSON.stringify({ newPassword: pwForm.newPw }),
+      });
+      if (res.status === 401) {
+        setPwMsg({ type: "err", text: "Nesprávné aktuální heslo" });
+        setPwLoading(false);
+        return;
+      }
+      if (!res.ok) {
+        const d = await res.json().catch(() => ({}));
+        setPwMsg({ type: "err", text: d.error || "Chyba serveru" });
+        setPwLoading(false);
+        return;
+      }
+      // Update token in session
+      sessionStorage.setItem("admin-token", pwForm.newPw);
+      setPwForm({ current: "", newPw: "", confirm: "" });
+      setPwMsg({ type: "ok", text: "Heslo změněno" });
+    } catch (e) {
+      setPwMsg({ type: "err", text: "Chyba připojení" });
+    }
+    setPwLoading(false);
+  };
+
   return (
     <div>
       <h1 style={{ fontSize: 22, fontWeight: 800, marginBottom: 4 }}>Nastavení webu</h1>
@@ -444,6 +487,20 @@ function SettingsTab({ data, save }) {
         <div style={{ display: "flex", gap: 12 }}>
           <button onClick={() => save({ ...data, siteSettings: form })} style={addBtnStyle}>Uložit</button>
           <button onClick={resetAll} style={{ ...addBtnStyle, background: "#ef4444" }}>Reset na default</button>
+        </div>
+      </div>
+
+      {/* PASSWORD CHANGE */}
+      <div style={{ borderTop: "1px solid rgba(255,255,255,.06)", marginTop: 40, paddingTop: 32 }}>
+        <h2 style={{ fontSize: 18, fontWeight: 800, marginBottom: 4 }}>Změna hesla</h2>
+        <p style={{ fontSize: 13, color: "#8a8a9a", marginBottom: 20 }}>Změnit přihlašovací heslo do admin panelu</p>
+        <div style={{ display: "flex", flexDirection: "column", gap: 14, maxWidth: 400 }}>
+          <Field label="Nové heslo" value={pwForm.newPw} onChange={v => setPwForm({ ...pwForm, newPw: v })} placeholder="Min. 4 znaky" />
+          <Field label="Potvrzení hesla" value={pwForm.confirm} onChange={v => setPwForm({ ...pwForm, confirm: v })} placeholder="Zadejte znovu" />
+          {pwMsg && <div style={{ fontSize: 13, fontWeight: 600, color: pwMsg.type === "err" ? "#ef4444" : "#00eb00" }}>{pwMsg.text}</div>}
+          <button onClick={changePassword} disabled={pwLoading} style={{ ...addBtnStyle, alignSelf: "flex-start", opacity: pwLoading ? 0.6 : 1 }}>
+            {pwLoading ? "Měním..." : "Změnit heslo"}
+          </button>
         </div>
       </div>
     </div>
