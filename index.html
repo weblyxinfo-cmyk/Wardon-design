@@ -456,33 +456,50 @@ footer .footer-links a:hover{color:var(--accent)}
 .hamburger.active span:nth-child(2){opacity:0}
 .hamburger.active span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px)}
 
+/* ===== MOBILE MENU DROPDOWN ===== */
+.mob-menu{
+  display:none;
+  position:fixed;top:60px;left:50%;transform:translateX(-50%);
+  width:calc(100% - 32px);max-width:360px;
+  background:rgba(12,12,14,.95);
+  backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:20px;
+  padding:20px 24px;
+  flex-direction:column;align-items:center;gap:16px;
+  z-index:9998;
+  opacity:0;pointer-events:none;
+  transition:opacity .25s,transform .25s;
+  transform:translateX(-50%) translateY(-10px);
+}
+.mob-menu.open{
+  display:flex;opacity:1;pointer-events:all;
+  transform:translateX(-50%) translateY(0);
+}
+.mob-menu a{
+  font-size:.9rem;font-weight:600;color:var(--gray);
+  transition:color .2s;padding:6px 0;
+}
+.mob-menu a:hover{color:#fff}
+.mob-cta{
+  margin-top:4px;
+  font-size:.85rem !important;font-weight:700 !important;
+  color:#fff !important;
+  background:rgba(0,235,0,.12);
+  border:1.5px solid #00eb00;
+  border-radius:100px;
+  padding:10px 24px !important;
+  text-align:center;width:100%;
+}
+
 /* ===== MOBILE ===== */
 @media(max-width:768px){
   /* Nav */
   .nav{top:10px;padding:6px 14px 6px 6px;gap:0;justify-content:space-between;width:auto;min-width:0}
   .nav-pfp{width:32px;height:32px}
-  .nav-links{
-    display:none;
-  }
-  .nav-links a{font-size:1.4rem;font-weight:700;color:#fff}
+  .nav-links{display:none}
   .nav-cta{display:none}
   .hamburger{display:flex;margin-left:10px}
-  /* Menu open: nav becomes fullscreen overlay */
-  .nav.menu-open{
-    position:fixed;top:0;left:0;right:0;bottom:0;
-    transform:none;max-width:100%;width:100%;
-    border-radius:0;padding:0;
-    flex-direction:column;align-items:center;justify-content:center;
-    background:#0a0a0c;
-    z-index:9999;
-  }
-  .nav.menu-open .nav-pfp{display:none}
-  .nav.menu-open .nav-links{
-    display:flex;flex-direction:column;align-items:center;gap:36px;
-  }
-  .nav.menu-open .hamburger{
-    position:absolute;top:16px;right:16px;
-  }
 
   /* Hero */
   .hero{padding:100px 20px 30px}
@@ -571,6 +588,17 @@ footer .footer-links a:hover{color:var(--accent)}
   <a href="https://docs.google.com/forms/d/e/1FAIpQLSeQvCfQAVdHnhB4Ui5TGVFLtOypq8UZsbGEAaf-St-GYP2g6g/viewform" target="_blank" rel="noopener" class="nav-cta">Get Started →</a>
   <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
 </nav>
+
+<!-- ===== MOBILE MENU DROPDOWN ===== -->
+<div class="mob-menu" id="mobMenu">
+  <a href="#hero">Home</a>
+  <a href="#showcase1">Thumbnails</a>
+  <a href="#about">About Me</a>
+  <a href="#test">Testimonials</a>
+  <a href="#faq">FAQ</a>
+  <a href="#cta">Socials</a>
+  <a href="https://docs.google.com/forms/d/e/1FAIpQLSeQvCfQAVdHnhB4Ui5TGVFLtOypq8UZsbGEAaf-St-GYP2g6g/viewform" target="_blank" rel="noopener" class="mob-cta">Get Started &rarr;</a>
+</div>
 
 <!-- ===== HERO ===== -->
 <section class="hero" id="hero">
@@ -1039,10 +1067,10 @@ function initInteractions() {
       var target = document.querySelector(a.getAttribute('href'));
       if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
       // Close mobile menu if open
-      var navBar = document.querySelector('.nav');
+      var mobMenu = document.getElementById('mobMenu');
       var hamburger = document.getElementById('hamburger');
-      if (navBar && hamburger) {
-        navBar.classList.remove('menu-open');
+      if (mobMenu && hamburger) {
+        mobMenu.classList.remove('open');
         hamburger.classList.remove('active');
         document.body.style.overflow = '';
       }
@@ -1094,12 +1122,17 @@ function animateCount(el) {
 // ===== HAMBURGER MENU =====
 (function() {
   var btn = document.getElementById('hamburger');
-  var navEl = document.querySelector('.nav');
-  var navLinks = document.getElementById('navLinks');
-  if (!btn || !navEl || !navLinks) return;
+  var mob = document.getElementById('mobMenu');
+  if (!btn || !mob) return;
+
+  function closeMenu() {
+    mob.classList.remove('open');
+    btn.classList.remove('active');
+    document.body.style.overflow = '';
+  }
 
   function toggleMenu() {
-    var isOpen = navEl.classList.toggle('menu-open');
+    var isOpen = mob.classList.toggle('open');
     btn.classList.toggle('active');
     document.body.style.overflow = isOpen ? 'hidden' : '';
   }
@@ -1107,10 +1140,15 @@ function animateCount(el) {
   btn.addEventListener('click', toggleMenu);
 
   // Close menu when clicking a link
-  navLinks.querySelectorAll('a').forEach(function(a) {
-    a.addEventListener('click', function() {
-      if (navEl.classList.contains('menu-open')) toggleMenu();
-    });
+  mob.querySelectorAll('a').forEach(function(a) {
+    a.addEventListener('click', closeMenu);
+  });
+
+  // Close on outside click
+  document.addEventListener('click', function(e) {
+    if (mob.classList.contains('open') && !mob.contains(e.target) && !btn.contains(e.target)) {
+      closeMenu();
+    }
   });
 })();
 
