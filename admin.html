@@ -100,13 +100,14 @@ const DEFAULT_DATA = {
     { id: "so2", platform: "Twitter / X", url: "https://x.com/" },
     { id: "so3", platform: "Behance", url: "https://behance.net/" },
   ],
-  siteSettings: { brandName: "Studio", heroHeadline: "Crafting Instant Clicks.", heroSub: "My work isn't just good-looking \u2014 it's about making visuals that pull people in.", email: "hello@studio.com" },
+  siteSettings: { brandName: "Studio", heroHeadline: "Crafting Instant Clicks.", heroSub: "My work isn't just good-looking \u2014 it's about making visuals that pull people in.", email: "wardondesign@gmail.com" },
 };
 
 function uid() { return Date.now().toString(36) + Math.random().toString(36).slice(2, 7); }
 
 // ===== API HELPERS =====
 function getToken() { return sessionStorage.getItem("admin-token") || ""; }
+function getAdminEmail() { return sessionStorage.getItem("admin-email") || ""; }
 
 async function apiGet() {
   const res = await fetch("/api/get-data");
@@ -123,6 +124,7 @@ async function apiSave(data) {
   });
   if (res.status === 401) {
     sessionStorage.removeItem("admin-token");
+    sessionStorage.removeItem("admin-email");
     window.location.reload();
     throw new Error("Unauthorized");
   }
@@ -132,29 +134,24 @@ async function apiSave(data) {
 
 // ===== LOGIN GATE =====
 function LoginGate({ onLogin }) {
+  const [email, setEmail] = useState("");
   const [pw, setPw] = useState("");
   const [err, setErr] = useState("");
   const [loading, setLoading] = useState(false);
 
   const submit = async (e) => {
     e.preventDefault();
-    if (!pw.trim()) return;
+    if (!email.trim() || !pw.trim()) return;
     setLoading(true);
     setErr("");
     try {
-      // Load existing data (or use defaults) and re-save to verify password
-      let existingData = DEFAULT_DATA;
-      try {
-        const getRes = await fetch("/api/get-data");
-        if (getRes.ok) existingData = await getRes.json();
-      } catch (ignored) {}
-      const res = await fetch("/api/save-data", {
+      const res = await fetch("/api/login", {
         method: "POST",
-        headers: { "Content-Type": "application/json", "Authorization": "Bearer " + pw },
-        body: JSON.stringify(existingData),
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: email.trim(), password: pw }),
       });
       if (res.status === 401) {
-        setErr("Nesprávné heslo");
+        setErr("Nesprávný email nebo heslo");
         setLoading(false);
         return;
       }
@@ -163,7 +160,9 @@ function LoginGate({ onLogin }) {
         setLoading(false);
         return;
       }
-      sessionStorage.setItem("admin-token", pw);
+      const data = await res.json();
+      sessionStorage.setItem("admin-token", email.trim().toLowerCase() + ":" + pw);
+      sessionStorage.setItem("admin-email", data.email);
       onLogin();
     } catch (e) {
       setErr("Chyba připojení");
@@ -175,9 +174,10 @@ function LoginGate({ onLogin }) {
     <div className="login-wrap">
       <form className="login-box" onSubmit={submit}>
         <h1>Studio<span style={{ color: "#00eb00" }}>.</span></h1>
-        <div className="sub">Admin Panel — zadejte heslo</div>
+        <div className="sub">Admin Panel — přihlášení</div>
         {err && <div className="err">{err}</div>}
-        <input type="password" value={pw} onChange={e => setPw(e.target.value)} placeholder="Heslo" autoFocus />
+        <input type="email" value={email} onChange={e => setEmail(e.target.value)} placeholder="Email" autoFocus />
+        <input type="password" value={pw} onChange={e => setPw(e.target.value)} placeholder="Heslo" />
         <button type="submit" disabled={loading}>{loading ? "Ověřuji..." : "Přihlásit"}</button>
       </form>
     </div>
@@ -226,6 +226,7 @@ function AdminPanel() {
 
   const logout = () => {
     sessionStorage.removeItem("admin-token");
+    sessionStorage.removeItem("admin-email");
     window.location.reload();
   };
 
@@ -266,12 +267,10 @@ function AdminPanel() {
           ))}
         </nav>
         <div style={{ padding: "12px 10px", borderTop: "1px solid rgba(255,255,255,.06)" }}>
+          <div style={{ padding: "8px 12px 10px", fontSize: 11, color: "#55555f", wordBreak: "break-all" }}>{getAdminEmail()}</div>
           <button onClick={logout} style={{ width: "100%", display: "flex", alignItems: "center", gap: 10, padding: "10px 12px", borderRadius: 8, border: "none", background: "transparent", color: "#ef4444", cursor: "pointer", fontFamily: "inherit", fontSize: 13, fontWeight: 600 }}>
             {Icons.logout} Odhlásit
           </button>
-        </div>
-        <div style={{ padding: "8px 16px 16px", fontSize: 11, color: "#55555f" }}>
-          v1.0 — Portfolio Admin
         </div>
       </aside>
 
@@ -465,8 +464,8 @@ function SettingsTab({ data, save }) {
         setPwLoading(false);
         return;
       }
-      // Update token in session
-      sessionStorage.setItem("admin-token", pwForm.newPw);
+      // Update token in session with new password
+      sessionStorage.setItem("admin-token", getAdminEmail() + ":" + pwForm.newPw);
       setPwForm({ current: "", newPw: "", confirm: "" });
       setPwMsg({ type: "ok", text: "Heslo změněno" });
     } catch (e) {

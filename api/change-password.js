@@ -1,15 +1,4 @@
-const { db } = require("./_db");
-
-async function getCurrentPassword(client) {
-  try {
-    const result = await client.execute({
-      sql: "SELECT value FROM admin_settings WHERE key = ?",
-      args: ["admin_password"],
-    });
-    if (result.rows.length > 0) return result.rows[0].value;
-  } catch (e) {}
-  return process.env.ADMIN_PASSWORD || "wardon2024";
-}
+const { db, verifyAuth } = require("./_db");
 
 module.exports = async function handler(req, res) {
   if (req.method === "OPTIONS") {
@@ -25,16 +14,9 @@ module.exports = async function handler(req, res) {
 
   try {
     const client = await db();
+    const email = await verifyAuth(client, req.headers.authorization);
 
-    // Verify current password
-    const authHeader = req.headers.authorization;
-    const currentPassword = await getCurrentPassword(client);
-
-    if (!currentPassword) {
-      return res.status(500).json({ error: "No password configured" });
-    }
-
-    if (!authHeader || authHeader !== `Bearer ${currentPassword}`) {
+    if (!email) {
       return res.status(401).json({ error: "Unauthorized" });
     }
 
@@ -43,11 +25,9 @@ module.exports = async function handler(req, res) {
       return res.status(400).json({ error: "Password must be at least 4 characters" });
     }
 
-    // Upsert new password
     await client.execute({
-      sql: `INSERT INTO admin_settings (key, value) VALUES (?, ?)
-            ON CONFLICT(key) DO UPDATE SET value = excluded.value`,
-      args: ["admin_password", newPassword],
+      sql: "UPDATE admin_users SET password = ? WHERE email = ?",
+      args: [newPassword, email],
     });
 
     res.setHeader("Access-Control-Allow-Origin", "*");
