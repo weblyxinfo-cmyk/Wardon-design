@@ -149,6 +149,7 @@ img{display:block;max-width:100%}
 .avatar-row{
   display:flex;gap:10px;width:max-content;
   animation:scrollL 35s linear infinite;
+  will-change:transform;transform:translateZ(0);
 }
 .avatar-row:hover{animation-play-state:paused}
 .av{
@@ -170,7 +171,7 @@ img{display:block;max-width:100%}
 .gallery-section{padding:30px 0}
 .gallery-band{overflow:hidden;padding:7px 0}
 
-.gr{display:flex;gap:14px;width:max-content}
+.gr{display:flex;gap:14px;width:max-content;will-change:transform;transform:translateZ(0)}
 .gr.sL{animation:scrollL 60s linear infinite}
 .gr.sR{animation:scrollR 50s linear infinite}
 .gr.s3{animation:scrollL 65s linear infinite}
@@ -231,6 +232,7 @@ img{display:block;max-width:100%}
 .stats-row{
   display:flex;gap:48px;width:max-content;
   animation:scrollL 28s linear infinite;align-items:center;
+  will-change:transform;transform:translateZ(0);
 }
 .stats-row:hover{animation-play-state:paused}
 .stat-item{white-space:nowrap}
@@ -644,9 +646,9 @@ function makeThumbCard(i) {
 
 (function() {
   var r1 = '', r2 = '';
-  for (var i = 0; i < 12; i++) r1 += makeThumbCard(i);
-  r1 += r1; // duplicate for seamless loop
-  for (var i = 4; i < 15; i++) r2 += makeThumbCard(i);
+  for (var i = 0; i < 8; i++) r1 += makeThumbCard(i);
+  r1 += r1;
+  for (var i = 4; i < 12; i++) r2 += makeThumbCard(i);
   r2 += r2;
   document.getElementById('s1r1').innerHTML = r1;
   document.getElementById('s1r2').innerHTML = r2;
@@ -655,7 +657,7 @@ function makeThumbCard(i) {
 // ===== STATS MARQUEE =====
 (function() {
   var h = '';
-  for (var j = 0; j < 5; j++) {
+  for (var j = 0; j < 3; j++) {
     h += '<div class="stat-item"><span class="num">3M+</span><span class="lbl">Views</span></div>';
     h += '<div class="stat-item"><span class="stat-sep">✦</span></div>';
     h += '<div class="stat-item"><span class="num">20+</span><span class="lbl">Clients</span></div>';
@@ -679,10 +681,10 @@ function makeThumb(i) {
   var html = '';
   for (var row = 0; row < 6; row++) {
     var rh = '';
-    for (var i = 0; i < 12; i++) {
+    for (var i = 0; i < 8; i++) {
       rh += makeThumb((i + row * 3) % 15);
     }
-    rh += rh; // duplicate for seamless loop
+    rh += rh;
     html += '<div class="gallery-band"><div class="gr ' + speeds[row] + '">' + rh + '</div></div>';
   }
   document.getElementById('bigShowcase').innerHTML = html;
