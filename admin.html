@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Admin Panel — Studio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Plus Jakarta Sans',system-ui,sans-serif;background:#0a0a0c;color:#fff;font-size:14px}
+@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+#root{min-height:100vh}
+/* Login */
+.login-wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;background:#0a0a0c}
+.login-box{background:#111114;border:1px solid rgba(255,255,255,.06);border-radius:16px;padding:40px;width:360px;text-align:center}
+.login-box h1{font-size:24px;font-weight:800;margin-bottom:6px}
+.login-box .sub{font-size:12px;color:#55555f;margin-bottom:28px}
+.login-box input{width:100%;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:8px;padding:12px 16px;color:#fff;font-family:inherit;font-size:14px;outline:none;margin-bottom:16px}
+.login-box button{width:100%;padding:12px;border-radius:10px;border:none;background:#00eb00;color:#fff;font-family:inherit;font-size:14px;font-weight:700;cursor:pointer}
+.login-box .err{color:#ef4444;font-size:12px;margin-bottom:12px}
+</style>
+<script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel">
+const { useState, useEffect, useRef } = React;
+
+// ===== ICONS =====
+const Icons = {
+  grid: <svg width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>,
+  users: <svg width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>,
+  star: <svg width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>,
+  bar: <svg width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>,
+  layers: <svg width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>,
+  user: <svg width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>,
+  help: <svg width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>,
+  settings: <svg width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>,
+  plus: <svg width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>,
+  trash: <svg width="15" height="15" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>,
+  edit: <svg width="15" height="15" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>,
+  x: <svg width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>,
+  logout: <svg width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>,
+};
+
+// ===== CONSTANTS =====
+const GRADIENTS = [
+  "linear-gradient(135deg,#1a1040,#4a20a0)","linear-gradient(135deg,#a01020,#e04060)",
+  "linear-gradient(135deg,#0a3060,#1070c0)","linear-gradient(135deg,#405010,#80a020)",
+  "linear-gradient(135deg,#103020,#208050)","linear-gradient(135deg,#501050,#a030a0)",
+  "linear-gradient(135deg,#4a2a0a,#a06020)","linear-gradient(135deg,#0a3a3a,#109090)",
+  "linear-gradient(135deg,#3a0a2a,#801060)","linear-gradient(135deg,#2a3a0a,#607010)",
+];
+const AVATAR_COLORS = ["#6366f1","#ec4899","#f59e0b","#00eb00","#ef4444","#3b82f6","#8b5cf6","#14b8a6","#f97316","#06b6d4"];
+
+const DEFAULT_DATA = {
+  thumbnails: [
+    { id: "t1", title: "TOP 10 PLAYS", channel: "GamerPro", views: "1.2M", icon: "\u{1f3ae}", gradient: 0, category: "showcase1", channelAvatar: "GP" },
+    { id: "t2", title: "iPhone 16 Review", channel: "TechDaily", views: "2.1M", icon: "\u{1f4bb}", gradient: 2, category: "showcase1", channelAvatar: "TD" },
+    { id: "t3", title: "Hidden Waterfalls", channel: "NatureVlogs", views: "450K", icon: "\u{1f33f}", gradient: 3, category: "showcase1", channelAvatar: "NV" },
+    { id: "t4", title: "30 Day Transform", channel: "FitLife", views: "670K", icon: "\u{1f4aa}", gradient: 4, category: "showcase2", channelAvatar: "FL" },
+    { id: "t5", title: "NEW ALBUM REACTION", channel: "MusicBox", views: "3.4M", icon: "\u{1f3b5}", gradient: 5, category: "showcase2", channelAvatar: "MB" },
+    { id: "t6", title: "Gordon Ramsay CRIES", channel: "CookMaster", views: "1.8M", icon: "\u{1f373}", gradient: 6, category: "showcase2", channelAvatar: "CM" },
+  ],
+  creators: [
+    { id: "c1", name: "Martin K.", initials: "MK", subs: "1.2M", color: 0 },
+    { id: "c2", name: "Tereza P.", initials: "TP", subs: "580K", color: 1 },
+    { id: "c3", name: "Jan N.", initials: "JN", subs: "340K", color: 2 },
+    { id: "c4", name: "Lucie S.", initials: "LS", subs: "210K", color: 3 },
+  ],
+  reviews: [
+    { id: "r1", text: "Absolutely incredible work. CTR jumped 340% the first month.", author: "Martin Kov\u00e1\u0159", handle: "@MartinK", subs: "1.2M", color: 3, rating: 5 },
+    { id: "r2", text: "Finally someone who understands not just design but YouTube itself.", author: "Tereza P.", handle: "@TerezaP", subs: "580K", color: 1, rating: 5 },
+  ],
+  stats: [
+    { id: "s1", value: "200M+", label: "Views Generated" },
+    { id: "s2", value: "1500+", label: "Thumbnails Made" },
+    { id: "s3", value: "200+", label: "Happy Creators" },
+  ],
+  process: [
+    { id: "p1", title: "Brief & Research", desc: "Understanding your channel, audience, and visual style." },
+    { id: "p2", title: "Design & Iteration", desc: "Crafting multiple concepts and A/B variants for max CTR." },
+    { id: "p3", title: "Delivery & Optimization", desc: "Final delivery within 48h with CTR tracking." },
+  ],
+  faq: [
+    { id: "f1", q: "How fast do you deliver?", a: "Standard 24-48 hours. Express within 12 hours." },
+    { id: "f2", q: "What are your prices?", a: "Thumbnails from $50. Monthly from $300. Branding from $800." },
+    { id: "f3", q: "How many revisions?", a: "2-3 rounds included." },
+  ],
+  about: { headline: "Design that drives results.", text1: "I specialize in YouTube thumbnails, branding, and visual design.", text2: "Working with creators from 10K to 5M+ subscribers." },
+  socials: [
+    { id: "so1", platform: "Instagram", url: "https://instagram.com/" },
+    { id: "so2", platform: "Twitter / X", url: "https://x.com/" },
+    { id: "so3", platform: "Behance", url: "https://behance.net/" },
+  ],
+  siteSettings: { brandName: "Studio", heroHeadline: "Crafting Instant Clicks.", heroSub: "My work isn't just good-looking \u2014 it's about making visuals that pull people in.", email: "hello@studio.com" },
+};
+
+function uid() { return Date.now().toString(36) + Math.random().toString(36).slice(2, 7); }
+
+// ===== API HELPERS =====
+function getToken() { return sessionStorage.getItem("admin-token") || ""; }
+
+async function apiGet() {
+  const res = await fetch("/api/get-data");
+  if (res.status === 404) return null;
+  if (!res.ok) throw new Error("Failed to load data");
+  return res.json();
+}
+
+async function apiSave(data) {
+  const res = await fetch("/api/save-data", {
+    method: "POST",
+    headers: { "Content-Type": "application/json", "Authorization": "Bearer " + getToken() },
+    body: JSON.stringify(data),
+  });
+  if (res.status === 401) {
+    sessionStorage.removeItem("admin-token");
+    window.location.reload();
+    throw new Error("Unauthorized");
+  }
+  if (!res.ok) throw new Error("Failed to save");
+  return res.json();
+}
+
+// ===== LOGIN GATE =====
+function LoginGate({ onLogin }) {
+  const [pw, setPw] = useState("");
+  const [err, setErr] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const submit = async (e) => {
+    e.preventDefault();
+    if (!pw.trim()) return;
+    setLoading(true);
+    setErr("");
+    try {
+      // Load existing data (or use defaults) and re-save to verify password
+      let existingData = DEFAULT_DATA;
+      try {
+        const getRes = await fetch("/api/get-data");
+        if (getRes.ok) existingData = await getRes.json();
+      } catch (ignored) {}
+      const res = await fetch("/api/save-data", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "Authorization": "Bearer " + pw },
+        body: JSON.stringify(existingData),
+      });
+      if (res.status === 401) {
+        setErr("Nesprávné heslo");
+        setLoading(false);
+        return;
+      }
+      if (!res.ok) {
+        setErr("Chyba serveru");
+        setLoading(false);
+        return;
+      }
+      sessionStorage.setItem("admin-token", pw);
+      onLogin();
+    } catch (e) {
+      setErr("Chyba připojení");
+      setLoading(false);
+    }
+  };
+
+  return (
+    <div className="login-wrap">
+      <form className="login-box" onSubmit={submit}>
+        <h1>Studio<span style={{ color: "#00eb00" }}>.</span></h1>
+        <div className="sub">Admin Panel — zadejte heslo</div>
+        {err && <div className="err">{err}</div>}
+        <input type="password" value={pw} onChange={e => setPw(e.target.value)} placeholder="Heslo" autoFocus />
+        <button type="submit" disabled={loading}>{loading ? "Ověřuji..." : "Přihlásit"}</button>
+      </form>
+    </div>
+  );
+}
+
+// ===== MAIN APP =====
+function App() {
+  const [loggedIn, setLoggedIn] = useState(!!sessionStorage.getItem("admin-token"));
+
+  if (!loggedIn) return <LoginGate onLogin={() => setLoggedIn(true)} />;
+  return <AdminPanel />;
+}
+
+function AdminPanel() {
+  const [data, setData] = useState(DEFAULT_DATA);
+  const [activeTab, setActiveTab] = useState("thumbnails");
+  const [modal, setModal] = useState(null);
+  const [toast, setToast] = useState(null);
+  const [subFilter, setSubFilter] = useState("all");
+  const [loading, setLoading] = useState(true);
+
+  // Load from API
+  useEffect(() => {
+    (async () => {
+      try {
+        const r = await apiGet();
+        if (r) setData(r);
+      } catch (e) { /* use defaults */ }
+      setLoading(false);
+    })();
+  }, []);
+
+  // Save
+  const save = async (newData) => {
+    setData(newData);
+    try {
+      await apiSave(newData);
+      showToast("Uloženo \u2713");
+    } catch (e) {
+      showToast("Chyba při ukládání!");
+    }
+  };
+
+  const showToast = (msg) => { setToast(msg); setTimeout(() => setToast(null), 2000); };
+
+  const logout = () => {
+    sessionStorage.removeItem("admin-token");
+    window.location.reload();
+  };
+
+  const tabs = [
+    { id: "thumbnails", label: "Thumbnaily", icon: Icons.grid, count: data.thumbnails.length },
+    { id: "creators", label: "Tvůrci", icon: Icons.users, count: data.creators.length },
+    { id: "reviews", label: "Recenze", icon: Icons.star, count: data.reviews.length },
+    { id: "stats", label: "Statistiky", icon: Icons.bar, count: data.stats.length },
+    { id: "process", label: "Process", icon: Icons.layers, count: data.process.length },
+    { id: "faq", label: "FAQ", icon: Icons.help, count: data.faq.length },
+    { id: "about", label: "About", icon: Icons.user },
+    { id: "socials", label: "Socials", icon: Icons.grid, count: data.socials.length },
+    { id: "settings", label: "Nastavení", icon: Icons.settings },
+  ];
+
+  const deleteItem = (section, id) => { save({ ...data, [section]: data[section].filter(x => x.id !== id) }); };
+  const addItem = (section, item) => { save({ ...data, [section]: [...data[section], { ...item, id: uid() }] }); setModal(null); };
+  const updateItem = (section, id, updates) => { save({ ...data, [section]: data[section].map(x => x.id === id ? { ...x, ...updates } : x) }); setModal(null); };
+
+  if (loading) return <div style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", background: "#0a0a0c", color: "#55555f" }}>Načítání...</div>;
+
+  return (
+    <div style={{ display: "flex", height: "100vh", background: "#0a0a0c", color: "#fff", fontFamily: "'Plus Jakarta Sans', system-ui, sans-serif", fontSize: "14px" }}>
+      {/* SIDEBAR */}
+      <aside style={{ width: 240, background: "#111114", borderRight: "1px solid rgba(255,255,255,.06)", display: "flex", flexDirection: "column", flexShrink: 0 }}>
+        <div style={{ padding: "20px 20px 16px", borderBottom: "1px solid rgba(255,255,255,.06)" }}>
+          <div style={{ fontWeight: 800, fontSize: 18 }}>{data.siteSettings.brandName}<span style={{ color: "#00eb00" }}>.</span></div>
+          <div style={{ fontSize: 11, color: "#55555f", marginTop: 2 }}>Admin Panel</div>
+        </div>
+        <nav style={{ flex: 1, padding: "12px 10px", overflowY: "auto" }}>
+          {tabs.map(t => (
+            <button key={t.id} onClick={() => { setActiveTab(t.id); setSubFilter("all"); }}
+              style={{ width: "100%", display: "flex", alignItems: "center", gap: 10, padding: "10px 12px", borderRadius: 8, border: "none", background: activeTab === t.id ? "rgba(0,235,0,.1)" : "transparent", color: activeTab === t.id ? "#00eb00" : "#8a8a9a", cursor: "pointer", fontFamily: "inherit", fontSize: 13, fontWeight: 600, marginBottom: 2, transition: "all .2s", textAlign: "left" }}>
+              {t.icon}
+              <span style={{ flex: 1 }}>{t.label}</span>
+              {t.count !== undefined && <span style={{ fontSize: 11, background: "rgba(255,255,255,.06)", padding: "2px 8px", borderRadius: 10, color: "#55555f" }}>{t.count}</span>}
+            </button>
+          ))}
+        </nav>
+        <div style={{ padding: "12px 10px", borderTop: "1px solid rgba(255,255,255,.06)" }}>
+          <button onClick={logout} style={{ width: "100%", display: "flex", alignItems: "center", gap: 10, padding: "10px 12px", borderRadius: 8, border: "none", background: "transparent", color: "#ef4444", cursor: "pointer", fontFamily: "inherit", fontSize: 13, fontWeight: 600 }}>
+            {Icons.logout} Odhlásit
+          </button>
+        </div>
+        <div style={{ padding: "8px 16px 16px", fontSize: 11, color: "#55555f" }}>
+          v1.0 — Portfolio Admin
+        </div>
+      </aside>
+
+      {/* MAIN */}
+      <main style={{ flex: 1, overflowY: "auto", padding: 32 }}>
+        {activeTab === "thumbnails" && <ThumbnailsTab data={data} subFilter={subFilter} setSubFilter={setSubFilter} onDelete={(id) => deleteItem("thumbnails", id)} onAdd={(item) => addItem("thumbnails", item)} onEdit={(id, u) => updateItem("thumbnails", id, u)} setModal={setModal} />}
+        {activeTab === "creators" && <CrudSection title="Tvůrci" subtitle="Trusted by — scrollující strip avatarů" items={data.creators}
+          onDelete={(id) => deleteItem("creators", id)} onAdd={() => setModal({ type: "creator" })}
+          renderItem={(c) => (
+            <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
+              <div style={{ width: 40, height: 40, borderRadius: "50%", background: AVATAR_COLORS[c.color % 10], display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 800, fontSize: 12 }}>{c.initials}</div>
+              <div><div style={{ fontWeight: 700 }}>{c.name}</div><div style={{ fontSize: 12, color: "#55555f" }}>{c.subs} odběratelů</div></div>
+            </div>
+          )} onEdit={(c) => setModal({ type: "creator", editing: c })} />}
+        {activeTab === "reviews" && <CrudSection title="Recenze" subtitle="Testimonials — karty s citacemi klientů" items={data.reviews}
+          onDelete={(id) => deleteItem("reviews", id)} onAdd={() => setModal({ type: "review" })}
+          renderItem={(r) => (
+            <div>
+              <div style={{ color: "#fbbf24", fontSize: 12, letterSpacing: 2, marginBottom: 6 }}>{"★".repeat(r.rating)}{"☆".repeat(5 - r.rating)}</div>
+              <div style={{ fontSize: 13, color: "rgba(255,255,255,.7)", fontStyle: "italic", marginBottom: 10, lineHeight: 1.5 }}>"{r.text}"</div>
+              <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+                <div style={{ width: 32, height: 32, borderRadius: "50%", background: AVATAR_COLORS[r.color % 10], display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 800, fontSize: 10 }}>{r.author.split(" ").map(w=>w[0]).join("")}</div>
+                <div><div style={{ fontWeight: 700, fontSize: 13 }}>{r.author}</div><div style={{ fontSize: 11, color: "#55555f" }}>{r.handle} · {r.subs} subs</div></div>
+              </div>
+            </div>
+          )} onEdit={(r) => setModal({ type: "review", editing: r })} />}
+        {activeTab === "stats" && <CrudSection title="Statistiky" subtitle="Scrollující marquee s čísly" items={data.stats}
+          onDelete={(id) => deleteItem("stats", id)} onAdd={() => setModal({ type: "stat" })}
+          renderItem={(s) => (
+            <div style={{ display: "flex", alignItems: "baseline", gap: 12 }}>
+              <span style={{ fontSize: 22, fontWeight: 800 }}>{s.value}</span>
+              <span style={{ fontSize: 13, color: "#8a8a9a" }}>{s.label}</span>
+            </div>
+          )} onEdit={(s) => setModal({ type: "stat", editing: s })} />}
+        {activeTab === "process" && <CrudSection title="Process" subtitle="3 kroky designového procesu" items={data.process}
+          onDelete={(id) => deleteItem("process", id)} onAdd={() => setModal({ type: "process" })}
+          renderItem={(p, i) => (
+            <div style={{ display: "flex", gap: 16, alignItems: "flex-start" }}>
+              <div style={{ width: 36, height: 36, borderRadius: "50%", background: "#00eb00", display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 800, flexShrink: 0 }}>{i + 1}</div>
+              <div><div style={{ fontWeight: 700, marginBottom: 4 }}>{p.title}</div><div style={{ fontSize: 12, color: "#8a8a9a", lineHeight: 1.5 }}>{p.desc}</div></div>
+            </div>
+          )} onEdit={(p) => setModal({ type: "process", editing: p })} />}
+        {activeTab === "faq" && <CrudSection title="FAQ" subtitle="Otázky a odpovědi — accordion" items={data.faq}
+          onDelete={(id) => deleteItem("faq", id)} onAdd={() => setModal({ type: "faq" })}
+          renderItem={(f) => (
+            <div><div style={{ fontWeight: 700, marginBottom: 6 }}>{f.q}</div><div style={{ fontSize: 12, color: "#8a8a9a", lineHeight: 1.5 }}>{f.a}</div></div>
+          )} onEdit={(f) => setModal({ type: "faq", editing: f })} />}
+        {activeTab === "about" && <AboutTab data={data} save={save} />}
+        {activeTab === "socials" && <CrudSection title="Socials" subtitle="Odkazy na sociální sítě" items={data.socials}
+          onDelete={(id) => deleteItem("socials", id)} onAdd={() => setModal({ type: "social" })}
+          renderItem={(s) => (
+            <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+              <div style={{ fontWeight: 700 }}>{s.platform}</div>
+              <div style={{ fontSize: 12, color: "#00eb00", wordBreak: "break-all" }}>{s.url}</div>
+            </div>
+          )} onEdit={(s) => setModal({ type: "social", editing: s })} />}
+        {activeTab === "settings" && <SettingsTab data={data} save={save} />}
+      </main>
+
+      {/* MODAL */}
+      {modal && <ModalForm modal={modal} close={() => setModal(null)} addItem={addItem} updateItem={updateItem} />}
+
+      {/* TOAST */}
+      {toast && <div style={{ position: "fixed", bottom: 24, right: 24, background: toast.includes("Chyba") ? "#ef4444" : "#00eb00", color: "#fff", padding: "10px 20px", borderRadius: 10, fontWeight: 700, fontSize: 13, zIndex: 9999, animation: "fadeIn .3s ease" }}>{toast}</div>}
+    </div>
+  );
+}
+
+// ===== THUMBNAILS TAB =====
+function ThumbnailsTab({ data, subFilter, setSubFilter, onDelete, onAdd, onEdit, setModal }) {
+  const filtered = subFilter === "all" ? data.thumbnails : data.thumbnails.filter(t => t.category === subFilter);
+  return (
+    <div>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 8 }}>
+        <div>
+          <h1 style={{ fontSize: 22, fontWeight: 800, marginBottom: 4 }}>Thumbnaily / Portfolio</h1>
+          <p style={{ fontSize: 13, color: "#8a8a9a" }}>Showcase #1 (s profilkou) · Showcase #2 (jen obrázky)</p>
+        </div>
+        <button onClick={() => setModal({ type: "thumbnail" })} style={addBtnStyle}>{Icons.plus} Přidat</button>
+      </div>
+      <div style={{ display: "flex", gap: 8, marginBottom: 24, marginTop: 16 }}>
+        {[["all","Vše"],["showcase1","Showcase #1"],["showcase2","Showcase #2"]].map(([k,l]) => (
+          <button key={k} onClick={() => setSubFilter(k)}
+            style={{ padding: "8px 18px", borderRadius: 100, border: "1px solid " + (subFilter === k ? "#00eb00" : "rgba(255,255,255,.06)"), background: subFilter === k ? "rgba(0,235,0,.1)" : "transparent", color: subFilter === k ? "#00eb00" : "#8a8a9a", cursor: "pointer", fontFamily: "inherit", fontSize: 12, fontWeight: 600 }}>
+            {l} {k !== "all" && <span style={{ marginLeft: 6, opacity: .5 }}>({data.thumbnails.filter(t => k === "all" || t.category === k).length})</span>}
+          </button>
+        ))}
+      </div>
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))", gap: 14 }}>
+        {filtered.map(t => (
+          <div key={t.id} style={{ borderRadius: 12, overflow: "hidden", border: "1px solid rgba(255,255,255,.06)", background: "#161619", transition: "all .3s" }}>
+            <div style={{ height: 140, background: GRADIENTS[t.gradient % 10], display: "flex", alignItems: "center", justifyContent: "center", position: "relative" }}>
+              <span style={{ fontSize: 40 }}>{t.icon}</span>
+              <div style={{ position: "absolute", top: 8, right: 8, background: t.category === "showcase1" ? "#00eb00" : "#6366f1", padding: "3px 10px", borderRadius: 6, fontSize: 10, fontWeight: 700 }}>
+                {t.category === "showcase1" ? "S1" : "S2"}
+              </div>
+            </div>
+            <div style={{ padding: 14 }}>
+              <div style={{ fontWeight: 700, marginBottom: 2 }}>{t.title}</div>
+              <div style={{ fontSize: 12, color: "#55555f" }}>{t.channel} · {t.views} views</div>
+              <div style={{ display: "flex", gap: 8, marginTop: 12 }}>
+                <button onClick={() => setModal({ type: "thumbnail", editing: t })} style={smallBtnStyle}>{Icons.edit}</button>
+                <button onClick={() => onDelete(t.id)} style={{ ...smallBtnStyle, color: "#ef4444" }}>{Icons.trash}</button>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+// ===== GENERIC CRUD SECTION =====
+function CrudSection({ title, subtitle, items, onDelete, onAdd, renderItem, onEdit }) {
+  return (
+    <div>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 24 }}>
+        <div><h1 style={{ fontSize: 22, fontWeight: 800, marginBottom: 4 }}>{title}</h1><p style={{ fontSize: 13, color: "#8a8a9a" }}>{subtitle}</p></div>
+        <button onClick={onAdd} style={addBtnStyle}>{Icons.plus} Přidat</button>
+      </div>
+      <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+        {items.map((item, i) => (
+          <div key={item.id} style={{ padding: 18, borderRadius: 12, background: "#161619", border: "1px solid rgba(255,255,255,.06)", display: "flex", justifyContent: "space-between", alignItems: "center", gap: 16 }}>
+            <div style={{ flex: 1 }}>{renderItem(item, i)}</div>
+            <div style={{ display: "flex", gap: 8, flexShrink: 0 }}>
+              <button onClick={() => onEdit(item)} style={smallBtnStyle}>{Icons.edit}</button>
+              <button onClick={() => onDelete(item.id)} style={{ ...smallBtnStyle, color: "#ef4444" }}>{Icons.trash}</button>
+            </div>
+          </div>
+        ))}
+        {items.length === 0 && <div style={{ textAlign: "center", padding: 40, color: "#55555f" }}>Zatím prázdné. Klikni na "Přidat".</div>}
+      </div>
+    </div>
+  );
+}
+
+// ===== ABOUT TAB =====
+function AboutTab({ data, save }) {
+  const [form, setForm] = useState(data.about);
+  return (
+    <div>
+      <h1 style={{ fontSize: 22, fontWeight: 800, marginBottom: 4 }}>About Me</h1>
+      <p style={{ fontSize: 13, color: "#8a8a9a", marginBottom: 24 }}>Sekce "Built for Creators"</p>
+      <div style={{ display: "flex", flexDirection: "column", gap: 16, maxWidth: 600 }}>
+        <Field label="Headline" value={form.headline} onChange={v => setForm({ ...form, headline: v })} />
+        <Field label="Text 1" value={form.text1} onChange={v => setForm({ ...form, text1: v })} textarea />
+        <Field label="Text 2" value={form.text2} onChange={v => setForm({ ...form, text2: v })} textarea />
+        <button onClick={() => save({ ...data, about: form })} style={{ ...addBtnStyle, alignSelf: "flex-start" }}>Uložit</button>
+      </div>
+    </div>
+  );
+}
+
+// ===== SETTINGS TAB =====
+function SettingsTab({ data, save }) {
+  const [form, setForm] = useState(data.siteSettings);
+  const resetAll = () => {
+    save(DEFAULT_DATA);
+    setForm(DEFAULT_DATA.siteSettings);
+  };
+  return (
+    <div>
+      <h1 style={{ fontSize: 22, fontWeight: 800, marginBottom: 4 }}>Nastavení webu</h1>
+      <p style={{ fontSize: 13, color: "#8a8a9a", marginBottom: 24 }}>Globální nastavení stránky</p>
+      <div style={{ display: "flex", flexDirection: "column", gap: 16, maxWidth: 600 }}>
+        <Field label="Název brandu" value={form.brandName} onChange={v => setForm({ ...form, brandName: v })} />
+        <Field label="Hero headline" value={form.heroHeadline} onChange={v => setForm({ ...form, heroHeadline: v })} />
+        <Field label="Hero subtext" value={form.heroSub} onChange={v => setForm({ ...form, heroSub: v })} textarea />
+        <Field label="Kontaktní email" value={form.email} onChange={v => setForm({ ...form, email: v })} />
+        <div style={{ display: "flex", gap: 12 }}>
+          <button onClick={() => save({ ...data, siteSettings: form })} style={addBtnStyle}>Uložit</button>
+          <button onClick={resetAll} style={{ ...addBtnStyle, background: "#ef4444" }}>Reset na default</button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ===== MODAL FORM =====
+function ModalForm({ modal, close, addItem, updateItem }) {
+  const isEdit = !!modal.editing;
+  const type = modal.type;
+  const [form, setForm] = useState(modal.editing || getDefaults(type));
+  const set = (k, v) => setForm({ ...form, [k]: v });
+
+  const submit = () => {
+    const section = { thumbnail: "thumbnails", creator: "creators", review: "reviews", stat: "stats", process: "process", faq: "faq", social: "socials" }[type];
+    if (isEdit) updateItem(section, modal.editing.id, form);
+    else addItem(section, form);
+  };
+
+  return (
+    <div onClick={close} style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,.7)", display: "flex", alignItems: "center", justifyContent: "center", zIndex: 9998, backdropFilter: "blur(8px)" }}>
+      <div onClick={e => e.stopPropagation()} style={{ background: "#161619", border: "1px solid rgba(255,255,255,.08)", borderRadius: 16, padding: 28, width: 440, maxHeight: "80vh", overflowY: "auto" }}>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 20 }}>
+          <h2 style={{ fontSize: 18, fontWeight: 800 }}>{isEdit ? "Upravit" : "Přidat"} {typeLabel(type)}</h2>
+          <button onClick={close} style={{ background: "none", border: "none", color: "#8a8a9a", cursor: "pointer" }}>{Icons.x}</button>
+        </div>
+        <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
+          {type === "thumbnail" && <>
+            <Field label="Název videa" value={form.title} onChange={v => set("title", v)} />
+            <Field label="Kanál" value={form.channel} onChange={v => set("channel", v)} />
+            <Field label="Iniciály kanálu" value={form.channelAvatar} onChange={v => set("channelAvatar", v)} placeholder="GP" />
+            <Field label="Views" value={form.views} onChange={v => set("views", v)} placeholder="1.2M" />
+            <Field label="Ikona (emoji)" value={form.icon} onChange={v => set("icon", v)} placeholder="\u{1f3ae}" />
+            <div>
+              <div style={labelStyle}>Kategorie</div>
+              <div style={{ display: "flex", gap: 8 }}>
+                {[["showcase1","Showcase #1 (s profilkou)"],["showcase2","Showcase #2 (jen obrázky)"]].map(([k,l]) => (
+                  <button key={k} onClick={() => set("category", k)} style={{ flex: 1, padding: "10px", borderRadius: 8, border: "1px solid " + (form.category === k ? "#00eb00" : "rgba(255,255,255,.06)"), background: form.category === k ? "rgba(0,235,0,.1)" : "transparent", color: form.category === k ? "#00eb00" : "#8a8a9a", cursor: "pointer", fontFamily: "inherit", fontSize: 12, fontWeight: 600 }}>{l}</button>
+                ))}
+              </div>
+            </div>
+            <GradientPicker value={form.gradient} onChange={v => set("gradient", v)} />
+          </>}
+          {type === "creator" && <>
+            <Field label="Jméno" value={form.name} onChange={v => set("name", v)} />
+            <Field label="Iniciály" value={form.initials} onChange={v => set("initials", v)} placeholder="MK" />
+            <Field label="Odběratelé" value={form.subs} onChange={v => set("subs", v)} placeholder="1.2M" />
+            <ColorPicker value={form.color} onChange={v => set("color", v)} />
+          </>}
+          {type === "review" && <>
+            <Field label="Text recenze" value={form.text} onChange={v => set("text", v)} textarea />
+            <Field label="Autor" value={form.author} onChange={v => set("author", v)} />
+            <Field label="Handle" value={form.handle} onChange={v => set("handle", v)} placeholder="@username" />
+            <Field label="Odběratelé" value={form.subs} onChange={v => set("subs", v)} placeholder="1.2M" />
+            <div>
+              <div style={labelStyle}>Hodnocení</div>
+              <div style={{ display: "flex", gap: 4 }}>
+                {[1,2,3,4,5].map(n => (
+                  <button key={n} onClick={() => set("rating", n)} style={{ background: "none", border: "none", fontSize: 22, cursor: "pointer", color: n <= form.rating ? "#fbbf24" : "#333" }}>{"\u2605"}</button>
+                ))}
+              </div>
+            </div>
+            <ColorPicker value={form.color} onChange={v => set("color", v)} />
+          </>}
+          {type === "stat" && <>
+            <Field label="Hodnota" value={form.value} onChange={v => set("value", v)} placeholder="200M+" />
+            <Field label="Popis" value={form.label} onChange={v => set("label", v)} placeholder="Views Generated" />
+          </>}
+          {type === "process" && <>
+            <Field label="Název kroku" value={form.title} onChange={v => set("title", v)} />
+            <Field label="Popis" value={form.desc} onChange={v => set("desc", v)} textarea />
+          </>}
+          {type === "faq" && <>
+            <Field label="Otázka" value={form.q} onChange={v => set("q", v)} />
+            <Field label="Odpověď" value={form.a} onChange={v => set("a", v)} textarea />
+          </>}
+          {type === "social" && <>
+            <Field label="Platforma" value={form.platform} onChange={v => set("platform", v)} placeholder="Instagram" />
+            <Field label="URL" value={form.url} onChange={v => set("url", v)} placeholder="https://..." />
+          </>}
+        </div>
+        <div style={{ display: "flex", gap: 10, marginTop: 20 }}>
+          <button onClick={submit} style={{ ...addBtnStyle, flex: 1, justifyContent: "center" }}>{isEdit ? "Uložit změny" : "Přidat"}</button>
+          <button onClick={close} style={{ ...addBtnStyle, flex: 1, justifyContent: "center", background: "rgba(255,255,255,.06)", color: "#8a8a9a" }}>Zrušit</button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ===== HELPER COMPONENTS =====
+function Field({ label, value, onChange, textarea, placeholder }) {
+  const style = { width: "100%", background: "rgba(255,255,255,.04)", border: "1px solid rgba(255,255,255,.08)", borderRadius: 8, padding: "10px 14px", color: "#fff", fontFamily: "inherit", fontSize: 13, outline: "none", resize: "vertical" };
+  return (
+    <div>
+      <div style={labelStyle}>{label}</div>
+      {textarea
+        ? <textarea value={value} onChange={e => onChange(e.target.value)} style={{ ...style, minHeight: 80 }} placeholder={placeholder} />
+        : <input value={value} onChange={e => onChange(e.target.value)} style={style} placeholder={placeholder} />}
+    </div>
+  );
+}
+
+function GradientPicker({ value, onChange }) {
+  return (
+    <div>
+      <div style={labelStyle}>Barva pozadí</div>
+      <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+        {GRADIENTS.map((g, i) => (
+          <button key={i} onClick={() => onChange(i)}
+            style={{ width: 36, height: 36, borderRadius: 8, background: g, border: value === i ? "2px solid #00eb00" : "2px solid transparent", cursor: "pointer", transition: "all .2s" }} />
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function ColorPicker({ value, onChange }) {
+  return (
+    <div>
+      <div style={labelStyle}>Barva avataru</div>
+      <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+        {AVATAR_COLORS.map((c, i) => (
+          <button key={i} onClick={() => onChange(i)}
+            style={{ width: 32, height: 32, borderRadius: "50%", background: c, border: value === i ? "2px solid #fff" : "2px solid transparent", cursor: "pointer" }} />
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function getDefaults(type) {
+  const d = {
+    thumbnail: { title: "", channel: "", channelAvatar: "", views: "", icon: "\u{1f3ae}", gradient: 0, category: "showcase1" },
+    creator: { name: "", initials: "", subs: "", color: 0 },
+    review: { text: "", author: "", handle: "", subs: "", color: 0, rating: 5 },
+    stat: { value: "", label: "" },
+    process: { title: "", desc: "" },
+    faq: { q: "", a: "" },
+    social: { platform: "", url: "" },
+  };
+  return d[type] || {};
+}
+
+function typeLabel(t) {
+  return { thumbnail: "thumbnail", creator: "tvůrce", review: "recenzi", stat: "statistiku", process: "krok", faq: "FAQ", social: "sociální síť" }[t] || t;
+}
+
+const labelStyle = { fontSize: 12, fontWeight: 600, color: "#8a8a9a", marginBottom: 6 };
+const addBtnStyle = { display: "inline-flex", alignItems: "center", gap: 8, padding: "10px 20px", borderRadius: 10, border: "none", background: "#00eb00", color: "#fff", fontFamily: "inherit", fontSize: 13, fontWeight: 700, cursor: "pointer" };
+const smallBtnStyle = { background: "rgba(255,255,255,.04)", border: "1px solid rgba(255,255,255,.06)", borderRadius: 8, padding: "8px 10px", color: "#8a8a9a", cursor: "pointer", display: "flex", alignItems: "center" };
+
+// ===== RENDER =====
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(<App />);
+</script>
+</body>
+</html>

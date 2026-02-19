@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=1400">
 <title>Studio — Thumbnail Design</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -17,9 +17,9 @@
   --gray:#94929d;
   --gray-dark:#5a5862;
   --border:#222228;
-  --accent:#00d47e;
-  --accent-glow:rgba(0,212,126,.15);
-  --green:#00e887;
+  --accent:#00eb00;
+  --accent-glow:rgba(0,235,0,.15);
+  --green:#00eb00;
   --r:12px;
 }
 html{scroll-behavior:smooth}
@@ -42,13 +42,13 @@ body::before{
   background-size:60px 60px;
 }
 
-/* ===== NOISE TEXTURE ===== */
+/* ===== NOISE / GRAIN TEXTURE ===== */
 body::after{
   content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
-  opacity:.035;
-  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  opacity:.07;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.65' numOctaves='5' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   background-repeat:repeat;
-  background-size:180px 180px;
+  background-size:256px 256px;
 }
 
 /* Ensure all content above overlays */
@@ -97,7 +97,7 @@ img{display:block;max-width:100%}
 .hero::before{
   content:'';position:absolute;
   width:800px;height:800px;border-radius:50%;
-  background:radial-gradient(circle,rgba(0,212,126,.07),transparent 65%);
+  background:radial-gradient(circle,rgba(0,235,0,.07),transparent 65%);
   top:-200px;left:50%;
   transform:translateX(-50%);pointer-events:none;
   animation:floatGlow 8s ease-in-out infinite;
@@ -105,7 +105,7 @@ img{display:block;max-width:100%}
 .hero::after{
   content:'';position:absolute;
   width:500px;height:500px;border-radius:50%;
-  background:radial-gradient(circle,rgba(0,212,126,.05),transparent 65%);
+  background:radial-gradient(circle,rgba(0,235,0,.05),transparent 65%);
   bottom:-100px;right:5%;pointer-events:none;
   animation:floatGlow2 10s ease-in-out infinite;
 }
@@ -122,9 +122,9 @@ img{display:block;max-width:100%}
 .badge{
   display:inline-flex;align-items:center;gap:8px;
   padding:8px 18px;border-radius:100px;
-  border:1px solid rgba(0,232,135,.15);
+  border:1px solid rgba(0,235,0,.15);
   font-size:.75rem;font-weight:600;color:var(--green);
-  background:rgba(0,232,135,.04);
+  background:rgba(0,235,0,.04);
   opacity:0;transform:translateY(-10px);
   animation:fadeDown .7s .2s ease forwards;
 }
@@ -133,7 +133,7 @@ img{display:block;max-width:100%}
   animation:pulse-dot 2s infinite;
 }
 @keyframes pulse-dot{
-  0%,100%{box-shadow:0 0 0 0 rgba(0,232,135,.45)}
+  0%,100%{box-shadow:0 0 0 0 rgba(0,235,0,.45)}
   50%{box-shadow:0 0 0 7px transparent}
 }
 @keyframes fadeDown{to{opacity:1;transform:translateY(0)}}
@@ -176,8 +176,8 @@ img{display:block;max-width:100%}
 
 /* Avatar strip */
 .avatar-band{
-  overflow:hidden;margin-bottom:14px;max-width:600px;
-  opacity:0;animation:fadeIn 1s 1s ease forwards;
+  overflow:hidden;max-width:600px;
+  opacity:0;animation:fadeIn 1s 1.1s ease forwards;
 }
 .avatar-row{
   display:flex;gap:10px;width:max-content;
@@ -197,7 +197,8 @@ img{display:block;max-width:100%}
 .trusted-label{
   font-size:.7rem;font-weight:600;color:var(--gray-dark);
   text-transform:uppercase;letter-spacing:.14em;
-  opacity:0;animation:fadeIn 1s 1.1s ease forwards;
+  margin-bottom:14px;
+  opacity:0;animation:fadeIn 1s 1s ease forwards;
 }
 
 /* ===== GALLERY / SHOWCASE ===== */
@@ -227,7 +228,7 @@ img{display:block;max-width:100%}
 }
 .thumb-card:hover{
   transform:scale(1.03);
-  border-color:rgba(0,212,126,.3);
+  border-color:rgba(0,235,0,.3);
 }
 .thumb-card .tc-img{
   width:100%;height:175px;position:relative;overflow:hidden;
@@ -254,7 +255,7 @@ img{display:block;max-width:100%}
 }
 .thumb:hover{
   transform:scale(1.03);
-  border-color:rgba(0,212,126,.3);
+  border-color:rgba(0,235,0,.3);
 }
 
 /* ===== STATS SECTION ===== */
@@ -280,7 +281,7 @@ img{display:block;max-width:100%}
   display:inline-block;font-size:.68rem;font-weight:700;
   text-transform:uppercase;letter-spacing:.14em;color:var(--accent);
   margin-bottom:12px;padding:7px 16px;border-radius:100px;
-  border:1px solid rgba(0,212,126,.12);background:rgba(0,212,126,.04);
+  border:1px solid rgba(0,235,0,.12);background:rgba(0,235,0,.04);
 }
 .sec-title{
   font-size:clamp(2rem,3.8vw,3rem);font-weight:900;
@@ -331,7 +332,7 @@ img{display:block;max-width:100%}
   background:var(--card);border:1px solid var(--border);
   transition:all .45s cubic-bezier(.23,1,.32,1);
 }
-.tc2:hover{border-color:rgba(0,212,126,.12);transform:translateY(-5px);box-shadow:0 16px 48px rgba(0,0,0,.3)}
+.tc2:hover{border-color:rgba(0,235,0,.12);transform:translateY(-5px);box-shadow:0 16px 48px rgba(0,0,0,.3)}
 .tc2 .stars{color:#fbbf24;font-size:.82rem;letter-spacing:3px;margin-bottom:14px}
 .tc2 blockquote{
   font-size:.9rem;line-height:1.7;
@@ -407,7 +408,7 @@ footer .footer-links a:hover{color:var(--accent)}
 /* ===== DIVIDER GLOW ===== */
 .glow-divider{
   height:1px;max-width:600px;margin:0 auto;
-  background:linear-gradient(90deg,transparent,var(--accent-glow),rgba(0,212,126,.2),var(--accent-glow),transparent);
+  background:linear-gradient(90deg,transparent,var(--accent-glow),rgba(0,235,0,.2),var(--accent-glow),transparent);
 }
 
 /* ===== HAMBURGER ===== */
@@ -511,7 +512,7 @@ footer .footer-links a:hover{color:var(--accent)}
 
 <!-- ===== NAVIGATION ===== -->
 <nav class="nav">
-  <div class="nav-logo">Studio<span>.</span></div>
+  <div class="nav-logo" id="navBrand">Studio<span>.</span></div>
   <ul class="nav-links" id="navLinks">
     <li><a href="#hero">Home</a></li>
     <li><a href="#showcase1">Thumbnails</a></li>
@@ -527,25 +528,19 @@ footer .footer-links a:hover{color:var(--accent)}
 <!-- ===== HERO ===== -->
 <section class="hero" id="hero">
   <div class="badge"><span class="dot"></span> Available Now</div>
-  <h1>Crafting <span class="acc">Instant</span><br>Clicks.</h1>
-  <p class="hero-sub">My work isn't just good-looking — it's about making visuals that pull people in and get real engagement.</p>
+  <h1 id="heroHeadline">Crafting <span class="acc">Instant</span><br>Clicks.</h1>
+  <p class="hero-sub" id="heroSub">My work isn't just good-looking — it's about making visuals that pull people in and get real engagement.</p>
   <div class="hero-btns">
     <a href="#cta" class="btn btn-fill">Get Started</a>
     <a href="#showcase2" class="btn btn-ghost">View Portfolio</a>
   </div>
-  <div class="avatar-band"><div class="avatar-row" id="avRow"></div></div>
   <div class="trusted-label">Trusted by 20+ clients</div>
+  <div class="avatar-band"><div class="avatar-row" id="avRow"></div></div>
 </section>
 
 <!-- ===== STATS ===== -->
 <section class="stats-section">
-  <div class="stats-grid sr">
-    <div class="stat-block"><div class="stat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></div><div class="num count-up" data-target="3" data-suffix="M+">0</div><div class="lbl">Views</div></div>
-    <div class="stat-divider"></div>
-    <div class="stat-block"><div class="stat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div><div class="num count-up" data-target="20" data-suffix="+">0</div><div class="lbl">Clients</div></div>
-    <div class="stat-divider"></div>
-    <div class="stat-block"><div class="stat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg></div><div class="num count-up" data-target="40" data-suffix="+">0</div><div class="lbl">Projects</div></div>
-  </div>
+  <div class="stats-grid sr" id="statsGrid"></div>
 </section>
 
 <!-- ===== SHOWCASE #1: 2 rows with profile + video name ===== -->
@@ -562,23 +557,7 @@ footer .footer-links a:hover{color:var(--accent)}
     <p class="sec-sub">From idea to impact, every thumbnail crafted with purpose, precision, and performance in mind.</p>
   </div>
   <div class="process-card sr">
-    <div class="process-steps">
-      <div class="step">
-        <div class="step-num">1</div>
-        <h3>Brief & Research</h3>
-        <p>Understanding your channel, audience, and visual style to create thumbnails that fit perfectly.</p>
-      </div>
-      <div class="step">
-        <div class="step-num">2</div>
-        <h3>Design & Iteration</h3>
-        <p>Crafting multiple concepts and A/B variants optimized for maximum click-through rate.</p>
-      </div>
-      <div class="step">
-        <div class="step-num">3</div>
-        <h3>Delivery & Optimization</h3>
-        <p>Final delivery within 48h with CTR tracking and ongoing performance optimization.</p>
-      </div>
-    </div>
+    <div class="process-steps" id="processSteps"></div>
   </div>
 </section>
 
@@ -602,26 +581,7 @@ footer .footer-links a:hover{color:var(--accent)}
     <div class="tag">About Me</div>
     <h2 class="sec-title">Built for Creators</h2>
   </div>
-  <div class="about-card sr">
-    <div class="about-visual" style="background:linear-gradient(160deg,#0e2a1e,#00d47e 50%,#0c0c0e)">
-      <div style="font-size:12rem;font-weight:900;opacity:.04;position:absolute;letter-spacing:-.05em">S</div>
-      <div style="text-align:center;z-index:1">
-        <div style="width:110px;height:110px;border-radius:50%;background:rgba(255,255,255,.06);backdrop-filter:blur(10px);margin:0 auto 16px;display:flex;align-items:center;justify-content:center;font-size:2.4rem;border:1px solid rgba(255,255,255,.08)">👨‍🎨</div>
-        <div style="font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:rgba(255,255,255,.35)">Creative Designer</div>
-      </div>
-    </div>
-    <div class="about-text">
-      <h2>Design that<br>drives results.</h2>
-      <p>I specialize in YouTube thumbnails, branding, and visual design. Every pixel has a purpose — to grab attention, build trust, and deliver results.</p>
-      <p>Working with creators from 10K to 5M+ subscribers. I understand algorithms, CTR optimization, and what stops the scroll.</p>
-      <div class="about-stats">
-        <div class="about-stat"><div class="n count-up" data-target="3" data-suffix="M+">0</div><div class="l">Views</div></div>
-        <div class="about-stat"><div class="n count-up" data-target="20" data-suffix="+">0</div><div class="l">Clients</div></div>
-        <div class="about-stat"><div class="n count-up" data-target="40" data-suffix="+">0</div><div class="l">Projects</div></div>
-        <div class="about-stat"><div class="n count-up" data-target="48" data-suffix="h">0</div><div class="l">Turnaround</div></div>
-      </div>
-    </div>
-  </div>
+  <div id="aboutContainer"></div>
 </section>
 
 <!-- ===== TESTIMONIALS ===== -->
@@ -631,40 +591,7 @@ footer .footer-links a:hover{color:var(--accent)}
     <h2 class="sec-title">Here's What Our Amazing<br>Clients Think</h2>
     <p class="sec-sub">Trusted by leading creators.</p>
   </div>
-  <div class="test-grid sr">
-    <div class="tc2">
-      <div class="stars">★★★★★</div>
-      <blockquote>"Absolutely incredible work. CTR jumped 340% the first month. Would recommend to anyone looking for reliable, fast and quality work."</blockquote>
-      <div class="au">
-        <div class="aa" style="background:linear-gradient(135deg,#00d47e,#34d399)">MK</div>
-        <div class="ai"><h4>Martin Kovář</h4><p>@MartinK · 1.2M subs</p></div>
-      </div>
-    </div>
-    <div class="tc2">
-      <div class="stars">★★★★★</div>
-      <blockquote>"Finally someone who understands not just design but YouTube itself. Thumbnails completely changed engagement on my channel."</blockquote>
-      <div class="au">
-        <div class="aa" style="background:linear-gradient(135deg,#ec4899,#f472b6)">TP</div>
-        <div class="ai"><h4>Tereza P.</h4><p>@TerezaP · 580K subs</p></div>
-      </div>
-    </div>
-    <div class="tc2">
-      <div class="stars">★★★★★</div>
-      <blockquote>"Fast delivery, amazing communication, results speak for themselves. Super understanding and great attitude about everything."</blockquote>
-      <div class="au">
-        <div class="aa" style="background:linear-gradient(135deg,#3b82f6,#60a5fa)">JN</div>
-        <div class="ai"><h4>Jan Novotný</h4><p>@JanN · 340K subs</p></div>
-      </div>
-    </div>
-    <div class="tc2">
-      <div class="stars">★★★★★</div>
-      <blockquote>"Best investment in our brand. New identity helped us land dream clients. Exceptional results every single time."</blockquote>
-      <div class="au">
-        <div class="aa" style="background:linear-gradient(135deg,#f59e0b,#fbbf24)">LS</div>
-        <div class="ai"><h4>Lucie S.</h4><p>@LucieS · 210K subs</p></div>
-      </div>
-    </div>
-  </div>
+  <div class="test-grid sr" id="testGrid"></div>
 </section>
 
 <!-- ===== FAQ ===== -->
@@ -673,51 +600,25 @@ footer .footer-links a:hover{color:var(--accent)}
     <div class="tag">FAQ</div>
     <h2 class="sec-title">Got Questions?</h2>
   </div>
-  <div class="faq-wrap sr">
-    <div class="fi">
-      <button class="fq">How fast do you deliver?<span class="fic">+</span></button>
-      <div class="fa"><p>Standard delivery is 24-48 hours. Express delivery within 12 hours for urgent projects.</p></div>
-    </div>
-    <div class="fi">
-      <button class="fq">What are your prices?<span class="fic">+</span></button>
-      <div class="fa"><p>Thumbnails from $50. Monthly packages from $300. Full branding from $800. Custom quotes for larger projects.</p></div>
-    </div>
-    <div class="fi">
-      <button class="fq">How many revisions are included?<span class="fic">+</span></button>
-      <div class="fa"><p>2-3 revision rounds are included. Most clients love the first version, but we perfect until you're satisfied.</p></div>
-    </div>
-    <div class="fi">
-      <button class="fq">Do you do A/B testing?<span class="fic">+</span></button>
-      <div class="fa"><p>Yes — we create 2-3 thumbnail variants for premium packages, optimized for maximum CTR.</p></div>
-    </div>
-    <div class="fi">
-      <button class="fq">Do you work with international creators?<span class="fic">+</span></button>
-      <div class="fa"><p>Absolutely. We work with creators worldwide in English, Czech, and German.</p></div>
-    </div>
-  </div>
+  <div class="faq-wrap sr" id="faqWrap"></div>
 </section>
 
 <div class="glow-divider"></div>
 
 <!-- ===== CTA / SOCIALS ===== -->
 <section class="cta-sec" id="cta">
-  <div class="sr">
+  <div class="sr" id="ctaContent">
     <div class="tag">Let's Work Together</div>
     <h2>Ready to level up<br>your <span class="acc">thumbnails?</span></h2>
     <p>Let's create something that stops the scroll and drives real results.</p>
-    <a href="mailto:hello@studio.com" class="btn btn-fill" style="font-size:1rem;padding:16px 40px">Get Started →</a>
-    <div class="socials">
-      <a href="#" class="social-pill">Instagram</a>
-      <a href="#" class="social-pill">Twitter / X</a>
-      <a href="#" class="social-pill">Behance</a>
-      <a href="#" class="social-pill">YouTube</a>
-    </div>
+    <a id="ctaEmail" href="mailto:hello@studio.com" class="btn btn-fill" style="font-size:1rem;padding:16px 40px">Get Started →</a>
+    <div class="socials" id="socialsContainer"></div>
   </div>
 </section>
 
 <!-- ===== FOOTER ===== -->
 <footer>
-  <div class="fl">Studio<span>.</span></div>
+  <div class="fl" id="footerBrand">Studio<span>.</span></div>
   <ul class="footer-links">
     <li><a href="#hero">Home</a></li>
     <li><a href="#showcase2">Portfolio</a></li>
@@ -725,12 +626,12 @@ footer .footer-links a:hover{color:var(--accent)}
     <li><a href="#faq">FAQ</a></li>
     <li><a href="#cta">Contact</a></li>
   </ul>
-  <div class="fc">&copy; 2026 Studio. All rights reserved.</div>
+  <div class="fc" id="footerCopy">&copy; 2026 Studio. All rights reserved.</div>
 </footer>
 
 <script>
-// ===== DATA =====
-var C = [
+// ===== SHARED CONSTANTS =====
+var GRADIENTS = [
   'linear-gradient(135deg,#1a1040,#4a20a0)',
   'linear-gradient(135deg,#a01020,#e04060)',
   'linear-gradient(135deg,#0a3060,#1070c0)',
@@ -740,83 +641,316 @@ var C = [
   'linear-gradient(135deg,#4a2a0a,#a06020)',
   'linear-gradient(135deg,#0a3a3a,#109090)',
   'linear-gradient(135deg,#3a0a2a,#801060)',
-  'linear-gradient(135deg,#2a3a0a,#607010)',
-  'linear-gradient(135deg,#0a1a40,#2040a0)',
-  'linear-gradient(135deg,#401a0a,#a04020)',
-  'linear-gradient(135deg,#1a1a30,#3030a0)',
-  'linear-gradient(135deg,#301020,#802040)',
-  'linear-gradient(135deg,#102a10,#208040)'
+  'linear-gradient(135deg,#2a3a0a,#607010)'
 ];
-var AC = ['#6366f1','#ec4899','#f59e0b','#00d47e','#ef4444','#3b82f6','#8b5cf6','#14b8a6','#f97316','#06b6d4','#a855f7','#22c55e','#e11d48','#0ea5e9','#d946ef'];
-var N = ['MK','TP','JN','LS','PH','AV','KD','EF','RH','MS','DL','NK','VB','TC','ZD'];
-var CH = ['GamerPro','TechDaily','NatureVlogs','FitLife','MusicBox','CookMaster','SciShow','CrimeHour','DIYKing','SpaceNerd','TravelBee','AITutor','StyleGuru','CryptoHub','DocuWorld'];
-var VD = ['TOP 10 PLAYS','iPhone 16 Review','Hidden Waterfalls','30 Day Transform','NEW ALBUM REACTION','Gordon Ramsay CRIES','Black Holes Explained','Case That Shocked All','$50 Room Makeover','James Webb Discovery','48h in Tokyo','GPT-5 Changes All','Fall Fashion 2025','Bitcoin Prediction','Inside North Korea'];
-var IC = ['🎮','💻','🌿','💪','🎵','🍳','🔬','🔍','🛠️','🚀','✈️','🤖','👗','📈','🎬'];
-var VW = ['1.2M','2.1M','450K','670K','3.4M','1.8M','920K','1.5M','340K','2.8M','760K','1.1M','530K','980K','840K'];
+var AVATAR_COLORS = ['#6366f1','#ec4899','#f59e0b','#00eb00','#ef4444','#3b82f6','#8b5cf6','#14b8a6','#f97316','#06b6d4'];
 
-// ===== AVATAR STRIP =====
-(function() {
+// ===== STAT ICONS =====
+var STAT_ICONS = [
+  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>',
+  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>',
+  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>'
+];
+
+// ===== DEFAULT DATA =====
+var DEFAULT_DATA = {
+  thumbnails: [
+    { id: "t1", title: "TOP 10 PLAYS", channel: "GamerPro", views: "1.2M", icon: "\u{1f3ae}", gradient: 0, category: "showcase1", channelAvatar: "GP" },
+    { id: "t2", title: "iPhone 16 Review", channel: "TechDaily", views: "2.1M", icon: "\u{1f4bb}", gradient: 2, category: "showcase1", channelAvatar: "TD" },
+    { id: "t3", title: "Hidden Waterfalls", channel: "NatureVlogs", views: "450K", icon: "\u{1f33f}", gradient: 3, category: "showcase1", channelAvatar: "NV" },
+    { id: "t4", title: "30 Day Transform", channel: "FitLife", views: "670K", icon: "\u{1f4aa}", gradient: 4, category: "showcase2", channelAvatar: "FL" },
+    { id: "t5", title: "NEW ALBUM REACTION", channel: "MusicBox", views: "3.4M", icon: "\u{1f3b5}", gradient: 5, category: "showcase2", channelAvatar: "MB" },
+    { id: "t6", title: "Gordon Ramsay CRIES", channel: "CookMaster", views: "1.8M", icon: "\u{1f373}", gradient: 6, category: "showcase2", channelAvatar: "CM" },
+  ],
+  creators: [
+    { id: "c1", name: "Martin K.", initials: "MK", subs: "1.2M", color: 0 },
+    { id: "c2", name: "Tereza P.", initials: "TP", subs: "580K", color: 1 },
+    { id: "c3", name: "Jan N.", initials: "JN", subs: "340K", color: 2 },
+    { id: "c4", name: "Lucie S.", initials: "LS", subs: "210K", color: 3 },
+  ],
+  reviews: [
+    { id: "r1", text: "Absolutely incredible work. CTR jumped 340% the first month.", author: "Martin Kov\u00e1\u0159", handle: "@MartinK", subs: "1.2M", color: 3, rating: 5 },
+    { id: "r2", text: "Finally someone who understands not just design but YouTube itself.", author: "Tereza P.", handle: "@TerezaP", subs: "580K", color: 1, rating: 5 },
+  ],
+  stats: [
+    { id: "s1", value: "200M+", label: "Views Generated" },
+    { id: "s2", value: "1500+", label: "Thumbnails Made" },
+    { id: "s3", value: "200+", label: "Happy Creators" },
+  ],
+  process: [
+    { id: "p1", title: "Brief & Research", desc: "Understanding your channel, audience, and visual style." },
+    { id: "p2", title: "Design & Iteration", desc: "Crafting multiple concepts and A/B variants for max CTR." },
+    { id: "p3", title: "Delivery & Optimization", desc: "Final delivery within 48h with CTR tracking." },
+  ],
+  faq: [
+    { id: "f1", q: "How fast do you deliver?", a: "Standard 24-48 hours. Express within 12 hours." },
+    { id: "f2", q: "What are your prices?", a: "Thumbnails from $50. Monthly from $300. Branding from $800." },
+    { id: "f3", q: "How many revisions?", a: "2-3 rounds included." },
+  ],
+  about: { headline: "Design that drives results.", text1: "I specialize in YouTube thumbnails, branding, and visual design.", text2: "Working with creators from 10K to 5M+ subscribers." },
+  socials: [
+    { id: "so1", platform: "Instagram", url: "https://instagram.com/" },
+    { id: "so2", platform: "Twitter / X", url: "https://x.com/" },
+    { id: "so3", platform: "Behance", url: "https://behance.net/" },
+  ],
+  siteSettings: { brandName: "Studio", heroHeadline: "Crafting *Instant*|Clicks.", heroSub: "My work isn't just good-looking \u2014 it's about making visuals that pull people in and get real engagement.", email: "hello@studio.com" },
+};
+
+// ===== HELPER: escape HTML =====
+function esc(str) {
+  var d = document.createElement('div');
+  d.textContent = str;
+  return d.innerHTML;
+}
+
+// ===== HELPER: parse headline with *accent* and |linebreak =====
+function parseHeadline(text) {
+  return text
+    .replace(/\|/g, '<br>')
+    .replace(/\*([^*]+)\*/g, '<span class="acc">$1</span>');
+}
+
+// ===== RENDER FUNCTIONS =====
+
+function renderBrandName(data) {
+  var name = esc(data.siteSettings.brandName);
+  document.getElementById('navBrand').innerHTML = name + '<span>.</span>';
+  document.getElementById('footerBrand').innerHTML = name + '<span>.</span>';
+  document.getElementById('footerCopy').innerHTML = '&copy; 2026 ' + name + '. All rights reserved.';
+  document.title = name + ' \u2014 Thumbnail Design';
+}
+
+function renderHero(data) {
+  document.getElementById('heroHeadline').innerHTML = parseHeadline(data.siteSettings.heroHeadline);
+  document.getElementById('heroSub').textContent = data.siteSettings.heroSub;
+}
+
+function renderAvatarStrip(data) {
+  var creators = data.creators;
+  if (creators.length === 0) {
+    document.getElementById('avRow').innerHTML = '';
+    return;
+  }
   var h = '';
-  for (var j = 0; j < 3; j++) {
-    for (var i = 0; i < N.length; i++) {
-      h += '<div class="av" style="background:' + AC[i] + '">' + N[i] + '</div>';
+  // Repeat enough times for seamless scroll
+  var reps = Math.max(3, Math.ceil(30 / creators.length));
+  for (var j = 0; j < reps; j++) {
+    for (var i = 0; i < creators.length; i++) {
+      var c = creators[i];
+      h += '<div class="av" style="background:' + AVATAR_COLORS[c.color % 10] + '">' + esc(c.initials) + '</div>';
     }
   }
   document.getElementById('avRow').innerHTML = h;
-})();
+}
 
-// ===== SHOWCASE #1: thumb cards with profile + video name =====
-function makeThumbCard(i) {
+function renderStats(data) {
+  var stats = data.stats;
+  var h = '';
+  for (var i = 0; i < stats.length; i++) {
+    if (i > 0) h += '<div class="stat-divider"></div>';
+    var icon = STAT_ICONS[i % STAT_ICONS.length];
+    // Try to parse numeric value for count-up
+    var raw = stats[i].value;
+    var numMatch = raw.match(/^([\d.]+)/);
+    var suffix = numMatch ? raw.slice(numMatch[1].length) : '';
+    var numVal = numMatch ? numMatch[1] : '';
+    h += '<div class="stat-block"><div class="stat-icon">' + icon + '</div>';
+    if (numVal) {
+      h += '<div class="num count-up" data-target="' + numVal + '" data-suffix="' + esc(suffix) + '">0</div>';
+    } else {
+      h += '<div class="num">' + esc(raw) + '</div>';
+    }
+    h += '<div class="lbl">' + esc(stats[i].label) + '</div></div>';
+  }
+  document.getElementById('statsGrid').innerHTML = h;
+}
+
+function makeThumbCardFromData(t) {
+  var grad = GRADIENTS[t.gradient % 10];
+  var avColor = AVATAR_COLORS[(t.gradient || 0) % 10];
   return '<div class="thumb-card">' +
-    '<div class="tc-img" style="background:' + C[i % 15] + '">' +
-      '<div style="font-size:4.5rem;opacity:.05;font-weight:900;position:absolute">' + IC[i % 15] + '</div>' +
-      '<div style="font-size:2rem;z-index:1;">' + IC[i % 15] + '</div>' +
+    '<div class="tc-img" style="background:' + grad + '">' +
+      '<div style="font-size:4.5rem;opacity:.05;font-weight:900;position:absolute">' + t.icon + '</div>' +
+      '<div style="font-size:2rem;z-index:1;">' + t.icon + '</div>' +
     '</div>' +
     '<div class="tc-meta">' +
-      '<div class="tc-av" style="background:' + AC[i % 15] + '">' + N[i % 15] + '</div>' +
+      '<div class="tc-av" style="background:' + avColor + '">' + esc(t.channelAvatar) + '</div>' +
       '<div>' +
-        '<div class="tc-name">' + CH[i % 15] + '</div>' +
-        '<div class="tc-views">' + VD[i % 15] + ' · ' + VW[i % 15] + ' views</div>' +
+        '<div class="tc-name">' + esc(t.channel) + '</div>' +
+        '<div class="tc-views">' + esc(t.title) + ' \u00b7 ' + esc(t.views) + ' views</div>' +
       '</div>' +
     '</div>' +
   '</div>';
 }
 
-(function() {
-  var r1 = '', r2 = '';
-  for (var i = 0; i < 8; i++) r1 += makeThumbCard(i);
-  r1 += r1;
-  for (var i = 4; i < 12; i++) r2 += makeThumbCard(i);
-  r2 += r2;
-  document.getElementById('s1r1').innerHTML = r1;
-  document.getElementById('s1r2').innerHTML = r2;
-})();
-
-
-// ===== SHOWCASE #2: 6 rows, simple thumbs only =====
-function makeThumb(i) {
-  return '<div class="thumb" style="background:' + C[i % 15] + '">' +
-    '<div style="font-size:5.5rem;opacity:.04;font-weight:900;position:absolute">' + IC[i % 15] + '</div>' +
-    '<div style="font-size:2.2rem;z-index:1;">' + IC[i % 15] + '</div>' +
+function makeThumbFromData(t) {
+  var grad = GRADIENTS[t.gradient % 10];
+  return '<div class="thumb" style="background:' + grad + '">' +
+    '<div style="font-size:5.5rem;opacity:.04;font-weight:900;position:absolute">' + t.icon + '</div>' +
+    '<div style="font-size:2.2rem;z-index:1;">' + t.icon + '</div>' +
   '</div>';
 }
 
-(function() {
+function renderShowcase1(data) {
+  var items = data.thumbnails.filter(function(t) { return t.category === 'showcase1'; });
+  if (items.length === 0) {
+    document.getElementById('s1r1').innerHTML = '';
+    document.getElementById('s1r2').innerHTML = '';
+    return;
+  }
+  // Build cards and duplicate for seamless scroll
+  var r1 = '', r2 = '';
+  var half = Math.ceil(items.length / 2);
+  var set1 = items.slice(0, Math.max(half, 1));
+  var set2 = items.slice(half).length > 0 ? items.slice(half) : items;
+  // Need enough cards for seamless scroll (at least 8 visible)
+  var reps1 = Math.max(2, Math.ceil(16 / set1.length));
+  var reps2 = Math.max(2, Math.ceil(16 / set2.length));
+  for (var j = 0; j < reps1; j++) for (var i = 0; i < set1.length; i++) r1 += makeThumbCardFromData(set1[i]);
+  for (var j = 0; j < reps2; j++) for (var i = 0; i < set2.length; i++) r2 += makeThumbCardFromData(set2[i]);
+  document.getElementById('s1r1').innerHTML = r1;
+  document.getElementById('s1r2').innerHTML = r2;
+}
+
+function renderShowcase2(data) {
+  var items = data.thumbnails.filter(function(t) { return t.category === 'showcase2'; });
+  if (items.length === 0) {
+    document.getElementById('bigShowcase').innerHTML = '';
+    return;
+  }
   var speeds = ['sL', 'sR', 's3', 's4', 's5', 's6'];
   var html = '';
-  for (var row = 0; row < 6; row++) {
+  var numRows = Math.min(6, Math.max(2, items.length));
+  for (var row = 0; row < numRows; row++) {
     var rh = '';
-    for (var i = 0; i < 8; i++) {
-      rh += makeThumb((i + row * 3) % 15);
+    var reps = Math.max(2, Math.ceil(16 / items.length));
+    for (var j = 0; j < reps; j++) {
+      for (var i = 0; i < items.length; i++) {
+        rh += makeThumbFromData(items[(i + row) % items.length]);
+      }
     }
-    rh += rh;
-    html += '<div class="gallery-band"><div class="gr ' + speeds[row] + '">' + rh + '</div></div>';
+    html += '<div class="gallery-band"><div class="gr ' + speeds[row % 6] + '">' + rh + '</div></div>';
   }
   document.getElementById('bigShowcase').innerHTML = html;
-})();
+}
 
-// ===== SCROLL REVEAL (Intersection Observer) =====
-(function() {
+function renderProcess(data) {
+  var steps = data.process;
+  var h = '';
+  for (var i = 0; i < steps.length; i++) {
+    h += '<div class="step">' +
+      '<div class="step-num">' + (i + 1) + '</div>' +
+      '<h3>' + esc(steps[i].title) + '</h3>' +
+      '<p>' + esc(steps[i].desc) + '</p>' +
+    '</div>';
+  }
+  document.getElementById('processSteps').innerHTML = h;
+}
+
+function renderAbout(data) {
+  var a = data.about;
+  var stats = data.stats;
+  var statsHtml = '';
+  for (var i = 0; i < stats.length; i++) {
+    var raw = stats[i].value;
+    var numMatch = raw.match(/^([\d.]+)/);
+    var suffix = numMatch ? raw.slice(numMatch[1].length) : '';
+    var numVal = numMatch ? numMatch[1] : '';
+    if (numVal) {
+      statsHtml += '<div class="about-stat"><div class="n count-up" data-target="' + numVal + '" data-suffix="' + esc(suffix) + '">0</div><div class="l">' + esc(stats[i].label) + '</div></div>';
+    } else {
+      statsHtml += '<div class="about-stat"><div class="n">' + esc(raw) + '</div><div class="l">' + esc(stats[i].label) + '</div></div>';
+    }
+  }
+  // Add turnaround stat
+  statsHtml += '<div class="about-stat"><div class="n count-up" data-target="48" data-suffix="h">0</div><div class="l">Turnaround</div></div>';
+
+  var html = '<div class="about-card sr">' +
+    '<div class="about-visual" style="background:linear-gradient(160deg,#0e2a1e,#028b00 50%,#0c0c0e)">' +
+      '<div style="font-size:12rem;font-weight:900;opacity:.04;position:absolute;letter-spacing:-.05em">S</div>' +
+      '<div style="text-align:center;z-index:1">' +
+        '<div style="width:110px;height:110px;border-radius:50%;background:rgba(255,255,255,.06);backdrop-filter:blur(10px);margin:0 auto 16px;display:flex;align-items:center;justify-content:center;font-size:2.4rem;border:1px solid rgba(255,255,255,.08)">\u{1f468}\u200d\u{1f3a8}</div>' +
+        '<div style="font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:rgba(255,255,255,.35)">Creative Designer</div>' +
+      '</div>' +
+    '</div>' +
+    '<div class="about-text">' +
+      '<h2>' + esc(a.headline).replace(/\n/g, '<br>') + '</h2>' +
+      '<p>' + esc(a.text1) + '</p>' +
+      '<p>' + esc(a.text2) + '</p>' +
+      '<div class="about-stats">' + statsHtml + '</div>' +
+    '</div>' +
+  '</div>';
+  document.getElementById('aboutContainer').innerHTML = html;
+}
+
+function renderTestimonials(data) {
+  var reviews = data.reviews;
+  var h = '';
+  for (var i = 0; i < reviews.length; i++) {
+    var r = reviews[i];
+    var color = AVATAR_COLORS[r.color % 10];
+    var initials = r.author.split(' ').map(function(w) { return w[0]; }).join('');
+    h += '<div class="tc2">' +
+      '<div class="stars">' + '\u2605'.repeat(r.rating) + '\u2606'.repeat(5 - r.rating) + '</div>' +
+      '<blockquote>"\u200b' + esc(r.text) + '"</blockquote>' +
+      '<div class="au">' +
+        '<div class="aa" style="background:' + color + '">' + esc(initials) + '</div>' +
+        '<div class="ai"><h4>' + esc(r.author) + '</h4><p>' + esc(r.handle) + ' \u00b7 ' + esc(r.subs) + ' subs</p></div>' +
+      '</div>' +
+    '</div>';
+  }
+  document.getElementById('testGrid').innerHTML = h;
+}
+
+function renderFAQ(data) {
+  var faqs = data.faq;
+  var h = '';
+  for (var i = 0; i < faqs.length; i++) {
+    h += '<div class="fi">' +
+      '<button class="fq">' + esc(faqs[i].q) + '<span class="fic">+</span></button>' +
+      '<div class="fa"><p>' + esc(faqs[i].a) + '</p></div>' +
+    '</div>';
+  }
+  document.getElementById('faqWrap').innerHTML = h;
+}
+
+function renderSocials(data) {
+  var socials = data.socials;
+  var h = '';
+  for (var i = 0; i < socials.length; i++) {
+    h += '<a href="' + esc(socials[i].url) + '" class="social-pill" target="_blank" rel="noopener">' + esc(socials[i].platform) + '</a>';
+  }
+  document.getElementById('socialsContainer').innerHTML = h;
+  // Update CTA email
+  var email = data.siteSettings.email;
+  document.getElementById('ctaEmail').href = 'mailto:' + email;
+}
+
+function renderFooter(data) {
+  // Footer brand already handled by renderBrandName
+}
+
+// ===== MAIN RENDER =====
+function renderSite(data) {
+  renderBrandName(data);
+  renderHero(data);
+  renderAvatarStrip(data);
+  renderStats(data);
+  renderShowcase1(data);
+  renderProcess(data);
+  renderShowcase2(data);
+  renderAbout(data);
+  renderTestimonials(data);
+  renderFAQ(data);
+  renderSocials(data);
+  renderFooter(data);
+  // Re-initialize interactive behaviors
+  initInteractions();
+}
+
+// ===== INTERACTIVE BEHAVIORS =====
+function initInteractions() {
+  // Scroll reveal
   var observer = new IntersectionObserver(function(entries) {
     entries.forEach(function(entry) {
       if (entry.isIntersecting) {
@@ -825,11 +959,63 @@ function makeThumb(i) {
       }
     });
   }, { threshold: 0.08, rootMargin: '0px 0px -50px 0px' });
-
   document.querySelectorAll('.sr').forEach(function(el) {
-    observer.observe(el);
+    if (!el.classList.contains('v')) observer.observe(el);
   });
-})();
+
+  // Count-up
+  var countObs = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        entry.target.querySelectorAll('.count-up').forEach(animateCount);
+        countObs.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.3 });
+  document.querySelectorAll('.stats-grid, .about-stats').forEach(function(el) {
+    countObs.observe(el);
+  });
+
+  // FAQ accordion
+  document.querySelectorAll('.fq').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var item = btn.parentElement;
+      var isOpen = item.classList.contains('open');
+      document.querySelectorAll('.fi').forEach(function(fi) { fi.classList.remove('open'); });
+      if (!isOpen) item.classList.add('open');
+    });
+  });
+
+  // Smooth scroll
+  document.querySelectorAll('a[href^="#"]').forEach(function(a) {
+    a.addEventListener('click', function(e) {
+      e.preventDefault();
+      var target = document.querySelector(a.getAttribute('href'));
+      if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      // Close mobile menu if open
+      var hamburger = document.getElementById('hamburger');
+      var navLinks = document.getElementById('navLinks');
+      if (hamburger && navLinks) {
+        hamburger.classList.remove('active');
+        navLinks.classList.remove('open');
+      }
+    });
+  });
+
+  // Pause off-screen animations
+  var bandObs = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      var row = entry.target.querySelector('.gr, .avatar-row');
+      if (row) {
+        if (entry.isIntersecting) row.classList.remove('paused');
+        else row.classList.add('paused');
+      }
+    });
+  }, { rootMargin: '100px 0px' });
+  document.querySelectorAll('.gallery-band, .avatar-band').forEach(function(band) {
+    bandObs.observe(band);
+  });
+}
 
 // ===== COUNT-UP ANIMATION =====
 function easeOutExpo(t) {
@@ -839,7 +1025,6 @@ function easeOutExpo(t) {
 function animateCount(el) {
   if (el.dataset.counted) return;
   el.dataset.counted = '1';
-
   var target = parseFloat(el.dataset.target);
   var suffix = el.dataset.suffix || '';
   var duration = 2000;
@@ -851,67 +1036,13 @@ function animateCount(el) {
     var progress = Math.min(elapsed / duration, 1);
     var eased = easeOutExpo(progress);
     var current = eased * target;
-
-    if (isDecimal) {
-      el.textContent = current.toFixed(1) + suffix;
-    } else {
-      el.textContent = Math.floor(current) + suffix;
-    }
-
-    if (progress < 1) {
-      requestAnimationFrame(update);
-    } else {
-      el.textContent = target + suffix;
-    }
+    if (isDecimal) el.textContent = current.toFixed(1) + suffix;
+    else el.textContent = Math.floor(current) + suffix;
+    if (progress < 1) requestAnimationFrame(update);
+    else el.textContent = target + suffix;
   }
-
   requestAnimationFrame(update);
 }
-
-// Observe all sections with count-up elements
-(function() {
-  var countObs = new IntersectionObserver(function(entries) {
-    entries.forEach(function(entry) {
-      if (entry.isIntersecting) {
-        entry.target.querySelectorAll('.count-up').forEach(animateCount);
-        countObs.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.3 });
-
-  document.querySelectorAll('.stats-grid, .about-stats').forEach(function(el) {
-    countObs.observe(el);
-  });
-})();
-
-// ===== FAQ ACCORDION =====
-(function() {
-  document.querySelectorAll('.fq').forEach(function(btn) {
-    btn.addEventListener('click', function() {
-      var item = btn.parentElement;
-      var isOpen = item.classList.contains('open');
-      // Close all
-      document.querySelectorAll('.fi').forEach(function(fi) {
-        fi.classList.remove('open');
-      });
-      // Toggle current
-      if (!isOpen) item.classList.add('open');
-    });
-  });
-})();
-
-// ===== SMOOTH SCROLL =====
-(function() {
-  document.querySelectorAll('a[href^="#"]').forEach(function(a) {
-    a.addEventListener('click', function(e) {
-      e.preventDefault();
-      var target = document.querySelector(a.getAttribute('href'));
-      if (target) {
-        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }
-    });
-  });
-})();
 
 // ===== HAMBURGER MENU =====
 (function() {
@@ -922,12 +1053,6 @@ function animateCount(el) {
       btn.classList.toggle('active');
       nav.classList.toggle('open');
     });
-    nav.querySelectorAll('a').forEach(function(a) {
-      a.addEventListener('click', function() {
-        btn.classList.remove('active');
-        nav.classList.remove('open');
-      });
-    });
   }
 })();
 
@@ -935,33 +1060,25 @@ function animateCount(el) {
 (function() {
   var nav = document.querySelector('.nav');
   window.addEventListener('scroll', function() {
-    if (window.pageYOffset > 100) {
-      nav.style.background = 'rgba(12,12,14,.88)';
-    } else {
-      nav.style.background = 'rgba(12,12,14,.72)';
-    }
+    if (window.pageYOffset > 100) nav.style.background = 'rgba(12,12,14,.88)';
+    else nav.style.background = 'rgba(12,12,14,.72)';
   }, { passive: true });
 })();
 
-// ===== PAUSE OFF-SCREEN ANIMATIONS =====
-(function() {
-  var bandObs = new IntersectionObserver(function(entries) {
-    entries.forEach(function(entry) {
-      var row = entry.target.querySelector('.gr, .stats-row, .avatar-row');
-      if (row) {
-        if (entry.isIntersecting) {
-          row.classList.remove('paused');
-        } else {
-          row.classList.add('paused');
-        }
-      }
-    });
-  }, { rootMargin: '100px 0px' });
+// ===== BOOT: Render defaults immediately, then fetch live data =====
+renderSite(DEFAULT_DATA);
 
-  document.querySelectorAll('.gallery-band, .avatar-band').forEach(function(band) {
-    bandObs.observe(band);
+fetch('/api/get-data')
+  .then(function(res) {
+    if (!res.ok) return null;
+    return res.json();
+  })
+  .then(function(data) {
+    if (data) renderSite(data);
+  })
+  .catch(function() {
+    // API not available, keep defaults
   });
-})();
 </script>
 </body>
 </html>
