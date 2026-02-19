@@ -84,7 +84,7 @@ img{display:block;max-width:100%}
 .nav-links a:hover::after{width:100%}
 .nav-cta{
   font-size:.8rem;font-weight:700;
-  background:rgba(0,235,0,.12);color:#00eb00;
+  background:rgba(0,235,0,.12);color:#fff;
   padding:11px 26px;border-radius:100px;
   transition:all .3s;border:1.5px solid #00eb00;cursor:pointer;
 }
@@ -171,7 +171,7 @@ img{display:block;max-width:100%}
   border:none;cursor:pointer;transition:all .35s cubic-bezier(.23,1,.32,1);
   display:inline-flex;align-items:center;gap:8px;
 }
-.btn-fill{background:rgba(0,235,0,.12);color:#00eb00;border:1.5px solid #00eb00}
+.btn-fill{background:rgba(0,235,0,.12);color:#fff;border:1.5px solid #00eb00}
 .btn-fill:hover{background:rgba(0,235,0,.22);transform:translateY(-3px);box-shadow:0 10px 36px var(--accent-glow)}
 .btn-ghost{background:transparent;color:#fff;border:1px solid var(--border)}
 .btn-ghost:hover{border-color:var(--gray-dark);transform:translateY(-3px)}
@@ -301,20 +301,22 @@ img{display:block;max-width:100%}
 }
 
 /* ===== PROCESS ===== */
-.process-card{
+.process-card{margin-top:20px}
+.process-steps{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.step{
+  text-align:center;padding:28px 24px;
   background:var(--card);border:1px solid var(--border);
-  border-radius:20px;padding:56px;margin-top:20px;
+  border-radius:20px;
 }
-.process-steps{display:grid;grid-template-columns:repeat(3,1fr);gap:36px}
-.step{text-align:center;padding:28px}
 .step-num{
-  width:52px;height:52px;border-radius:50%;
+  width:44px;height:44px;border-radius:50%;
   background:var(--accent);color:#fff;
-  display:flex;align-items:center;justify-content:center;
-  font-weight:900;font-size:1.15rem;margin:0 auto 18px;
+  display:inline-flex;align-items:center;justify-content:center;
+  font-weight:900;font-size:1rem;margin-bottom:14px;
   box-shadow:0 8px 24px var(--accent-glow);
 }
-.step h3{font-size:1.05rem;font-weight:800;margin-bottom:10px;letter-spacing:-.02em}
+.step h3{font-size:1.1rem;font-weight:800;margin-bottom:16px;letter-spacing:-.02em}
+.step-img{width:100%;border-radius:12px;margin-bottom:16px;object-fit:cover;aspect-ratio:3/2}
 .step p{font-size:.84rem;color:var(--gray);line-height:1.65}
 
 /* ===== ABOUT ===== */
@@ -475,9 +477,8 @@ footer .footer-links a:hover{color:var(--accent)}
   .sec-sub{font-size:.82rem}
 
   /* Process */
-  .process-card{padding:24px;border-radius:14px}
   .process-steps{grid-template-columns:1fr;gap:16px}
-  .step{padding:16px}
+  .step{padding:20px 18px}
 
   /* About */
   .about-card{grid-template-columns:1fr;padding:24px;gap:28px;border-radius:14px}
@@ -686,9 +687,9 @@ var DEFAULT_DATA = {
     { id: "s3", value: "40+", label: "Projects" },
   ],
   process: [
-    { id: "p1", title: "Brief & Research", desc: "Understanding your channel, audience, and visual style." },
-    { id: "p2", title: "Design & Iteration", desc: "Crafting multiple concepts and A/B variants for max CTR." },
-    { id: "p3", title: "Delivery & Optimization", desc: "Final delivery within 48h with CTR tracking." },
+    { id: "p1", title: "Contact me", desc: "Contact me through the form you can get to when you click Get Started.", img: "/img/process-1.png" },
+    { id: "p2", title: "Custom scene", desc: "I will create a custom scene based on your video and expectations. Without you posing on camera.", img: "/img/process-2.png" },
+    { id: "p3", title: "Finished work", desc: "At the end I will finish the final version that brings clicks on your video. We can also A/B test the thumbnail.", img: "/img/process-3.png" },
   ],
   faq: [
     { id: "f1", q: "How fast do you deliver?", a: "Standard delivery is 24-48 hours. Express delivery within 12 hours for urgent projects." },
@@ -846,9 +847,11 @@ function renderProcess(data) {
   var steps = data.process;
   var h = '';
   for (var i = 0; i < steps.length; i++) {
+    var imgHtml = steps[i].img ? '<img class="step-img" src="' + esc(steps[i].img) + '" alt="' + esc(steps[i].title) + '">' : '';
     h += '<div class="step">' +
       '<div class="step-num">' + (i + 1) + '</div>' +
       '<h3>' + esc(steps[i].title) + '</h3>' +
+      imgHtml +
       '<p>' + esc(steps[i].desc) + '</p>' +
     '</div>';
   }
