@@ -316,7 +316,7 @@ img{display:block;max-width:100%}
   box-shadow:0 8px 24px var(--accent-glow);
 }
 .step h3{font-size:1.1rem;font-weight:800;margin-bottom:16px;letter-spacing:-.02em}
-.step-img{width:100%;border-radius:12px;margin-bottom:16px;object-fit:cover;aspect-ratio:3/2}
+.step-img{width:100%;border-radius:12px;margin-bottom:16px;object-fit:contain}
 .step p{font-size:.84rem;color:var(--gray);line-height:1.65}
 
 /* ===== ABOUT ===== */
@@ -477,8 +477,11 @@ footer .footer-links a:hover{color:var(--accent)}
   .sec-sub{font-size:.82rem}
 
   /* Process */
-  .process-steps{grid-template-columns:1fr;gap:16px}
-  .step{padding:20px 18px}
+  .process-steps{grid-template-columns:repeat(3,1fr);gap:10px}
+  .step{padding:14px 10px}
+  .step-num{width:32px;height:32px;font-size:.75rem;margin-bottom:10px}
+  .step h3{font-size:.75rem;margin-bottom:10px}
+  .step p{font-size:.65rem}
 
   /* About */
   .about-card{grid-template-columns:1fr;padding:24px;gap:28px;border-radius:14px}
