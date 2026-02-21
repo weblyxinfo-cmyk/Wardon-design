@@ -847,25 +847,46 @@ function ImageUpload({ label, value, onChange, rounded }) {
   const [uploading, setUploading] = useState(false);
   const [dragOver, setDragOver] = useState(false);
 
-  const resizeImage = (file, maxW = 1920, maxH = 1080, quality = 0.92) => {
+  const resizeImage = (file, maxW = 1920, maxH = 1080) => {
     return new Promise((resolve) => {
       const img = new Image();
       img.onload = () => {
         let w = img.width, h = img.height;
         if (w <= maxW && h <= maxH) { resolve(file); return; }
+        // Step-down resize: halve dimensions until close to target, then final resize
+        let srcCanvas = document.createElement("canvas");
+        srcCanvas.width = w;
+        srcCanvas.height = h;
+        let srcCtx = srcCanvas.getContext("2d");
+        srcCtx.drawImage(img, 0, 0);
+        while (w / 2 > maxW || h / 2 > maxH) {
+          const nw = Math.round(w / 2), nh = Math.round(h / 2);
+          const tmp = document.createElement("canvas");
+          tmp.width = nw;
+          tmp.height = nh;
+          const tc = tmp.getContext("2d");
+          tc.imageSmoothingEnabled = true;
+          tc.imageSmoothingQuality = "high";
+          tc.drawImage(srcCanvas, 0, 0, nw, nh);
+          srcCanvas = tmp;
+          w = nw;
+          h = nh;
+        }
         const ratio = Math.min(maxW / w, maxH / h);
-        w = Math.round(w * ratio);
-        h = Math.round(h * ratio);
-        const canvas = document.createElement("canvas");
-        canvas.width = w;
-        canvas.height = h;
-        const ctx = canvas.getContext("2d");
-        ctx.imageSmoothingEnabled = true;
-        ctx.imageSmoothingQuality = "high";
-        ctx.drawImage(img, 0, 0, w, h);
-        canvas.toBlob((blob) => {
-          resolve(new File([blob], file.name || "image.png", { type: "image/png" }));
-        }, "image/png");
+        const fw = Math.round(w * ratio), fh = Math.round(h * ratio);
+        const final = document.createElement("canvas");
+        final.width = fw;
+        final.height = fh;
+        const fc = final.getContext("2d");
+        fc.imageSmoothingEnabled = true;
+        fc.imageSmoothingQuality = "high";
+        fc.drawImage(srcCanvas, 0, 0, fw, fh);
+        const isPng = file.type === "image/png";
+        const outType = isPng ? "image/png" : "image/jpeg";
+        final.toBlob((blob) => {
+          const ext = isPng ? ".png" : ".jpg";
+          resolve(new File([blob], (file.name || "image") + ext, { type: outType }));
+        }, outType, 0.95);
       };
       img.onerror = () => resolve(file);
       img.src = URL.createObjectURL(file);
