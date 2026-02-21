@@ -848,29 +848,28 @@ function ImageUpload({ label, value, onChange, rounded }) {
     if (!file) return;
     setUploading(true);
     try {
-      const baseUrl = window.location.origin;
-      const res = await fetch(baseUrl + "/api/upload", {
+      const safeName = (file.name || "image.png").replace(/[^\w._-]/g, "_");
+      const res = await fetch("/api/upload", {
         method: "POST",
         headers: {
           "Authorization": "Bearer " + getToken(),
           "Content-Type": file.type || "image/png",
-          "X-Filename": file.name || "image.png",
+          "X-Filename": safeName,
         },
         body: file,
-        redirect: "follow",
       });
       const text = await res.text();
       let data;
       try { data = JSON.parse(text); } catch (_) { data = { error: text }; }
       if (!res.ok) {
-        alert("Chyba serveru: " + (data.error || "Upload failed"));
+        alert("Chyba: " + (data.error || "Upload selhal"));
         setUploading(false);
         return;
       }
       if (data.url) onChange(data.url);
     } catch (e) {
       console.error("Upload error:", e);
-      alert("Chyba: " + e.toString());
+      alert("Upload selhal: " + e.message + "\n\nZkus menší obrázek nebo jiný formát.");
     }
     setUploading(false);
   };
