@@ -919,13 +919,13 @@ function makeThumbCardFromData(t) {
   var avColor = AVATAR_COLORS[(t.gradient || 0) % 10];
   var imgContent;
   if (t.image) {
-    imgContent = '<img src="' + esc(t.image) + '" alt="' + esc(t.title) + '" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0">';
+    imgContent = '<img src="' + esc(t.image) + '" alt="' + esc(t.title) + '" style="width:100%;height:100%;object-fit:contain;position:absolute;inset:0">';
   } else {
     imgContent = '<div style="font-size:4.5rem;opacity:.05;font-weight:900;position:absolute">' + t.icon + '</div>' +
       '<div style="font-size:2rem;z-index:1;">' + t.icon + '</div>';
   }
   return '<div class="thumb-card">' +
-    '<div class="tc-img" style="background:' + (t.image ? '#000' : grad) + '">' +
+    '<div class="tc-img" style="background:' + (t.image ? '#0a0a0c' : grad) + '">' +
       imgContent +
     '</div>' +
     '<div class="tc-meta">' +
@@ -941,8 +941,8 @@ function makeThumbCardFromData(t) {
 function makeThumbFromData(t) {
   var grad = GRADIENTS[t.gradient % 10];
   if (t.image) {
-    return '<div class="thumb" style="background:#000">' +
-      '<img src="' + esc(t.image) + '" alt="' + esc(t.title) + '" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0">' +
+    return '<div class="thumb" style="background:#0a0a0c">' +
+      '<img src="' + esc(t.image) + '" alt="' + esc(t.title) + '" style="width:100%;height:100%;object-fit:contain;position:absolute;inset:0">' +
     '</div>';
   }
   return '<div class="thumb" style="background:' + grad + '">' +
