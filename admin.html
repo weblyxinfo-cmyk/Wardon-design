@@ -852,16 +852,21 @@ function ImageUpload({ label, value, onChange, rounded }) {
         method: "POST",
         headers: {
           "Authorization": "Bearer " + getToken(),
-          "Content-Type": file.type,
-          "X-Filename": file.name,
+          "Content-Type": file.type || "image/png",
+          "X-Filename": file.name || "image.png",
         },
         body: file,
       });
-      if (!res.ok) throw new Error("Upload failed");
       const data = await res.json();
-      onChange(data.url);
+      if (!res.ok) {
+        alert("Chyba serveru: " + (data.error || "Upload failed"));
+        setUploading(false);
+        return;
+      }
+      if (data.url) onChange(data.url);
     } catch (e) {
-      alert("Chyba při nahrávání: " + e.message);
+      console.error("Upload error:", e);
+      alert("Chyba při nahrávání: " + (e.message || e));
     }
     setUploading(false);
   };
