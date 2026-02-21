@@ -992,11 +992,15 @@ function renderShowcase1(data) {
     document.getElementById('s1r2').innerHTML = '';
     return;
   }
-  // Build cards and duplicate for seamless scroll
+  // Build cards and distribute alternately between rows
   var r1 = '', r2 = '';
-  var half = Math.ceil(items.length / 2);
-  var set1 = items.slice(0, Math.max(half, 1));
-  var set2 = items.slice(half).length > 0 ? items.slice(half) : items;
+  var set1 = [], set2 = [];
+  for (var k = 0; k < items.length; k++) {
+    if (k % 2 === 0) set1.push(items[k]);
+    else set2.push(items[k]);
+  }
+  if (set1.length === 0) set1 = items;
+  if (set2.length === 0) set2 = items;
   // Need enough cards for seamless scroll (at least 8 visible)
   var reps1 = Math.max(2, Math.ceil(16 / set1.length));
   var reps2 = Math.max(2, Math.ceil(16 / set2.length));
