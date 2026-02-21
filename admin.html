@@ -220,12 +220,24 @@ function AdminPanel() {
   const [subFilter, setSubFilter] = useState("all");
   const [loading, setLoading] = useState(true);
 
-  // Load from API
+  // Load from API (merge with defaults so new keys are always present)
   useEffect(() => {
     (async () => {
       try {
         const r = await apiGet();
-        if (r) setData(r);
+        if (r) {
+          const merged = { ...DEFAULT_DATA };
+          for (const k of Object.keys(DEFAULT_DATA)) {
+            if (r[k] !== undefined) {
+              if (typeof DEFAULT_DATA[k] === "object" && !Array.isArray(DEFAULT_DATA[k])) {
+                merged[k] = { ...DEFAULT_DATA[k], ...r[k] };
+              } else {
+                merged[k] = r[k];
+              }
+            }
+          }
+          setData(merged);
+        }
       } catch (e) { /* use defaults */ }
       setLoading(false);
     })();

@@ -1,10 +1,11 @@
 const { db, verifyAuth } = require("./_db");
 
 module.exports = async function handler(req, res) {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
+
   if (req.method === "OPTIONS") {
-    res.setHeader("Access-Control-Allow-Origin", "*");
-    res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
-    res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
     return res.status(204).end();
   }
 
@@ -30,7 +31,6 @@ module.exports = async function handler(req, res) {
       args: [newPassword, email],
     });
 
-    res.setHeader("Access-Control-Allow-Origin", "*");
     return res.status(200).json({ ok: true });
   } catch (err) {
     console.error("change-password error:", err);
