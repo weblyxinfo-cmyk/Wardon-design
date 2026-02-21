@@ -105,21 +105,46 @@ const DEFAULT_DATA = {
     metaTitle: "Wardon Visuals — Professional YouTube Thumbnail Design",
     metaDescription: "Professional YouTube thumbnail design that drives clicks, money, and curiosity. Custom 3D scenes, A/B testing, and fast 24-48h delivery. Trusted by creators worldwide.",
     metaKeywords: "YouTube thumbnail design, thumbnail designer, YouTube thumbnails, CTR optimization, thumbnail A/B testing, custom thumbnails, 3D thumbnail design, Blender thumbnails",
-    canonicalUrl: "https://wardon-design.vercel.app/",
+    canonicalUrl: "https://www.wardonvisuals.com/",
     robotsIndex: "index",
     robotsFollow: "follow",
     ogTitle: "Wardon Visuals — Professional YouTube Thumbnail Design",
     ogDescription: "Thumbnails that drive clicks. Custom 3D scenes, fast delivery, and designs optimized for maximum CTR. Trusted by creators worldwide.",
-    ogImage: "https://wardon-design.vercel.app/img/pfp.png",
+    ogImage: "https://www.wardonvisuals.com/img/pfp.png",
     twitterCard: "summary",
     twitterTitle: "Wardon Visuals — YouTube Thumbnail Design",
     twitterDescription: "Thumbnails that drive clicks. Custom 3D scenes, fast delivery, and designs optimized for maximum CTR.",
-    twitterImage: "https://wardon-design.vercel.app/img/pfp.png",
+    twitterImage: "https://www.wardonvisuals.com/img/pfp.png",
     schemaName: "Wardon Visuals",
     schemaDescription: "Professional YouTube thumbnail design service. Custom 3D scenes, A/B testing, and fast delivery.",
     schemaServiceType: "YouTube Thumbnail Design",
     schemaPriceRange: "$$",
     schemaAreaServed: "Worldwide",
+    personName: "",
+    personJobTitle: "",
+    personUrl: "",
+    personImage: "",
+    orgFoundingDate: "",
+    orgEmail: "",
+    orgLogo: "",
+    schemaKnowsAbout: "YouTube Thumbnails, Graphic Design, 3D Rendering, Blender, CTR Optimization",
+    serviceCurrency: "USD",
+    serviceMinPrice: "",
+    serviceMaxPrice: "",
+    servicePaymentAccepted: "PayPal, Bank Transfer",
+    serviceTurnaround: "24-48 hours",
+    aiContentDeclaration: "human",
+    aiSpeakableSelector: "",
+    enableFaqSchema: true,
+    enableHowToSchema: true,
+    enableReviewSchema: true,
+    enableBreadcrumbSchema: true,
+    enableSpeakableSchema: false,
+    enableOrganizationSchema: true,
+    enablePersonSchema: false,
+    enableOfferSchema: true,
+    hreflangEntries: [],
+    defaultLang: "en",
   },
 };
 
@@ -356,7 +381,7 @@ function AdminPanel() {
       </main>
 
       {/* MODAL */}
-      {modal && <ModalForm modal={modal} close={() => setModal(null)} addItem={addItem} updateItem={updateItem} />}
+      {modal && <ModalForm modal={modal} close={() => setModal(null)} addItem={addItem} updateItem={updateItem} data={data} />}
 
       {/* TOAST */}
       {toast && <div style={{ position: "fixed", bottom: 24, right: 24, background: toast.includes("Chyba") ? "#ef4444" : "#00eb00", color: "#fff", padding: "10px 20px", borderRadius: 10, fontWeight: 700, fontSize: 13, zIndex: 9999, animation: "fadeIn .3s ease" }}>{toast}</div>}
@@ -527,6 +552,17 @@ function SeoTab({ data, save }) {
       `Thumbnails that drive clicks. Custom 3D scenes, fast delivery, and CTR-optimized designs. Check out ${brandName}.`,
       `Professional YouTube thumbnail design by ${brandName}. Fast turnaround, custom scenes, proven results.`,
     ],
+    personJobTitle: [
+      "YouTube Thumbnail Designer & 3D Artist",
+      "Professional Thumbnail Designer & Visual Creator",
+      "Freelance YouTube Thumbnail Designer",
+      "Creative Director & YouTube Thumbnail Specialist",
+    ],
+    schemaKnowsAbout: [
+      "YouTube Thumbnails, Graphic Design, 3D Rendering, Blender, CTR Optimization, Visual Storytelling, Adobe Photoshop",
+      "Thumbnail Design, YouTube CTR, 3D Modeling, Visual Design, A/B Testing, Color Psychology, Composition",
+      "YouTube Thumbnails, Blender 3D, Photoshop, Click-Through Rate Optimization, Video Marketing, Brand Design",
+    ],
   };
 
   const generateAi = (field) => {
@@ -667,6 +703,160 @@ function SeoTab({ data, save }) {
         </div>
       </div>
 
+      {/* SECTION F: Person & Organization */}
+      <div style={{ background: "#161619", border: "1px solid rgba(255,255,255,.06)", borderRadius: 12, padding: 24, marginBottom: 24 }}>
+        <h3 style={{ fontSize: 15, fontWeight: 700, marginBottom: 16 }}>Person &amp; Organization</h3>
+        <div style={{ display: "flex", flexDirection: "column", gap: 14, maxWidth: 600 }}>
+          <div style={{ fontSize: 12, color: "#55555f", marginBottom: 4, padding: "8px 12px", background: "rgba(255,255,255,.02)", borderRadius: 8, borderLeft: "3px solid #00eb00" }}>
+            Informace o designérovi a organizaci pro strukturovaná data (Person + Organization schema).
+          </div>
+          <Field label="Jméno designéra" value={form.personName} onChange={v => set("personName", v)} placeholder="např. Jan Novák" />
+          <div>
+            <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 6 }}><span style={labelStyle}>Job Title</span> <AiBtn field="personJobTitle" /></div>
+            <input value={form.personJobTitle} onChange={e => set("personJobTitle", e.target.value)} style={fieldInputStyle} placeholder="např. YouTube Thumbnail Designer & 3D Artist" />
+          </div>
+          <Field label="Osobní URL" value={form.personUrl} onChange={v => set("personUrl", v)} placeholder="https://example.com/about" />
+          <ImageUpload label="Fotka designéra" value={form.personImage} onChange={v => set("personImage", v)} rounded />
+          <div style={{ borderTop: "1px solid rgba(255,255,255,.06)", paddingTop: 14, marginTop: 8 }}>
+            <div style={{ fontSize: 13, fontWeight: 700, color: "#8a8a9a", marginBottom: 12 }}>Organizace</div>
+          </div>
+          <Field label="Rok založení" value={form.orgFoundingDate} onChange={v => set("orgFoundingDate", v)} placeholder="např. 2022" />
+          <Field label="Email organizace" value={form.orgEmail} onChange={v => set("orgEmail", v)} placeholder="např. info@wardon.com" />
+          <ImageUpload label="Logo organizace" value={form.orgLogo} onChange={v => set("orgLogo", v)} />
+          <div>
+            <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 6 }}><span style={labelStyle}>Knows About (skills)</span> <AiBtn field="schemaKnowsAbout" /></div>
+            <textarea value={form.schemaKnowsAbout} onChange={e => set("schemaKnowsAbout", e.target.value)} style={{ ...fieldInputStyle, minHeight: 60, resize: "vertical" }} placeholder="YouTube Thumbnails, Graphic Design, 3D Rendering, Blender" />
+            <div style={{ fontSize: 11, color: "#55555f", marginTop: 4 }}>Čárkami oddělený seznam dovedností — použije se v Person i Organization schema.</div>
+          </div>
+        </div>
+      </div>
+
+      {/* SECTION G: Service & Pricing */}
+      <div style={{ background: "#161619", border: "1px solid rgba(255,255,255,.06)", borderRadius: 12, padding: 24, marginBottom: 24 }}>
+        <h3 style={{ fontSize: 15, fontWeight: 700, marginBottom: 16 }}>Service &amp; Pricing</h3>
+        <div style={{ display: "flex", flexDirection: "column", gap: 14, maxWidth: 600 }}>
+          <div style={{ fontSize: 12, color: "#55555f", marginBottom: 4, padding: "8px 12px", background: "rgba(255,255,255,.02)", borderRadius: 8, borderLeft: "3px solid #00eb00" }}>
+            Cenové údaje pro OfferCatalog schema — pomáhá Google zobrazit cenový rozsah přímo ve výsledcích.
+          </div>
+          <Field label="Měna" value={form.serviceCurrency} onChange={v => set("serviceCurrency", v)} placeholder="USD" />
+          <div style={{ display: "flex", gap: 12 }}>
+            <div style={{ flex: 1 }}><Field label="Min. cena" value={form.serviceMinPrice} onChange={v => set("serviceMinPrice", v)} placeholder="např. 50" /></div>
+            <div style={{ flex: 1 }}><Field label="Max. cena" value={form.serviceMaxPrice} onChange={v => set("serviceMaxPrice", v)} placeholder="např. 200" /></div>
+          </div>
+          <Field label="Platební metody" value={form.servicePaymentAccepted} onChange={v => set("servicePaymentAccepted", v)} placeholder="PayPal, Bank Transfer" />
+          <Field label="Dodací lhůta" value={form.serviceTurnaround} onChange={v => set("serviceTurnaround", v)} placeholder="24-48 hours" />
+        </div>
+      </div>
+
+      {/* SECTION H: AI & GEO Optimization */}
+      <div style={{ background: "#161619", border: "1px solid rgba(255,255,255,.06)", borderRadius: 12, padding: 24, marginBottom: 24 }}>
+        <h3 style={{ fontSize: 15, fontWeight: 700, marginBottom: 4 }}>AI &amp; GEO Optimization</h3>
+        <p style={{ fontSize: 12, color: "#55555f", marginBottom: 16 }}>Generative Engine Optimization — optimalizace pro AI vyhledávače (ChatGPT, Perplexity, Google SGE)</p>
+        <div style={{ display: "flex", flexDirection: "column", gap: 14, maxWidth: 600 }}>
+          <div>
+            <div style={labelStyle}>AI Content Declaration</div>
+            <div style={{ display: "flex", gap: 8 }}>
+              {["human", "ai-assisted"].map(v => (
+                <button key={v} onClick={() => set("aiContentDeclaration", v)} style={{ flex: 1, padding: "10px", borderRadius: 8, border: "1px solid " + (form.aiContentDeclaration === v ? "#00eb00" : "rgba(255,255,255,.06)"), background: form.aiContentDeclaration === v ? "rgba(0,235,0,.1)" : "transparent", color: form.aiContentDeclaration === v ? "#00eb00" : "#8a8a9a", cursor: "pointer", fontFamily: "inherit", fontSize: 12, fontWeight: 600 }}>{v === "human" ? "Human-created" : "AI-assisted"}</button>
+              ))}
+            </div>
+            <div style={{ fontSize: 11, color: "#55555f", marginTop: 4 }}>Deklarace pro AI vyhledávače, zda je obsah tvořen člověkem nebo s pomocí AI.</div>
+          </div>
+          <div>
+            <div style={labelStyle}>Speakable CSS selektory</div>
+            <textarea value={form.aiSpeakableSelector} onChange={e => set("aiSpeakableSelector", e.target.value)} style={{ ...fieldInputStyle, minHeight: 60, resize: "vertical" }} placeholder=".hero h1, .hero-sub, .sec-title" />
+            <div style={{ fontSize: 11, color: "#55555f", marginTop: 4 }}>CSS selektory pro hlasové asistenty (Google Assistant, Alexa) — které části stránky jsou vhodné k přečtení nahlas.</div>
+          </div>
+          <div style={{ borderTop: "1px solid rgba(255,255,255,.06)", paddingTop: 14, marginTop: 8 }}>
+            <div style={{ fontSize: 13, fontWeight: 700, color: "#8a8a9a", marginBottom: 12 }}>Auto-generovaná schémata</div>
+            <div style={{ fontSize: 12, color: "#55555f", marginBottom: 14 }}>Zapni/vypni automatické generování JSON-LD schémat z dat webu.</div>
+          </div>
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
+            {[
+              { key: "enableFaqSchema", label: "FAQ Schema", desc: data.faq ? data.faq.length + " otázek" : "0 otázek" },
+              { key: "enableHowToSchema", label: "HowTo Schema", desc: data.process ? data.process.length + " kroků" : "0 kroků" },
+              { key: "enableReviewSchema", label: "Review Schema", desc: data.reviews ? data.reviews.length + " recenzí" : "0 recenzí" },
+              { key: "enableBreadcrumbSchema", label: "Breadcrumb", desc: "Homepage drobečky" },
+              { key: "enableOrganizationSchema", label: "Organization", desc: "Z Person & Org sekce" },
+              { key: "enablePersonSchema", label: "Person", desc: "Z Person & Org sekce" },
+              { key: "enableOfferSchema", label: "Offer Catalog", desc: "Z Service & Pricing" },
+              { key: "enableSpeakableSchema", label: "Speakable", desc: "Pro hlasové asistenty" },
+            ].map(item => (
+              <button key={item.key} onClick={() => set(item.key, !form[item.key])}
+                style={{ padding: "12px 14px", borderRadius: 10, border: "1px solid " + (form[item.key] ? "rgba(0,235,0,.3)" : "rgba(255,255,255,.06)"), background: form[item.key] ? "rgba(0,235,0,.06)" : "rgba(255,255,255,.02)", cursor: "pointer", textAlign: "left", fontFamily: "inherit" }}>
+                <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 4 }}>
+                  <div style={{ width: 18, height: 18, borderRadius: 4, border: "2px solid " + (form[item.key] ? "#00eb00" : "rgba(255,255,255,.15)"), background: form[item.key] ? "#00eb00" : "transparent", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 11, color: "#fff", flexShrink: 0 }}>{form[item.key] ? "✓" : ""}</div>
+                  <span style={{ fontSize: 13, fontWeight: 700, color: form[item.key] ? "#fff" : "#8a8a9a" }}>{item.label}</span>
+                </div>
+                <div style={{ fontSize: 11, color: "#55555f", marginLeft: 26 }}>{item.desc}</div>
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* SECTION I: Internationalization */}
+      <div style={{ background: "#161619", border: "1px solid rgba(255,255,255,.06)", borderRadius: 12, padding: 24, marginBottom: 24 }}>
+        <h3 style={{ fontSize: 15, fontWeight: 700, marginBottom: 16 }}>Internationalizace</h3>
+        <div style={{ display: "flex", flexDirection: "column", gap: 14, maxWidth: 600 }}>
+          <Field label="Výchozí jazyk (ISO 639-1)" value={form.defaultLang} onChange={v => set("defaultLang", v)} placeholder="en" />
+          <div>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 8 }}>
+              <div style={labelStyle}>Hreflang záznamy</div>
+              <button onClick={() => set("hreflangEntries", [...(form.hreflangEntries || []), { lang: "", url: "" }])} style={{ padding: "4px 12px", borderRadius: 6, border: "1px solid rgba(0,235,0,.3)", background: "rgba(0,235,0,.06)", color: "#00eb00", cursor: "pointer", fontFamily: "inherit", fontSize: 11, fontWeight: 600 }}>+ Přidat</button>
+            </div>
+            {(form.hreflangEntries || []).map((entry, i) => (
+              <div key={i} style={{ display: "flex", gap: 8, alignItems: "center", marginBottom: 6 }}>
+                <input value={entry.lang} onChange={e => { const arr = [...form.hreflangEntries]; arr[i] = { ...arr[i], lang: e.target.value }; set("hreflangEntries", arr); }} style={{ ...fieldInputStyle, width: 80 }} placeholder="cs" />
+                <input value={entry.url} onChange={e => { const arr = [...form.hreflangEntries]; arr[i] = { ...arr[i], url: e.target.value }; set("hreflangEntries", arr); }} style={{ ...fieldInputStyle, flex: 1 }} placeholder="https://example.com/cs/" />
+                <button onClick={() => set("hreflangEntries", form.hreflangEntries.filter((_, j) => j !== i))} style={{ background: "none", border: "none", color: "#ef4444", cursor: "pointer", fontSize: 16, padding: 4 }}>×</button>
+              </div>
+            ))}
+            {(!form.hreflangEntries || form.hreflangEntries.length === 0) && <div style={{ fontSize: 12, color: "#55555f" }}>Žádné hreflang záznamy. Web je pouze v jednom jazyce.</div>}
+          </div>
+        </div>
+      </div>
+
+      {/* SECTION J: Social Profiles */}
+      <div style={{ background: "#161619", border: "1px solid rgba(255,255,255,.06)", borderRadius: 12, padding: 24, marginBottom: 24 }}>
+        <h3 style={{ fontSize: 15, fontWeight: 700, marginBottom: 16 }}>Social Profiles</h3>
+        <div style={{ fontSize: 12, color: "#55555f", padding: "12px 14px", background: "rgba(255,255,255,.02)", borderRadius: 8, borderLeft: "3px solid #6366f1" }}>
+          <div style={{ fontWeight: 700, color: "#a78bfa", marginBottom: 4 }}>Automatické propojení</div>
+          Sociální sítě ze záložky <strong style={{ color: "#fff" }}>Socials</strong> se automaticky použijí v Organization a Person schema jako <code style={{ color: "#00eb00" }}>sameAs</code>.
+          {data.socials && data.socials.length > 0 && (
+            <div style={{ marginTop: 8 }}>
+              Aktuálně: {data.socials.map(s => s.platform).join(", ")} ({data.socials.length} profilů)
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* SECTION K: SERP & AI Preview */}
+      <div style={{ background: "#161619", border: "1px solid rgba(255,255,255,.06)", borderRadius: 12, padding: 24, marginBottom: 24 }}>
+        <h3 style={{ fontSize: 15, fontWeight: 700, marginBottom: 16 }}>AI Answer Preview</h3>
+        <div style={{ background: "#1a1a2e", borderRadius: 10, padding: 20, maxWidth: 600, border: "1px solid rgba(138,99,255,.15)" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 12 }}>
+            <div style={{ width: 20, height: 20, borderRadius: "50%", background: "linear-gradient(135deg, #6366f1, #a78bfa)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 10 }}>✦</div>
+            <span style={{ fontSize: 13, fontWeight: 700, color: "#a78bfa" }}>AI Answer</span>
+          </div>
+          <div style={{ fontSize: 13, color: "rgba(255,255,255,.8)", lineHeight: 1.7, marginBottom: 12 }}>
+            <strong>{form.schemaName || data.siteSettings.brandName}</strong> is a {form.schemaServiceType || "professional service"} based {form.schemaAreaServed ? "serving " + form.schemaAreaServed : "worldwide"}.
+            {form.schemaDescription ? " " + form.schemaDescription.slice(0, 120) + (form.schemaDescription.length > 120 ? "..." : "") : ""}
+          </div>
+          {form.serviceMinPrice && form.serviceMaxPrice && (
+            <div style={{ fontSize: 12, color: "#00eb00", marginBottom: 8 }}>
+              Pricing: {form.serviceCurrency} {form.serviceMinPrice}–{form.serviceMaxPrice} · {form.serviceTurnaround || "N/A"}
+            </div>
+          )}
+          <div style={{ fontSize: 11, color: "#55555f" }}>
+            Source: {form.canonicalUrl || "example.com"} · {form.aiContentDeclaration === "ai-assisted" ? "AI-assisted content" : "Human-created content"}
+          </div>
+        </div>
+        <div style={{ marginTop: 12, fontSize: 12, color: "#55555f" }}>
+          Toto je náhled jak AI vyhledávače (ChatGPT, Perplexity, Google SGE) mohou prezentovat vaše strukturovaná data.
+        </div>
+      </div>
+
       <button onClick={() => save({ ...data, seo: form })} style={{ ...addBtnStyle, marginBottom: 32 }}>Uložit SEO nastavení</button>
     </div>
   );
@@ -757,7 +947,7 @@ function SettingsTab({ data, save }) {
 }
 
 // ===== MODAL FORM =====
-function ModalForm({ modal, close, addItem, updateItem }) {
+function ModalForm({ modal, close, addItem, updateItem, data }) {
   const isEdit = !!modal.editing;
   const type = modal.type;
   const [form, setForm] = useState(modal.editing || getDefaults(type));
@@ -780,8 +970,27 @@ function ModalForm({ modal, close, addItem, updateItem }) {
           {type === "thumbnail" && <>
             <ImageUpload label="Obrázek thumbnaily" value={form.image || ""} onChange={v => set("image", v)} />
             <Field label="Název videa" value={form.title} onChange={v => set("title", v)} placeholder="např. TOP 10 PLAYS" />
+            {data && data.creators && data.creators.length > 0 && (
+              <div>
+                <div style={labelStyle}>Vybrat tvůrce (auto-vyplní kanál + avatar)</div>
+                <select
+                  value=""
+                  onChange={e => {
+                    const creator = data.creators.find(c => c.id === e.target.value);
+                    if (creator) {
+                      setForm(prev => ({ ...prev, channel: creator.name, channelAvatar: creator.initials, channelAvatarImage: creator.avatar || "" }));
+                    }
+                  }}
+                  style={fieldInputStyle}
+                >
+                  <option value="">— Vybrat tvůrce —</option>
+                  {data.creators.map(c => <option key={c.id} value={c.id}>{c.name} ({c.subs} subs)</option>)}
+                </select>
+              </div>
+            )}
             <Field label="Kanál" value={form.channel} onChange={v => set("channel", v)} placeholder="např. GamerPro" />
-            <Field label="Iniciály kanálu" value={form.channelAvatar} onChange={v => set("channelAvatar", v)} placeholder="např. GP (zobrazí se v avataru)" />
+            <Field label="Iniciály kanálu" value={form.channelAvatar} onChange={v => set("channelAvatar", v)} placeholder="např. GP (záložní, když není foto)" />
+            <ImageUpload label="Avatar kanálu" value={form.channelAvatarImage || ""} onChange={v => set("channelAvatarImage", v)} rounded />
             <Field label="Views" value={form.views} onChange={v => set("views", v)} placeholder="např. 1.2M" />
             <div>
               <div style={labelStyle}>Kategorie</div>
@@ -800,6 +1009,24 @@ function ModalForm({ modal, close, addItem, updateItem }) {
           </>}
           {type === "review" && <>
             <Field label="Text recenze" value={form.text} onChange={v => set("text", v)} textarea placeholder="Citace klienta, např. Absolutely incredible work..." />
+            {data && data.creators && data.creators.length > 0 && (
+              <div>
+                <div style={labelStyle}>Vybrat tvůrce (auto-vyplní autora + avatar)</div>
+                <select
+                  value=""
+                  onChange={e => {
+                    const creator = data.creators.find(c => c.id === e.target.value);
+                    if (creator) {
+                      setForm(prev => ({ ...prev, author: creator.name, avatar: creator.avatar || "", subs: creator.subs || prev.subs }));
+                    }
+                  }}
+                  style={fieldInputStyle}
+                >
+                  <option value="">— Vybrat tvůrce —</option>
+                  {data.creators.map(c => <option key={c.id} value={c.id}>{c.name} ({c.subs} subs)</option>)}
+                </select>
+              </div>
+            )}
             <Field label="Autor" value={form.author} onChange={v => set("author", v)} placeholder="Celé jméno autora recenze" />
             <ImageUpload label="Avatar autora" value={form.avatar || ""} onChange={v => set("avatar", v)} rounded />
             <Field label="Handle" value={form.handle} onChange={v => set("handle", v)} placeholder="např. @MartinK (sociální síť)" />
@@ -1002,7 +1229,7 @@ function ColorPicker({ value, onChange }) {
 
 function getDefaults(type) {
   const d = {
-    thumbnail: { title: "", channel: "", channelAvatar: "", views: "", icon: "\u{1f3ae}", gradient: 0, category: "showcase1", image: "" },
+    thumbnail: { title: "", channel: "", channelAvatar: "", channelAvatarImage: "", views: "", icon: "\u{1f3ae}", gradient: 0, category: "showcase1", image: "" },
     creator: { name: "", initials: "", subs: "", color: 0, avatar: "" },
     review: { text: "", author: "", handle: "", subs: "", color: 0, rating: 5, avatar: "" },
     stat: { value: "", label: "" },

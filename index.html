@@ -8,7 +8,7 @@
 <meta name="keywords" content="YouTube thumbnail design, thumbnail designer, YouTube thumbnails, CTR optimization, thumbnail A/B testing, custom thumbnails, 3D thumbnail design, Blender thumbnails">
 <meta name="author" content="Wardon Visuals">
 <meta name="robots" content="index, follow">
-<link rel="canonical" href="https://wardon-design.vercel.app/">
+<link rel="canonical" href="https://www.wardonvisuals.com/">
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <link rel="icon" type="image/png" href="/img/pfp.png">
 
@@ -16,25 +16,25 @@
 <meta property="og:type" content="website">
 <meta property="og:title" content="Wardon Visuals — Professional YouTube Thumbnail Design">
 <meta property="og:description" content="Thumbnails that drive clicks. Custom 3D scenes, fast delivery, and designs optimized for maximum CTR. Trusted by creators worldwide.">
-<meta property="og:url" content="https://wardon-design.vercel.app/">
+<meta property="og:url" content="https://www.wardonvisuals.com/">
 <meta property="og:site_name" content="Wardon Visuals">
-<meta property="og:image" content="https://wardon-design.vercel.app/img/pfp.png">
+<meta property="og:image" content="https://www.wardonvisuals.com/img/pfp.png">
 
 <!-- Twitter Card -->
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Wardon Visuals — YouTube Thumbnail Design">
 <meta name="twitter:description" content="Thumbnails that drive clicks. Custom 3D scenes, fast delivery, and designs optimized for maximum CTR.">
-<meta name="twitter:image" content="https://wardon-design.vercel.app/img/pfp.png">
+<meta name="twitter:image" content="https://www.wardonvisuals.com/img/pfp.png">
 
 <!-- Structured Data -->
-<script type="application/ld+json">
+<script type="application/ld+json" id="jsonld-professionalService">
 {
   "@context": "https://schema.org",
   "@type": "ProfessionalService",
   "name": "Wardon Visuals",
   "description": "Professional YouTube thumbnail design service. Custom 3D scenes, A/B testing, and fast delivery.",
-  "url": "https://wardon-design.vercel.app",
-  "image": "https://wardon-design.vercel.app/img/pfp.png",
+  "url": "https://www.wardonvisuals.com",
+  "image": "https://www.wardonvisuals.com/img/pfp.png",
   "priceRange": "$$",
   "areaServed": "Worldwide",
   "serviceType": "YouTube Thumbnail Design",
@@ -299,9 +299,12 @@ img{display:block;max-width:100%}
   width:30px;height:30px;border-radius:50%;flex-shrink:0;
   display:flex;align-items:center;justify-content:center;
   font-size:.55rem;font-weight:800;color:#fff;
+  overflow:hidden;
 }
+.thumb-card .tc-av img{width:100%;height:100%;object-fit:cover;border-radius:50%}
+.thumb-card .tc-info{min-width:0;overflow:hidden}
 .thumb-card .tc-name{font-size:.72rem;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.thumb-card .tc-views{font-size:.6rem;color:var(--gray-dark)}
+.thumb-card .tc-views{font-size:.6rem;color:var(--gray-dark);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 
 /* Showcase #2 — clean thumbs only */
 .thumb{
@@ -530,7 +533,7 @@ footer .footer-links a:hover{color:var(--accent)}
   .nav-pfp{width:24px;height:24px}
   .nav-links{gap:6px}
   .nav-links a{font-size:.55rem}
-  .nav-cta{font-size:.55rem;padding:5px 10px}
+  .nav-cta{font-size:.48rem;padding:3px 7px;border-width:1px}
 
   /* Hero */
   .hero{padding:100px 20px 30px}
@@ -823,21 +826,46 @@ var DEFAULT_DATA = {
     metaTitle: "Wardon Visuals — Professional YouTube Thumbnail Design",
     metaDescription: "Professional YouTube thumbnail design that drives clicks, money, and curiosity. Custom 3D scenes, A/B testing, and fast 24-48h delivery. Trusted by creators worldwide.",
     metaKeywords: "YouTube thumbnail design, thumbnail designer, YouTube thumbnails, CTR optimization, thumbnail A/B testing, custom thumbnails, 3D thumbnail design, Blender thumbnails",
-    canonicalUrl: "https://wardon-design.vercel.app/",
+    canonicalUrl: "https://www.wardonvisuals.com/",
     robotsIndex: "index",
     robotsFollow: "follow",
     ogTitle: "Wardon Visuals — Professional YouTube Thumbnail Design",
     ogDescription: "Thumbnails that drive clicks. Custom 3D scenes, fast delivery, and designs optimized for maximum CTR. Trusted by creators worldwide.",
-    ogImage: "https://wardon-design.vercel.app/img/pfp.png",
+    ogImage: "https://www.wardonvisuals.com/img/pfp.png",
     twitterCard: "summary",
     twitterTitle: "Wardon Visuals — YouTube Thumbnail Design",
     twitterDescription: "Thumbnails that drive clicks. Custom 3D scenes, fast delivery, and designs optimized for maximum CTR.",
-    twitterImage: "https://wardon-design.vercel.app/img/pfp.png",
+    twitterImage: "https://www.wardonvisuals.com/img/pfp.png",
     schemaName: "Wardon Visuals",
     schemaDescription: "Professional YouTube thumbnail design service. Custom 3D scenes, A/B testing, and fast delivery.",
     schemaServiceType: "YouTube Thumbnail Design",
     schemaPriceRange: "$$",
     schemaAreaServed: "Worldwide",
+    personName: "",
+    personJobTitle: "",
+    personUrl: "",
+    personImage: "",
+    orgFoundingDate: "",
+    orgEmail: "",
+    orgLogo: "",
+    schemaKnowsAbout: "YouTube Thumbnails, Graphic Design, 3D Rendering, Blender, CTR Optimization",
+    serviceCurrency: "USD",
+    serviceMinPrice: "",
+    serviceMaxPrice: "",
+    servicePaymentAccepted: "PayPal, Bank Transfer",
+    serviceTurnaround: "24-48 hours",
+    aiContentDeclaration: "human",
+    aiSpeakableSelector: "",
+    enableFaqSchema: true,
+    enableHowToSchema: true,
+    enableReviewSchema: true,
+    enableBreadcrumbSchema: true,
+    enableSpeakableSchema: false,
+    enableOrganizationSchema: true,
+    enablePersonSchema: false,
+    enableOfferSchema: true,
+    hreflangEntries: [],
+    defaultLang: "en",
   },
 };
 
@@ -919,18 +947,24 @@ function makeThumbCardFromData(t) {
   var avColor = AVATAR_COLORS[(t.gradient || 0) % 10];
   var imgContent;
   if (t.image) {
-    imgContent = '<img src="' + esc(t.image) + '" alt="' + esc(t.title) + '" style="width:100%;height:100%;object-fit:contain;position:absolute;inset:0">';
+    imgContent = '<img src="' + esc(t.image) + '" alt="' + esc(t.title) + '" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0">';
   } else {
     imgContent = '<div style="font-size:4.5rem;opacity:.05;font-weight:900;position:absolute">' + t.icon + '</div>' +
       '<div style="font-size:2rem;z-index:1;">' + t.icon + '</div>';
+  }
+  var avatarHtml;
+  if (t.channelAvatarImage) {
+    avatarHtml = '<div class="tc-av" style="background:' + avColor + '"><img src="' + esc(t.channelAvatarImage) + '" alt="' + esc(t.channel) + '"></div>';
+  } else {
+    avatarHtml = '<div class="tc-av" style="background:' + avColor + '">' + esc(t.channelAvatar) + '</div>';
   }
   return '<div class="thumb-card">' +
     '<div class="tc-img" style="background:' + (t.image ? '#0a0a0c' : grad) + '">' +
       imgContent +
     '</div>' +
     '<div class="tc-meta">' +
-      '<div class="tc-av" style="background:' + avColor + '">' + esc(t.channelAvatar) + '</div>' +
-      '<div>' +
+      avatarHtml +
+      '<div class="tc-info">' +
         '<div class="tc-name">' + esc(t.channel) + '</div>' +
         '<div class="tc-views">' + esc(t.title) + ' \u00b7 ' + esc(t.views) + ' views</div>' +
       '</div>' +
@@ -942,7 +976,7 @@ function makeThumbFromData(t) {
   var grad = GRADIENTS[t.gradient % 10];
   if (t.image) {
     return '<div class="thumb" style="background:#0a0a0c">' +
-      '<img src="' + esc(t.image) + '" alt="' + esc(t.title) + '" style="width:100%;height:100%;object-fit:contain;position:absolute;inset:0">' +
+      '<img src="' + esc(t.image) + '" alt="' + esc(t.title) + '" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0">' +
     '</div>';
   }
   return '<div class="thumb" style="background:' + grad + '">' +
@@ -1101,6 +1135,23 @@ function renderFooter(data) {
   // Footer brand already handled by renderBrandName
 }
 
+// ===== JSON-LD HELPERS =====
+function setJsonLd(id, obj) {
+  var el = document.getElementById(id);
+  if (!el) {
+    el = document.createElement('script');
+    el.type = 'application/ld+json';
+    el.id = id;
+    document.head.appendChild(el);
+  }
+  el.textContent = JSON.stringify(obj, null, 2);
+}
+
+function removeJsonLd(id) {
+  var el = document.getElementById(id);
+  if (el) el.remove();
+}
+
 function renderSEO(data) {
   var seo = data.seo;
   if (!seo) return;
@@ -1127,6 +1178,11 @@ function renderSEO(data) {
     setMeta('name', 'robots', (seo.robotsIndex || 'index') + ', ' + (seo.robotsFollow || 'follow'));
   }
 
+  // AI Content Declaration
+  if (seo.aiContentDeclaration) {
+    setMeta('name', 'ai-content-declaration', seo.aiContentDeclaration);
+  }
+
   // Canonical
   if (seo.canonicalUrl) {
     var canon = document.querySelector('link[rel="canonical"]');
@@ -1136,6 +1192,32 @@ function renderSEO(data) {
       document.head.appendChild(canon);
     }
     canon.setAttribute('href', seo.canonicalUrl);
+  }
+
+  // Hreflang tags
+  document.querySelectorAll('link[hreflang]').forEach(function(el) { el.remove(); });
+  if (seo.defaultLang) {
+    var defHl = document.createElement('link');
+    defHl.setAttribute('rel', 'alternate');
+    defHl.setAttribute('hreflang', seo.defaultLang);
+    defHl.setAttribute('href', seo.canonicalUrl || window.location.href);
+    document.head.appendChild(defHl);
+  }
+  if (seo.hreflangEntries && seo.hreflangEntries.length > 0) {
+    seo.hreflangEntries.forEach(function(entry) {
+      if (entry.lang && entry.url) {
+        var hl = document.createElement('link');
+        hl.setAttribute('rel', 'alternate');
+        hl.setAttribute('hreflang', entry.lang);
+        hl.setAttribute('href', entry.url);
+        document.head.appendChild(hl);
+      }
+    });
+    var xDef = document.createElement('link');
+    xDef.setAttribute('rel', 'alternate');
+    xDef.setAttribute('hreflang', 'x-default');
+    xDef.setAttribute('href', seo.canonicalUrl || window.location.href);
+    document.head.appendChild(xDef);
   }
 
   // Open Graph
@@ -1150,22 +1232,190 @@ function renderSEO(data) {
   if (seo.twitterDescription) setMeta('name', 'twitter:description', seo.twitterDescription);
   if (seo.twitterImage) setMeta('name', 'twitter:image', seo.twitterImage);
 
-  // Structured Data (JSON-LD)
-  var ldEl = document.querySelector('script[type="application/ld+json"]');
-  if (ldEl && (seo.schemaName || seo.schemaDescription)) {
-    var ld = {
-      "@context": "https://schema.org",
-      "@type": "ProfessionalService",
-      "name": seo.schemaName || data.siteSettings.brandName,
-      "description": seo.schemaDescription || "",
-      "url": seo.canonicalUrl || window.location.origin,
-      "image": seo.ogImage || "",
-      "priceRange": seo.schemaPriceRange || "$$",
-      "areaServed": seo.schemaAreaServed || "Worldwide",
-      "serviceType": seo.schemaServiceType || "",
-      "knowsAbout": ["YouTube Thumbnails", "Graphic Design", "3D Rendering", "Blender", "CTR Optimization"]
+  // Collect sameAs from socials
+  var sameAs = [];
+  if (data.socials) {
+    data.socials.forEach(function(s) {
+      if (s.url) sameAs.push(s.url);
+    });
+  }
+
+  // Parse knowsAbout
+  var knowsAbout = ["YouTube Thumbnails", "Graphic Design", "3D Rendering", "Blender", "CTR Optimization"];
+  if (seo.schemaKnowsAbout) {
+    knowsAbout = seo.schemaKnowsAbout.split(',').map(function(s) { return s.trim(); }).filter(Boolean);
+  }
+
+  // === ProfessionalService (main schema) ===
+  var profService = {
+    "@context": "https://schema.org",
+    "@type": "ProfessionalService",
+    "name": seo.schemaName || data.siteSettings.brandName,
+    "description": seo.schemaDescription || "",
+    "url": seo.canonicalUrl || window.location.origin,
+    "image": seo.ogImage || "",
+    "priceRange": seo.schemaPriceRange || "$$",
+    "areaServed": seo.schemaAreaServed || "Worldwide",
+    "serviceType": seo.schemaServiceType || "",
+    "knowsAbout": knowsAbout
+  };
+  if (sameAs.length > 0) profService.sameAs = sameAs;
+
+  // AggregateRating + Review into ProfessionalService
+  if (seo.enableReviewSchema && data.reviews && data.reviews.length > 0) {
+    var totalRating = 0;
+    var reviewObjs = [];
+    data.reviews.forEach(function(r) {
+      totalRating += (r.rating || 5);
+      reviewObjs.push({
+        "@type": "Review",
+        "author": { "@type": "Person", "name": r.author },
+        "reviewRating": { "@type": "Rating", "ratingValue": r.rating || 5, "bestRating": 5 },
+        "reviewBody": r.text
+      });
+    });
+    profService.aggregateRating = {
+      "@type": "AggregateRating",
+      "ratingValue": (totalRating / data.reviews.length).toFixed(1),
+      "reviewCount": data.reviews.length,
+      "bestRating": 5,
+      "worstRating": 1
     };
-    ldEl.textContent = JSON.stringify(ld, null, 2);
+    profService.review = reviewObjs;
+  }
+
+  // OfferCatalog into ProfessionalService
+  if (seo.enableOfferSchema && seo.serviceMinPrice && seo.serviceMaxPrice) {
+    profService.hasOfferCatalog = {
+      "@type": "OfferCatalog",
+      "name": seo.schemaServiceType || "Thumbnail Design Services",
+      "itemListElement": [{
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": seo.schemaServiceType || "YouTube Thumbnail Design"
+        },
+        "priceCurrency": seo.serviceCurrency || "USD",
+        "lowPrice": seo.serviceMinPrice,
+        "highPrice": seo.serviceMaxPrice
+      }]
+    };
+    if (seo.servicePaymentAccepted) profService.paymentAccepted = seo.servicePaymentAccepted;
+  }
+
+  setJsonLd('jsonld-professionalService', profService);
+
+  // === FAQPage Schema ===
+  if (seo.enableFaqSchema && data.faq && data.faq.length > 0) {
+    var faqSchema = {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": data.faq.map(function(f) {
+        return {
+          "@type": "Question",
+          "name": f.q,
+          "acceptedAnswer": { "@type": "Answer", "text": f.a }
+        };
+      })
+    };
+    setJsonLd('jsonld-faq', faqSchema);
+  } else {
+    removeJsonLd('jsonld-faq');
+  }
+
+  // === HowTo Schema ===
+  if (seo.enableHowToSchema && data.process && data.process.length > 0) {
+    var howTo = {
+      "@context": "https://schema.org",
+      "@type": "HowTo",
+      "name": "How to get a professional YouTube thumbnail",
+      "description": seo.schemaDescription || "Step-by-step thumbnail design process",
+      "step": data.process.map(function(p, i) {
+        var step = {
+          "@type": "HowToStep",
+          "position": i + 1,
+          "name": p.title,
+          "text": p.desc
+        };
+        if (p.img) step.image = p.img;
+        return step;
+      })
+    };
+    setJsonLd('jsonld-howto', howTo);
+  } else {
+    removeJsonLd('jsonld-howto');
+  }
+
+  // === Organization Schema ===
+  if (seo.enableOrganizationSchema) {
+    var org = {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": seo.schemaName || data.siteSettings.brandName,
+      "url": seo.canonicalUrl || window.location.origin
+    };
+    if (seo.orgLogo) org.logo = seo.orgLogo;
+    if (seo.orgEmail) org.email = seo.orgEmail;
+    if (seo.orgFoundingDate) org.foundingDate = seo.orgFoundingDate;
+    if (knowsAbout.length > 0) org.knowsAbout = knowsAbout;
+    if (sameAs.length > 0) org.sameAs = sameAs;
+    setJsonLd('jsonld-organization', org);
+  } else {
+    removeJsonLd('jsonld-organization');
+  }
+
+  // === Person Schema ===
+  if (seo.enablePersonSchema && seo.personName) {
+    var person = {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": seo.personName
+    };
+    if (seo.personJobTitle) person.jobTitle = seo.personJobTitle;
+    if (seo.personUrl) person.url = seo.personUrl;
+    if (seo.personImage) person.image = seo.personImage;
+    if (knowsAbout.length > 0) person.knowsAbout = knowsAbout;
+    if (sameAs.length > 0) person.sameAs = sameAs;
+    setJsonLd('jsonld-person', person);
+  } else {
+    removeJsonLd('jsonld-person');
+  }
+
+  // === BreadcrumbList Schema ===
+  if (seo.enableBreadcrumbSchema) {
+    var breadcrumb = {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [{
+        "@type": "ListItem",
+        "position": 1,
+        "name": seo.schemaName || data.siteSettings.brandName,
+        "item": seo.canonicalUrl || window.location.origin
+      }]
+    };
+    setJsonLd('jsonld-breadcrumb', breadcrumb);
+  } else {
+    removeJsonLd('jsonld-breadcrumb');
+  }
+
+  // === Speakable (WebPage) Schema ===
+  if (seo.enableSpeakableSchema && seo.aiSpeakableSelector) {
+    var selectors = seo.aiSpeakableSelector.split(',').map(function(s) { return s.trim(); }).filter(Boolean);
+    if (selectors.length > 0) {
+      var speakable = {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "name": seo.metaTitle || document.title,
+        "speakable": {
+          "@type": "SpeakableSpecification",
+          "cssSelector": selectors
+        },
+        "url": seo.canonicalUrl || window.location.href
+      };
+      setJsonLd('jsonld-speakable', speakable);
+    }
+  } else {
+    removeJsonLd('jsonld-speakable');
   }
 }
 
