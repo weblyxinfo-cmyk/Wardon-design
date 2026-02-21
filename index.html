@@ -528,12 +528,12 @@ footer .footer-links a:hover{color:var(--accent)}
 
 /* ===== MOBILE ===== */
 @media(max-width:768px){
-  /* Nav - fit everything, center links */
-  .nav{top:10px;padding:5px 8px;gap:6px}
-  .nav-pfp{width:24px;height:24px}
-  .nav-links{gap:6px;flex:1;justify-content:center}
+  /* Nav - center links, pfp absolute so it doesn't push text */
+  .nav{top:10px;padding:8px 12px;gap:6px;position:fixed;justify-content:center}
+  .nav-pfp{width:24px;height:24px;position:absolute;left:8px}
+  .nav-links{gap:6px;justify-content:center}
   .nav-links a{font-size:.55rem}
-  .nav-cta{width:24px;padding:0;border:none;background:none;color:transparent;font-size:0;pointer-events:none}
+  .nav-cta{display:none}
 
   /* Hero */
   .hero{padding:100px 20px 30px}
