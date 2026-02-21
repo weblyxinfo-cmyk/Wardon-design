@@ -1,4 +1,9 @@
 {
+  "functions": {
+    "api/upload.js": {
+      "maxDuration": 30
+    }
+  },
   "rewrites": [
     { "source": "/admin", "destination": "/admin.html" },
     { "source": "/api/:path*", "destination": "/api/:path*" }

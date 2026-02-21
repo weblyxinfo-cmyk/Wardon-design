@@ -47,6 +47,7 @@ const Icons = {
   edit: <svg width="15" height="15" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>,
   x: <svg width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>,
   logout: <svg width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>,
+  search: <svg width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>,
 };
 
 // ===== CONSTANTS =====
@@ -84,22 +85,42 @@ const DEFAULT_DATA = {
     { id: "s3", value: "40+", label: "Projects" },
   ],
   process: [
-    { id: "p1", title: "Contact me", desc: "Contact me through the form you can get to when you click Get Started.", img: "/img/process-1.png" },
-    { id: "p2", title: "Custom scene", desc: "I will create a custom scene based on your video and expectations. Without you posing on camera.", img: "/img/process-2.png" },
-    { id: "p3", title: "Finished work", desc: "At the end I will finish the final version that brings clicks on your video. We can also A/B test the thumbnail.", img: "/img/process-3.png" },
+    { id: "p1", title: "Brief & Strategy", desc: "Everything starts with clear communication. After filling out a short form, you'll share your video topic, goal, target audience, and any references you like. Based on this, I analyze your niche and competitors to define a direction with the highest potential to perform.", img: "/img/process-1.png" },
+    { id: "p2", title: "Concept & Custom Scene", desc: "I create a visual concept that tells a story and triggers emotion. I work with composition, contrast, lighting, and color psychology to make sure the thumbnail stands out even at a small size. If needed, I can build a fully custom scene in Blender without you having to pose on camera.", img: "/img/process-2.png" },
+    { id: "p3", title: "Finalization & Optimization", desc: "Once the concept is approved, I refine every detail \u2014 lighting, shadows, depth, textures, and key highlight elements. The thumbnail is optimized for mobile viewing and maximum readability. The final result is designed to increase CTR and overall video performance. If needed, we can test A/B versions.", img: "/img/process-3.png" },
   ],
   faq: [
     { id: "f1", q: "How fast do you deliver?", a: "Standard delivery is 24-48 hours." },
     { id: "f4", q: "Do you do A/B testing?", a: "Yes i do." },
     { id: "f5", q: "Do you work with international creators?", a: "Absolutely. I work with creators worldwide." },
   ],
-  about: { headline: "Design that drives results.", text1: "I specialize in YouTube thumbnails, branding, and visual design.", text2: "Working with creators from 10K to 5M+ subscribers." },
+  about: { headline: "Design that drives results.", text1: "I specialize in YouTube thumbnails, branding, and visual design.", text2: "Working with creators from 10K to 5M+ subscribers.", photo: "" },
   socials: [
     { id: "so1", platform: "Instagram", url: "https://instagram.com/" },
     { id: "so2", platform: "Twitter / X", url: "https://x.com/" },
     { id: "so3", platform: "Behance", url: "https://behance.net/" },
   ],
   siteSettings: { brandName: "Wardon Visuals", heroHeadline: "Crafting Instant Clicks.", heroSub: "As a creator, you need as many people as possible to click on your video. A professional thumbnail is the first step to success.", email: "wardondesign@gmail.com" },
+  seo: {
+    metaTitle: "Wardon Visuals — Professional YouTube Thumbnail Design",
+    metaDescription: "Professional YouTube thumbnail design that drives clicks, money, and curiosity. Custom 3D scenes, A/B testing, and fast 24-48h delivery. Trusted by creators worldwide.",
+    metaKeywords: "YouTube thumbnail design, thumbnail designer, YouTube thumbnails, CTR optimization, thumbnail A/B testing, custom thumbnails, 3D thumbnail design, Blender thumbnails",
+    canonicalUrl: "https://wardon-design.vercel.app/",
+    robotsIndex: "index",
+    robotsFollow: "follow",
+    ogTitle: "Wardon Visuals — Professional YouTube Thumbnail Design",
+    ogDescription: "Thumbnails that drive clicks. Custom 3D scenes, fast delivery, and designs optimized for maximum CTR. Trusted by creators worldwide.",
+    ogImage: "https://wardon-design.vercel.app/img/pfp.png",
+    twitterCard: "summary",
+    twitterTitle: "Wardon Visuals — YouTube Thumbnail Design",
+    twitterDescription: "Thumbnails that drive clicks. Custom 3D scenes, fast delivery, and designs optimized for maximum CTR.",
+    twitterImage: "https://wardon-design.vercel.app/img/pfp.png",
+    schemaName: "Wardon Visuals",
+    schemaDescription: "Professional YouTube thumbnail design service. Custom 3D scenes, A/B testing, and fast delivery.",
+    schemaServiceType: "YouTube Thumbnail Design",
+    schemaPriceRange: "$$",
+    schemaAreaServed: "Worldwide",
+  },
 };
 
 function uid() { return Date.now().toString(36) + Math.random().toString(36).slice(2, 7); }
@@ -238,6 +259,7 @@ function AdminPanel() {
     { id: "faq", label: "FAQ", icon: Icons.help, count: data.faq.length },
     { id: "about", label: "About", icon: Icons.user },
     { id: "socials", label: "Socials", icon: Icons.grid, count: data.socials.length },
+    { id: "seo", label: "SEO", icon: Icons.search },
     { id: "settings", label: "Nastavení", icon: Icons.settings },
   ];
 
@@ -280,7 +302,7 @@ function AdminPanel() {
           onDelete={(id) => deleteItem("creators", id)} onAdd={() => setModal({ type: "creator" })}
           renderItem={(c) => (
             <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
-              <div style={{ width: 40, height: 40, borderRadius: "50%", background: AVATAR_COLORS[c.color % 10], display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 800, fontSize: 12 }}>{c.initials}</div>
+              {c.avatar ? <img src={c.avatar} alt={c.name} style={{ width: 40, height: 40, borderRadius: "50%", objectFit: "cover" }} onError={e => { e.target.style.display = "none"; }} /> : <div style={{ width: 40, height: 40, borderRadius: "50%", background: AVATAR_COLORS[c.color % 10], display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 800, fontSize: 12 }}>{c.initials}</div>}
               <div><div style={{ fontWeight: 700 }}>{c.name}</div><div style={{ fontSize: 12, color: "#55555f" }}>{c.subs} odběratelů</div></div>
             </div>
           )} onEdit={(c) => setModal({ type: "creator", editing: c })} />}
@@ -317,7 +339,7 @@ function AdminPanel() {
           renderItem={(f) => (
             <div><div style={{ fontWeight: 700, marginBottom: 6 }}>{f.q}</div><div style={{ fontSize: 12, color: "#8a8a9a", lineHeight: 1.5 }}>{f.a}</div></div>
           )} onEdit={(f) => setModal({ type: "faq", editing: f })} />}
-        {activeTab === "about" && <AboutTab data={data} save={save} />}
+        {activeTab === "about" && <AboutTab data={data} save={save} setModal={setModal} />}
         {activeTab === "socials" && <CrudSection title="Socials" subtitle="Odkazy na sociální sítě" items={data.socials}
           onDelete={(id) => deleteItem("socials", id)} onAdd={() => setModal({ type: "social" })}
           renderItem={(s) => (
@@ -326,6 +348,7 @@ function AdminPanel() {
               <div style={{ fontSize: 12, color: "#00eb00", wordBreak: "break-all" }}>{s.url}</div>
             </div>
           )} onEdit={(s) => setModal({ type: "social", editing: s })} />}
+        {activeTab === "seo" && <SeoTab data={data} save={save} />}
         {activeTab === "settings" && <SettingsTab data={data} save={save} />}
       </main>
 
@@ -361,8 +384,8 @@ function ThumbnailsTab({ data, subFilter, setSubFilter, onDelete, onAdd, onEdit,
       <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))", gap: 14 }}>
         {filtered.map(t => (
           <div key={t.id} style={{ borderRadius: 12, overflow: "hidden", border: "1px solid rgba(255,255,255,.06)", background: "#161619", transition: "all .3s" }}>
-            <div style={{ height: 140, background: GRADIENTS[t.gradient % 10], display: "flex", alignItems: "center", justifyContent: "center", position: "relative" }}>
-              <span style={{ fontSize: 40 }}>{t.icon}</span>
+            <div style={{ height: 140, background: t.image ? "#000" : GRADIENTS[t.gradient % 10], display: "flex", alignItems: "center", justifyContent: "center", position: "relative", overflow: "hidden" }}>
+              {t.image ? <img src={t.image} alt={t.title} style={{ width: "100%", height: "100%", objectFit: "cover" }} onError={e => { e.target.style.display = "none"; }} /> : <span style={{ fontSize: 40 }}>{t.icon}</span>}
               <div style={{ position: "absolute", top: 8, right: 8, background: t.category === "showcase1" ? "#00eb00" : "#6366f1", padding: "3px 10px", borderRadius: 6, fontSize: 10, fontWeight: 700 }}>
                 {t.category === "showcase1" ? "S1" : "S2"}
               </div>
@@ -407,21 +430,246 @@ function CrudSection({ title, subtitle, items, onDelete, onAdd, renderItem, onEd
 }
 
 // ===== ABOUT TAB =====
-function AboutTab({ data, save }) {
+function AboutTab({ data, save, setModal }) {
   const [form, setForm] = useState(data.about);
+  const deleteStatFromAbout = (id) => { save({ ...data, stats: data.stats.filter(x => x.id !== id) }); };
   return (
     <div>
       <h1 style={{ fontSize: 22, fontWeight: 800, marginBottom: 4 }}>About Me</h1>
-      <p style={{ fontSize: 13, color: "#8a8a9a", marginBottom: 24 }}>Sekce "Built for Creators"</p>
-      <div style={{ display: "flex", flexDirection: "column", gap: 16, maxWidth: 600 }}>
-        <Field label="Headline" value={form.headline} onChange={v => setForm({ ...form, headline: v })} />
-        <Field label="Text 1" value={form.text1} onChange={v => setForm({ ...form, text1: v })} textarea />
-        <Field label="Text 2" value={form.text2} onChange={v => setForm({ ...form, text2: v })} textarea />
-        <button onClick={() => save({ ...data, about: form })} style={{ ...addBtnStyle, alignSelf: "flex-start" }}>Uložit</button>
+      <p style={{ fontSize: 13, color: "#8a8a9a", marginBottom: 24 }}>Sekce "Built for Creators" — texty + statistiky zobrazené na homepage</p>
+
+      {/* ABOUT TEXT */}
+      <div style={{ background: "#161619", border: "1px solid rgba(255,255,255,.06)", borderRadius: 12, padding: 24, marginBottom: 32 }}>
+        <h3 style={{ fontSize: 15, fontWeight: 700, marginBottom: 16 }}>Texty sekce</h3>
+        <div style={{ display: "flex", flexDirection: "column", gap: 14, maxWidth: 600 }}>
+          <Field label="Nadpis sekce" value={form.headline} onChange={v => setForm({ ...form, headline: v })} placeholder="např. Design that drives results." />
+          <Field label="Hlavní text (levý sloupec)" value={form.text1} onChange={v => setForm({ ...form, text1: v })} textarea placeholder="Popis vaší práce a specializace..." />
+          <Field label="Doplňkový text" value={form.text2} onChange={v => setForm({ ...form, text2: v })} textarea placeholder="Další informace o zkušenostech..." />
+          <ImageUpload label="Fotka / Obrázek" value={form.photo || ""} onChange={v => setForm({ ...form, photo: v })} />
+          <button onClick={() => save({ ...data, about: form })} style={{ ...addBtnStyle, alignSelf: "flex-start" }}>Uložit texty</button>
+        </div>
+      </div>
+
+      {/* STATS IN ABOUT */}
+      <div style={{ background: "#161619", border: "1px solid rgba(255,255,255,.06)", borderRadius: 12, padding: 24 }}>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16 }}>
+          <div>
+            <h3 style={{ fontSize: 15, fontWeight: 700, marginBottom: 4 }}>Statistiky</h3>
+            <p style={{ fontSize: 12, color: "#55555f" }}>Zobrazují se v About sekci i ve Stats marquee na homepage</p>
+          </div>
+          <button onClick={() => setModal({ type: "stat" })} style={addBtnStyle}>{Icons.plus} Přidat</button>
+        </div>
+        <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+          {data.stats.map(s => (
+            <div key={s.id} style={{ padding: 14, borderRadius: 10, background: "rgba(255,255,255,.02)", border: "1px solid rgba(255,255,255,.04)", display: "flex", justifyContent: "space-between", alignItems: "center", gap: 16 }}>
+              <div style={{ display: "flex", alignItems: "baseline", gap: 12 }}>
+                <span style={{ fontSize: 22, fontWeight: 800 }}>{s.value}</span>
+                <span style={{ fontSize: 13, color: "#8a8a9a" }}>{s.label}</span>
+              </div>
+              <div style={{ display: "flex", gap: 8, flexShrink: 0 }}>
+                <button onClick={() => setModal({ type: "stat", editing: s })} style={smallBtnStyle}>{Icons.edit}</button>
+                <button onClick={() => deleteStatFromAbout(s.id)} style={{ ...smallBtnStyle, color: "#ef4444" }}>{Icons.trash}</button>
+              </div>
+            </div>
+          ))}
+          {data.stats.length === 0 && <div style={{ textAlign: "center", padding: 24, color: "#55555f" }}>Žádné statistiky. Klikni na "Přidat".</div>}
+        </div>
       </div>
     </div>
   );
 }
+
+// ===== SEO TAB =====
+function SeoTab({ data, save }) {
+  const seoDefaults = DEFAULT_DATA.seo;
+  const [form, setForm] = useState({ ...seoDefaults, ...(data.seo || {}) });
+  const [aiLoading, setAiLoading] = useState(null);
+  const set = (k, v) => setForm({ ...form, [k]: v });
+
+  const charCounter = (val, min, max) => {
+    const len = (val || "").length;
+    const color = len >= min && len <= max ? "#00eb00" : len > max ? "#ef4444" : "#f59e0b";
+    return <span style={{ fontSize: 11, color, fontWeight: 600 }}>{len} / {min}-{max} znaků</span>;
+  };
+
+  // AI text generation templates
+  const brandName = data.siteSettings?.brandName || "Wardon Visuals";
+  const aiTemplates = {
+    metaTitle: [
+      `${brandName} — Professional YouTube Thumbnail Design`,
+      `${brandName} | Custom Thumbnails That Drive Clicks`,
+      `${brandName} — Thumbnail Designer for YouTubers`,
+      `${brandName} | YouTube Thumbnail Design & CTR Boost`,
+    ],
+    metaDescription: [
+      `Professional YouTube thumbnail design by ${brandName}. Custom 3D scenes, A/B testing, and fast 24-48h delivery. Trusted by creators worldwide. Boost your CTR today.`,
+      `${brandName} creates stunning YouTube thumbnails that drive clicks and views. Custom designs, fast turnaround, and proven results for creators of all sizes.`,
+      `Get professional YouTube thumbnails from ${brandName}. Expert design, 3D renders, and CTR optimization. Trusted by 20+ creators with 3M+ views generated.`,
+    ],
+    ogTitle: [
+      `${brandName} — Thumbnails That Drive Clicks`,
+      `${brandName} | Professional YouTube Thumbnail Design`,
+      `Get More Clicks with ${brandName} Thumbnail Design`,
+    ],
+    ogDescription: [
+      `Professional thumbnail design that stops the scroll. Custom 3D scenes, fast delivery, and designs optimized for maximum CTR. Get started today.`,
+      `Thumbnails crafted to drive clicks and curiosity. ${brandName} delivers professional YouTube thumbnail design trusted by creators worldwide.`,
+    ],
+    twitterTitle: [
+      `${brandName} — YouTube Thumbnail Design`,
+      `Professional Thumbnails by ${brandName}`,
+      `${brandName} | Click-Worthy Thumbnail Design`,
+    ],
+    twitterDescription: [
+      `Thumbnails that drive clicks. Custom 3D scenes, fast delivery, and CTR-optimized designs. Check out ${brandName}.`,
+      `Professional YouTube thumbnail design by ${brandName}. Fast turnaround, custom scenes, proven results.`,
+    ],
+  };
+
+  const generateAi = (field) => {
+    setAiLoading(field);
+    setTimeout(() => {
+      const templates = aiTemplates[field];
+      if (templates) {
+        const current = form[field] || "";
+        const available = templates.filter(t => t !== current);
+        const pick = available[Math.floor(Math.random() * available.length)] || templates[0];
+        set(field, pick);
+      }
+      setAiLoading(null);
+    }, 600);
+  };
+
+  const aiBtnStyle = { padding: "4px 10px", borderRadius: 6, border: "1px solid rgba(138,99,255,.3)", background: "rgba(138,99,255,.1)", color: "#a78bfa", cursor: "pointer", fontFamily: "inherit", fontSize: 11, fontWeight: 600, display: "inline-flex", alignItems: "center", gap: 4 };
+
+  const AiBtn = ({ field }) => (
+    <button onClick={() => generateAi(field)} disabled={aiLoading === field} style={{ ...aiBtnStyle, opacity: aiLoading === field ? 0.5 : 1 }}>
+      {aiLoading === field ? "..." : "✦ Generovat"}
+    </button>
+  );
+
+  // SERP Preview
+  const previewTitle = (form.metaTitle || "").slice(0, 60) || "Název stránky";
+  const previewUrl = form.canonicalUrl || "https://example.com";
+  const previewDesc = (form.metaDescription || "").slice(0, 160) || "Popis stránky...";
+
+  return (
+    <div>
+      <h1 style={{ fontSize: 22, fontWeight: 800, marginBottom: 4 }}>SEO</h1>
+      <p style={{ fontSize: 13, color: "#8a8a9a", marginBottom: 24 }}>Správa meta tagů, Open Graph, Twitter Card a strukturovaných dat</p>
+
+      {/* SECTION A: Basic SEO */}
+      <div style={{ background: "#161619", border: "1px solid rgba(255,255,255,.06)", borderRadius: 12, padding: 24, marginBottom: 24 }}>
+        <h3 style={{ fontSize: 15, fontWeight: 700, marginBottom: 16 }}>Základní SEO</h3>
+        <div style={{ display: "flex", flexDirection: "column", gap: 14, maxWidth: 600 }}>
+          <div>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+              <div style={{ display: "flex", alignItems: "center", gap: 8 }}><span style={labelStyle}>Meta Title</span> <AiBtn field="metaTitle" /></div>
+              {charCounter(form.metaTitle, 50, 60)}
+            </div>
+            <input value={form.metaTitle} onChange={e => set("metaTitle", e.target.value)} style={fieldInputStyle} placeholder="Název stránky pro vyhledávače" />
+          </div>
+          <div>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+              <div style={{ display: "flex", alignItems: "center", gap: 8 }}><span style={labelStyle}>Meta Description</span> <AiBtn field="metaDescription" /></div>
+              {charCounter(form.metaDescription, 150, 160)}
+            </div>
+            <textarea value={form.metaDescription} onChange={e => set("metaDescription", e.target.value)} style={{ ...fieldInputStyle, minHeight: 80, resize: "vertical" }} placeholder="Popis stránky pro vyhledávače" />
+          </div>
+          <Field label="Meta Keywords" value={form.metaKeywords} onChange={v => set("metaKeywords", v)} placeholder="klíčová slova oddělená čárkou" />
+          <Field label="Canonical URL" value={form.canonicalUrl} onChange={v => set("canonicalUrl", v)} placeholder="https://example.com/" />
+          <div>
+            <div style={labelStyle}>Robots</div>
+            <div style={{ display: "flex", gap: 12 }}>
+              <div style={{ flex: 1 }}>
+                <div style={{ fontSize: 11, color: "#55555f", marginBottom: 4 }}>Indexování</div>
+                <div style={{ display: "flex", gap: 8 }}>
+                  {["index", "noindex"].map(v => (
+                    <button key={v} onClick={() => set("robotsIndex", v)} style={{ flex: 1, padding: "8px", borderRadius: 8, border: "1px solid " + (form.robotsIndex === v ? "#00eb00" : "rgba(255,255,255,.06)"), background: form.robotsIndex === v ? "rgba(0,235,0,.1)" : "transparent", color: form.robotsIndex === v ? "#00eb00" : "#8a8a9a", cursor: "pointer", fontFamily: "inherit", fontSize: 12, fontWeight: 600 }}>{v}</button>
+                  ))}
+                </div>
+              </div>
+              <div style={{ flex: 1 }}>
+                <div style={{ fontSize: 11, color: "#55555f", marginBottom: 4 }}>Odkazy</div>
+                <div style={{ display: "flex", gap: 8 }}>
+                  {["follow", "nofollow"].map(v => (
+                    <button key={v} onClick={() => set("robotsFollow", v)} style={{ flex: 1, padding: "8px", borderRadius: 8, border: "1px solid " + (form.robotsFollow === v ? "#00eb00" : "rgba(255,255,255,.06)"), background: form.robotsFollow === v ? "rgba(0,235,0,.1)" : "transparent", color: form.robotsFollow === v ? "#00eb00" : "#8a8a9a", cursor: "pointer", fontFamily: "inherit", fontSize: 12, fontWeight: 600 }}>{v}</button>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* SECTION B: Open Graph */}
+      <div style={{ background: "#161619", border: "1px solid rgba(255,255,255,.06)", borderRadius: 12, padding: 24, marginBottom: 24 }}>
+        <h3 style={{ fontSize: 15, fontWeight: 700, marginBottom: 16 }}>Open Graph (Facebook / LinkedIn)</h3>
+        <div style={{ display: "flex", flexDirection: "column", gap: 14, maxWidth: 600 }}>
+          <div>
+            <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 6 }}><span style={labelStyle}>OG Title</span> <AiBtn field="ogTitle" /></div>
+            <input value={form.ogTitle} onChange={e => set("ogTitle", e.target.value)} style={fieldInputStyle} placeholder="Titulek pro sdílení na sociálních sítích" />
+          </div>
+          <div>
+            <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 6 }}><span style={labelStyle}>OG Description</span> <AiBtn field="ogDescription" /></div>
+            <textarea value={form.ogDescription} onChange={e => set("ogDescription", e.target.value)} style={{ ...fieldInputStyle, minHeight: 80, resize: "vertical" }} placeholder="Popis pro sdílení na sociálních sítích" />
+          </div>
+          <ImageUpload label="OG Image" value={form.ogImage} onChange={v => set("ogImage", v)} />
+        </div>
+      </div>
+
+      {/* SECTION C: Twitter Card */}
+      <div style={{ background: "#161619", border: "1px solid rgba(255,255,255,.06)", borderRadius: 12, padding: 24, marginBottom: 24 }}>
+        <h3 style={{ fontSize: 15, fontWeight: 700, marginBottom: 16 }}>Twitter Card</h3>
+        <div style={{ display: "flex", flexDirection: "column", gap: 14, maxWidth: 600 }}>
+          <div>
+            <div style={labelStyle}>Typ karty</div>
+            <div style={{ display: "flex", gap: 8 }}>
+              {["summary", "summary_large_image"].map(v => (
+                <button key={v} onClick={() => set("twitterCard", v)} style={{ flex: 1, padding: "10px", borderRadius: 8, border: "1px solid " + (form.twitterCard === v ? "#00eb00" : "rgba(255,255,255,.06)"), background: form.twitterCard === v ? "rgba(0,235,0,.1)" : "transparent", color: form.twitterCard === v ? "#00eb00" : "#8a8a9a", cursor: "pointer", fontFamily: "inherit", fontSize: 12, fontWeight: 600 }}>{v}</button>
+              ))}
+            </div>
+          </div>
+          <div>
+            <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 6 }}><span style={labelStyle}>Twitter Title</span> <AiBtn field="twitterTitle" /></div>
+            <input value={form.twitterTitle} onChange={e => set("twitterTitle", e.target.value)} style={fieldInputStyle} placeholder="Titulek pro Twitter" />
+          </div>
+          <div>
+            <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 6 }}><span style={labelStyle}>Twitter Description</span> <AiBtn field="twitterDescription" /></div>
+            <textarea value={form.twitterDescription} onChange={e => set("twitterDescription", e.target.value)} style={{ ...fieldInputStyle, minHeight: 80, resize: "vertical" }} placeholder="Popis pro Twitter" />
+          </div>
+          <ImageUpload label="Twitter Image" value={form.twitterImage} onChange={v => set("twitterImage", v)} />
+        </div>
+      </div>
+
+      {/* SECTION D: Structured Data */}
+      <div style={{ background: "#161619", border: "1px solid rgba(255,255,255,.06)", borderRadius: 12, padding: 24, marginBottom: 24 }}>
+        <h3 style={{ fontSize: 15, fontWeight: 700, marginBottom: 16 }}>Structured Data (JSON-LD)</h3>
+        <div style={{ display: "flex", flexDirection: "column", gap: 14, maxWidth: 600 }}>
+          <Field label="Business Name" value={form.schemaName} onChange={v => set("schemaName", v)} placeholder="Název firmy / služby" />
+          <Field label="Description" value={form.schemaDescription} onChange={v => set("schemaDescription", v)} textarea placeholder="Popis služby" />
+          <Field label="Service Type" value={form.schemaServiceType} onChange={v => set("schemaServiceType", v)} placeholder="např. YouTube Thumbnail Design" />
+          <Field label="Price Range" value={form.schemaPriceRange} onChange={v => set("schemaPriceRange", v)} placeholder="např. $$" />
+          <Field label="Area Served" value={form.schemaAreaServed} onChange={v => set("schemaAreaServed", v)} placeholder="např. Worldwide" />
+        </div>
+      </div>
+
+      {/* SECTION E: SERP Preview */}
+      <div style={{ background: "#161619", border: "1px solid rgba(255,255,255,.06)", borderRadius: 12, padding: 24, marginBottom: 24 }}>
+        <h3 style={{ fontSize: 15, fontWeight: 700, marginBottom: 16 }}>Google SERP Preview</h3>
+        <div style={{ background: "#fff", borderRadius: 10, padding: 20, maxWidth: 600 }}>
+          <div style={{ fontSize: 18, color: "#1a0dab", fontFamily: "Arial, sans-serif", marginBottom: 4, lineHeight: 1.3, cursor: "pointer" }}>{previewTitle}</div>
+          <div style={{ fontSize: 13, color: "#006621", fontFamily: "Arial, sans-serif", marginBottom: 4 }}>{previewUrl}</div>
+          <div style={{ fontSize: 13, color: "#545454", fontFamily: "Arial, sans-serif", lineHeight: 1.5 }}>{previewDesc}</div>
+        </div>
+      </div>
+
+      <button onClick={() => save({ ...data, seo: form })} style={{ ...addBtnStyle, marginBottom: 32 }}>Uložit SEO nastavení</button>
+    </div>
+  );
+}
+
+const fieldInputStyle = { width: "100%", background: "rgba(255,255,255,.04)", border: "1px solid rgba(255,255,255,.08)", borderRadius: 8, padding: "10px 14px", color: "#fff", fontFamily: "inherit", fontSize: 13, outline: "none" };
 
 // ===== SETTINGS TAB =====
 function SettingsTab({ data, save }) {
@@ -478,10 +726,10 @@ function SettingsTab({ data, save }) {
       <h1 style={{ fontSize: 22, fontWeight: 800, marginBottom: 4 }}>Nastavení webu</h1>
       <p style={{ fontSize: 13, color: "#8a8a9a", marginBottom: 24 }}>Globální nastavení stránky</p>
       <div style={{ display: "flex", flexDirection: "column", gap: 16, maxWidth: 600 }}>
-        <Field label="Název brandu" value={form.brandName} onChange={v => setForm({ ...form, brandName: v })} />
-        <Field label="Hero headline" value={form.heroHeadline} onChange={v => setForm({ ...form, heroHeadline: v })} />
-        <Field label="Hero subtext" value={form.heroSub} onChange={v => setForm({ ...form, heroSub: v })} textarea />
-        <Field label="Kontaktní email" value={form.email} onChange={v => setForm({ ...form, email: v })} />
+        <Field label="Název brandu" value={form.brandName} onChange={v => setForm({ ...form, brandName: v })} placeholder="Název vaší firmy / značky" />
+        <Field label="Hero headline" value={form.heroHeadline} onChange={v => setForm({ ...form, heroHeadline: v })} placeholder="Hlavní nadpis na homepage" />
+        <Field label="Hero subtext" value={form.heroSub} onChange={v => setForm({ ...form, heroSub: v })} textarea placeholder="Podnadpis pod hlavním nadpisem na homepage" />
+        <Field label="Kontaktní email" value={form.email} onChange={v => setForm({ ...form, email: v })} placeholder="vas@email.com" />
         <div style={{ display: "flex", gap: 12 }}>
           <button onClick={() => save({ ...data, siteSettings: form })} style={addBtnStyle}>Uložit</button>
           <button onClick={resetAll} style={{ ...addBtnStyle, background: "#ef4444" }}>Reset na default</button>
@@ -527,11 +775,12 @@ function ModalForm({ modal, close, addItem, updateItem }) {
         </div>
         <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
           {type === "thumbnail" && <>
-            <Field label="Název videa" value={form.title} onChange={v => set("title", v)} />
-            <Field label="Kanál" value={form.channel} onChange={v => set("channel", v)} />
-            <Field label="Iniciály kanálu" value={form.channelAvatar} onChange={v => set("channelAvatar", v)} placeholder="GP" />
-            <Field label="Views" value={form.views} onChange={v => set("views", v)} placeholder="1.2M" />
-            <Field label="Ikona (emoji)" value={form.icon} onChange={v => set("icon", v)} placeholder="\u{1f3ae}" />
+            <ImageUpload label="Obrázek thumbnaily" value={form.image || ""} onChange={v => set("image", v)} />
+            <Field label="Název videa" value={form.title} onChange={v => set("title", v)} placeholder="např. TOP 10 PLAYS" />
+            <Field label="Kanál" value={form.channel} onChange={v => set("channel", v)} placeholder="např. GamerPro" />
+            <Field label="Iniciály kanálu" value={form.channelAvatar} onChange={v => set("channelAvatar", v)} placeholder="např. GP (zobrazí se v avataru)" />
+            <Field label="Views" value={form.views} onChange={v => set("views", v)} placeholder="např. 1.2M" />
+            <Field label="Ikona (emoji, záložní)" value={form.icon} onChange={v => set("icon", v)} placeholder="Zobrazí se jen když není obrázek" />
             <div>
               <div style={labelStyle}>Kategorie</div>
               <div style={{ display: "flex", gap: 8 }}>
@@ -543,16 +792,17 @@ function ModalForm({ modal, close, addItem, updateItem }) {
             <GradientPicker value={form.gradient} onChange={v => set("gradient", v)} />
           </>}
           {type === "creator" && <>
-            <Field label="Jméno" value={form.name} onChange={v => set("name", v)} />
-            <Field label="Iniciály" value={form.initials} onChange={v => set("initials", v)} placeholder="MK" />
-            <Field label="Odběratelé" value={form.subs} onChange={v => set("subs", v)} placeholder="1.2M" />
+            <Field label="Jméno" value={form.name} onChange={v => set("name", v)} placeholder="např. Martin K." />
+            <ImageUpload label="Foto / Avatar" value={form.avatar || ""} onChange={v => set("avatar", v)} rounded />
+            <Field label="Iniciály" value={form.initials} onChange={v => set("initials", v)} placeholder="např. MK (záložní, když není foto)" />
+            <Field label="Odběratelé" value={form.subs} onChange={v => set("subs", v)} placeholder="např. 1.2M" />
             <ColorPicker value={form.color} onChange={v => set("color", v)} />
           </>}
           {type === "review" && <>
-            <Field label="Text recenze" value={form.text} onChange={v => set("text", v)} textarea />
-            <Field label="Autor" value={form.author} onChange={v => set("author", v)} />
-            <Field label="Handle" value={form.handle} onChange={v => set("handle", v)} placeholder="@username" />
-            <Field label="Odběratelé" value={form.subs} onChange={v => set("subs", v)} placeholder="1.2M" />
+            <Field label="Text recenze" value={form.text} onChange={v => set("text", v)} textarea placeholder="Citace klienta, např. Absolutely incredible work..." />
+            <Field label="Autor" value={form.author} onChange={v => set("author", v)} placeholder="Celé jméno autora recenze" />
+            <Field label="Handle" value={form.handle} onChange={v => set("handle", v)} placeholder="např. @MartinK (sociální síť)" />
+            <Field label="Odběratelé" value={form.subs} onChange={v => set("subs", v)} placeholder="např. 1.2M" />
             <div>
               <div style={labelStyle}>Hodnocení</div>
               <div style={{ display: "flex", gap: 4 }}>
@@ -568,22 +818,87 @@ function ModalForm({ modal, close, addItem, updateItem }) {
             <Field label="Popis" value={form.label} onChange={v => set("label", v)} placeholder="Views Generated" />
           </>}
           {type === "process" && <>
-            <Field label="Název kroku" value={form.title} onChange={v => set("title", v)} />
-            <Field label="Popis" value={form.desc} onChange={v => set("desc", v)} textarea />
+            <Field label="Název kroku" value={form.title} onChange={v => set("title", v)} placeholder="např. Brief & Strategy" />
+            <Field label="Popis" value={form.desc} onChange={v => set("desc", v)} textarea placeholder="Podrobný popis tohoto kroku procesu..." />
+            <ImageUpload label="Obrázek kroku" value={form.img || ""} onChange={v => set("img", v)} />
           </>}
           {type === "faq" && <>
-            <Field label="Otázka" value={form.q} onChange={v => set("q", v)} />
-            <Field label="Odpověď" value={form.a} onChange={v => set("a", v)} textarea />
+            <Field label="Otázka" value={form.q} onChange={v => set("q", v)} placeholder="např. How fast do you deliver?" />
+            <Field label="Odpověď" value={form.a} onChange={v => set("a", v)} textarea placeholder="Odpověď na otázku..." />
           </>}
           {type === "social" && <>
-            <Field label="Platforma" value={form.platform} onChange={v => set("platform", v)} placeholder="Instagram" />
-            <Field label="URL" value={form.url} onChange={v => set("url", v)} placeholder="https://..." />
+            <Field label="Platforma" value={form.platform} onChange={v => set("platform", v)} placeholder="např. Instagram, Twitter / X, Behance" />
+            <Field label="URL" value={form.url} onChange={v => set("url", v)} placeholder="https://instagram.com/vasprofil" />
+            <ImageUpload label="Ikona platformy" value={form.icon || ""} onChange={v => set("icon", v)} rounded />
           </>}
         </div>
         <div style={{ display: "flex", gap: 10, marginTop: 20 }}>
           <button onClick={submit} style={{ ...addBtnStyle, flex: 1, justifyContent: "center" }}>{isEdit ? "Uložit změny" : "Přidat"}</button>
           <button onClick={close} style={{ ...addBtnStyle, flex: 1, justifyContent: "center", background: "rgba(255,255,255,.06)", color: "#8a8a9a" }}>Zrušit</button>
         </div>
+      </div>
+    </div>
+  );
+}
+
+// ===== IMAGE UPLOAD COMPONENT =====
+function ImageUpload({ label, value, onChange, rounded }) {
+  const inputRef = useRef(null);
+  const [uploading, setUploading] = useState(false);
+  const [dragOver, setDragOver] = useState(false);
+
+  const upload = async (file) => {
+    if (!file) return;
+    setUploading(true);
+    try {
+      const res = await fetch("/api/upload", {
+        method: "POST",
+        headers: {
+          "Authorization": "Bearer " + getToken(),
+          "Content-Type": file.type,
+          "X-Filename": file.name,
+        },
+        body: file,
+      });
+      if (!res.ok) throw new Error("Upload failed");
+      const data = await res.json();
+      onChange(data.url);
+    } catch (e) {
+      alert("Chyba při nahrávání: " + e.message);
+    }
+    setUploading(false);
+  };
+
+  const handleDrop = (e) => {
+    e.preventDefault();
+    setDragOver(false);
+    const file = e.dataTransfer.files[0];
+    if (file && file.type.startsWith("image/")) upload(file);
+  };
+
+  const previewStyle = rounded
+    ? { width: 64, height: 64, borderRadius: "50%", objectFit: "cover", border: "2px solid rgba(255,255,255,.08)" }
+    : { maxWidth: "100%", maxHeight: 140, borderRadius: 8, objectFit: "cover", border: "1px solid rgba(255,255,255,.08)" };
+
+  return (
+    <div>
+      <div style={labelStyle}>{label}</div>
+      <div
+        onDragOver={(e) => { e.preventDefault(); setDragOver(true); }}
+        onDragLeave={() => setDragOver(false)}
+        onDrop={handleDrop}
+        style={{ border: "1px dashed " + (dragOver ? "#00eb00" : "rgba(255,255,255,.12)"), borderRadius: 10, padding: 14, background: dragOver ? "rgba(0,235,0,.04)" : "rgba(255,255,255,.02)", transition: "all .2s" }}
+      >
+        {value && <div style={{ marginBottom: 10 }}><img src={value} alt="Preview" style={previewStyle} onError={e => { e.target.style.display = "none"; }} /></div>}
+        <div style={{ display: "flex", gap: 8, alignItems: "center", flexWrap: "wrap" }}>
+          <button onClick={() => inputRef.current.click()} disabled={uploading} style={{ padding: "7px 16px", borderRadius: 8, border: "1px solid rgba(255,255,255,.1)", background: "rgba(255,255,255,.06)", color: "#fff", cursor: "pointer", fontFamily: "inherit", fontSize: 12, fontWeight: 600, opacity: uploading ? 0.5 : 1 }}>
+            {uploading ? "Nahrávám..." : "Nahrát obrázek"}
+          </button>
+          <span style={{ fontSize: 11, color: "#55555f" }}>nebo přetáhni sem</span>
+          {value && <button onClick={() => onChange("")} style={{ marginLeft: "auto", padding: "5px 10px", borderRadius: 6, border: "none", background: "rgba(239,68,68,.15)", color: "#ef4444", cursor: "pointer", fontFamily: "inherit", fontSize: 11, fontWeight: 600 }}>Odebrat</button>}
+        </div>
+        <input ref={inputRef} type="file" accept="image/*" style={{ display: "none" }} onChange={e => { if (e.target.files[0]) upload(e.target.files[0]); }} />
+        <input value={value || ""} onChange={e => onChange(e.target.value)} style={{ width: "100%", background: "rgba(255,255,255,.04)", border: "1px solid rgba(255,255,255,.06)", borderRadius: 6, padding: "6px 10px", color: "#fff", fontFamily: "inherit", fontSize: 11, outline: "none", marginTop: 8 }} placeholder="nebo vlož URL obrázku" />
       </div>
     </div>
   );
@@ -632,13 +947,13 @@ function ColorPicker({ value, onChange }) {
 
 function getDefaults(type) {
   const d = {
-    thumbnail: { title: "", channel: "", channelAvatar: "", views: "", icon: "\u{1f3ae}", gradient: 0, category: "showcase1" },
-    creator: { name: "", initials: "", subs: "", color: 0 },
+    thumbnail: { title: "", channel: "", channelAvatar: "", views: "", icon: "\u{1f3ae}", gradient: 0, category: "showcase1", image: "" },
+    creator: { name: "", initials: "", subs: "", color: 0, avatar: "" },
     review: { text: "", author: "", handle: "", subs: "", color: 0, rating: 5 },
     stat: { value: "", label: "" },
-    process: { title: "", desc: "" },
+    process: { title: "", desc: "", img: "" },
     faq: { q: "", a: "" },
-    social: { platform: "", url: "" },
+    social: { platform: "", url: "", icon: "" },
   };
   return d[type] || {};
 }

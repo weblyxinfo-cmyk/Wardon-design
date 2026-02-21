@@ -145,20 +145,9 @@ img{display:block;max-width:100%}
   transform:translateX(-50%);pointer-events:none;
   animation:floatGlow 8s ease-in-out infinite;
 }
-.hero::after{
-  content:'';position:absolute;
-  width:500px;height:500px;border-radius:50%;
-  background:radial-gradient(circle,rgba(0,235,0,.05),transparent 65%);
-  bottom:-100px;right:5%;pointer-events:none;
-  animation:floatGlow2 10s ease-in-out infinite;
-}
 @keyframes floatGlow{
   0%,100%{transform:translateX(-50%) translateY(0)}
   50%{transform:translateX(-50%) translateY(20px)}
-}
-@keyframes floatGlow2{
-  0%,100%{transform:translateY(0) translateX(0)}
-  50%{transform:translateY(-15px) translateX(10px)}
 }
 
 /* Badge */
@@ -194,6 +183,7 @@ img{display:block;max-width:100%}
 .hero h1 .acc{color:var(--accent)}
 .rotate-word{display:inline-block;position:relative;overflow:hidden;vertical-align:bottom;height:1.1em}
 .rotate-word::after{content:'attention.';visibility:hidden;font-weight:inherit;font-size:inherit;letter-spacing:inherit}
+.rotate-word span{animation-duration:10s}
 .rotate-word span{
   display:block;color:var(--accent);
   animation:rotateWords 10s infinite;
@@ -201,14 +191,13 @@ img{display:block;max-width:100%}
   opacity:0;transform:translateY(100%);
 }
 .rotate-word span:nth-child(1){animation-delay:0s}
-.rotate-word span:nth-child(2){animation-delay:2.5s}
-.rotate-word span:nth-child(3){animation-delay:5s}
-.rotate-word span:nth-child(4){animation-delay:7.5s}
+.rotate-word span:nth-child(2){animation-delay:3.33s}
+.rotate-word span:nth-child(3){animation-delay:6.66s}
 @keyframes rotateWords{
   0%{opacity:0;transform:translateY(80%)}
-  4%{opacity:1;transform:translateY(0)}
-  21%{opacity:1;transform:translateY(0)}
-  25%{opacity:0;transform:translateY(-80%)}
+  5%{opacity:1;transform:translateY(0)}
+  28%{opacity:1;transform:translateY(0)}
+  33%{opacity:0;transform:translateY(-80%)}
   100%{opacity:0;transform:translateY(-80%)}
 }
 
@@ -260,9 +249,9 @@ img{display:block;max-width:100%}
 .av:hover{transform:none}
 
 .trusted-label{
-  font-size:.7rem;font-weight:600;color:rgba(255,255,255,.55);
-  text-transform:none;letter-spacing:.08em;
-  margin-bottom:14px;
+  font-size:1rem;font-weight:500;color:#ffffff;
+  text-transform:none;letter-spacing:0;
+  margin-bottom:14px;line-height:1.7;
   opacity:0;animation:fadeIn 1s 1s ease forwards;
 }
 
@@ -645,7 +634,7 @@ footer .footer-links a:hover{color:var(--accent)}
 <!-- ===== HERO ===== -->
 <section class="hero" id="hero">
   <div class="badge"><span class="dot"></span> Available Now</div>
-  <h1 id="heroHeadline">Thumbnails that drive<br><span class="rotate-word"><span>clicks.</span><span>money.</span><span>curiosity.</span><span>attention.</span></span></h1>
+  <h1 id="heroHeadline">Thumbnails that drive<br><span class="rotate-word"><span>clicks.</span><span>curiosity.</span><span>attention.</span></span></h1>
   <p class="hero-sub" id="heroSub">As a creator, you need as many people as possible to click on your video. A professional thumbnail is the first step to success.</p>
   <div class="hero-btns">
     <a href="https://docs.google.com/forms/d/e/1FAIpQLSeQvCfQAVdHnhB4Ui5TGVFLtOypq8UZsbGEAaf-St-GYP2g6g/viewform" target="_blank" rel="noopener" class="btn btn-fill">Get Started</a>
@@ -675,6 +664,9 @@ footer .footer-links a:hover{color:var(--accent)}
   </div>
   <div class="process-card sr">
     <div class="process-steps" id="processSteps"></div>
+    <div style="text-align:center;margin-top:48px">
+      <a href="https://docs.google.com/forms/d/e/1FAIpQLSeQvCfQAVdHnhB4Ui5TGVFLtOypq8UZsbGEAaf-St-GYP2g6g/viewform" target="_blank" rel="noopener" class="btn btn-fill" style="font-size:.95rem;padding:16px 36px">Get Started &rarr;</a>
+    </div>
   </div>
 </section>
 
@@ -796,22 +788,42 @@ var DEFAULT_DATA = {
     { id: "s3", value: "40+", label: "Projects" },
   ],
   process: [
-    { id: "p1", title: "Contact me", desc: "Contact me through the form you can get to when you click Get Started.", img: "/img/process-1.png" },
-    { id: "p2", title: "Custom scene", desc: "I will create a custom scene based on your video and expectations. Without you posing on camera.", img: "/img/process-2.png" },
-    { id: "p3", title: "Finished work", desc: "At the end I will finish the final version that brings clicks on your video. We can also A/B test the thumbnail.", img: "/img/process-3.png" },
+    { id: "p1", title: "Brief & Strategy", desc: "Everything starts with clear communication. After filling out a short form, you'll share your video topic, goal, target audience, and any references you like. Based on this, I analyze your niche and competitors to define a direction with the highest potential to perform.", img: "/img/process-1.png" },
+    { id: "p2", title: "Concept & Custom Scene", desc: "I create a visual concept that tells a story and triggers emotion. I work with composition, contrast, lighting, and color psychology to make sure the thumbnail stands out even at a small size. If needed, I can build a fully custom scene in Blender without you having to pose on camera.", img: "/img/process-2.png" },
+    { id: "p3", title: "Finalization & Optimization", desc: "Once the concept is approved, I refine every detail \u2014 lighting, shadows, depth, textures, and key highlight elements. The thumbnail is optimized for mobile viewing and maximum readability. The final result is designed to increase CTR and overall video performance. If needed, we can test A/B versions.", img: "/img/process-3.png" },
   ],
   faq: [
     { id: "f1", q: "How fast do you deliver?", a: "Standard delivery is 24-48 hours." },
     { id: "f4", q: "Do you do A/B testing?", a: "Yes i do." },
     { id: "f5", q: "Do you work with international creators?", a: "Absolutely. I work with creators worldwide." },
   ],
-  about: { headline: "Design that drives results.", text1: "I specialize in YouTube thumbnails, branding, and visual design.", text2: "Working with creators from 10K to 5M+ subscribers." },
+  about: { headline: "Design that drives results.", text1: "I specialize in YouTube thumbnails, branding, and visual design.", text2: "Working with creators from 10K to 5M+ subscribers.", photo: "" },
   socials: [
     { id: "so1", platform: "Instagram", url: "https://instagram.com/" },
     { id: "so2", platform: "Twitter / X", url: "https://x.com/" },
     { id: "so3", platform: "Behance", url: "https://behance.net/" },
   ],
   siteSettings: { brandName: "Wardon Visuals", heroHeadline: "Crafting *Instant*|Clicks.", heroSub: "As a creator, you need as many people as possible to click on your video. A professional thumbnail is the first step to success.", email: "wardondesign@gmail.com" },
+  seo: {
+    metaTitle: "Wardon Visuals — Professional YouTube Thumbnail Design",
+    metaDescription: "Professional YouTube thumbnail design that drives clicks, money, and curiosity. Custom 3D scenes, A/B testing, and fast 24-48h delivery. Trusted by creators worldwide.",
+    metaKeywords: "YouTube thumbnail design, thumbnail designer, YouTube thumbnails, CTR optimization, thumbnail A/B testing, custom thumbnails, 3D thumbnail design, Blender thumbnails",
+    canonicalUrl: "https://wardon-design.vercel.app/",
+    robotsIndex: "index",
+    robotsFollow: "follow",
+    ogTitle: "Wardon Visuals — Professional YouTube Thumbnail Design",
+    ogDescription: "Thumbnails that drive clicks. Custom 3D scenes, fast delivery, and designs optimized for maximum CTR. Trusted by creators worldwide.",
+    ogImage: "https://wardon-design.vercel.app/img/pfp.png",
+    twitterCard: "summary",
+    twitterTitle: "Wardon Visuals — YouTube Thumbnail Design",
+    twitterDescription: "Thumbnails that drive clicks. Custom 3D scenes, fast delivery, and designs optimized for maximum CTR.",
+    twitterImage: "https://wardon-design.vercel.app/img/pfp.png",
+    schemaName: "Wardon Visuals",
+    schemaDescription: "Professional YouTube thumbnail design service. Custom 3D scenes, A/B testing, and fast delivery.",
+    schemaServiceType: "YouTube Thumbnail Design",
+    schemaPriceRange: "$$",
+    schemaAreaServed: "Worldwide",
+  },
 };
 
 // ===== HELPER: escape HTML =====
@@ -855,7 +867,11 @@ function renderAvatarStrip(data) {
   for (var j = 0; j < reps; j++) {
     for (var i = 0; i < creators.length; i++) {
       var c = creators[i];
-      h += '<div class="av" style="background:' + AVATAR_COLORS[c.color % 10] + '">' + esc(c.initials) + '</div>';
+      if (c.avatar) {
+        h += '<img class="av" src="' + esc(c.avatar) + '" alt="' + esc(c.name) + '" style="background:' + AVATAR_COLORS[c.color % 10] + ';object-fit:cover">';
+      } else {
+        h += '<div class="av" style="background:' + AVATAR_COLORS[c.color % 10] + '">' + esc(c.initials) + '</div>';
+      }
     }
   }
   document.getElementById('avRow').innerHTML = h;
@@ -886,10 +902,16 @@ function renderStats(data) {
 function makeThumbCardFromData(t) {
   var grad = GRADIENTS[t.gradient % 10];
   var avColor = AVATAR_COLORS[(t.gradient || 0) % 10];
+  var imgContent;
+  if (t.image) {
+    imgContent = '<img src="' + esc(t.image) + '" alt="' + esc(t.title) + '" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0">';
+  } else {
+    imgContent = '<div style="font-size:4.5rem;opacity:.05;font-weight:900;position:absolute">' + t.icon + '</div>' +
+      '<div style="font-size:2rem;z-index:1;">' + t.icon + '</div>';
+  }
   return '<div class="thumb-card">' +
-    '<div class="tc-img" style="background:' + grad + '">' +
-      '<div style="font-size:4.5rem;opacity:.05;font-weight:900;position:absolute">' + t.icon + '</div>' +
-      '<div style="font-size:2rem;z-index:1;">' + t.icon + '</div>' +
+    '<div class="tc-img" style="background:' + (t.image ? '#000' : grad) + '">' +
+      imgContent +
     '</div>' +
     '<div class="tc-meta">' +
       '<div class="tc-av" style="background:' + avColor + '">' + esc(t.channelAvatar) + '</div>' +
@@ -903,6 +925,11 @@ function makeThumbCardFromData(t) {
 
 function makeThumbFromData(t) {
   var grad = GRADIENTS[t.gradient % 10];
+  if (t.image) {
+    return '<div class="thumb" style="background:#000">' +
+      '<img src="' + esc(t.image) + '" alt="' + esc(t.title) + '" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0">' +
+    '</div>';
+  }
   return '<div class="thumb" style="background:' + grad + '">' +
     '<div style="font-size:5.5rem;opacity:.04;font-weight:900;position:absolute">' + t.icon + '</div>' +
     '<div style="font-size:2.2rem;z-index:1;">' + t.icon + '</div>' +
@@ -984,14 +1011,23 @@ function renderAbout(data) {
   }
   // Same stats as the main stats section — no extra hardcoded ones
 
-  var html = '<div class="about-card sr">' +
-    '<div class="about-visual" style="background:linear-gradient(160deg,#0e2a1e,#028b00 50%,#0c0c0e)">' +
+  var visualContent;
+  if (a.photo) {
+    visualContent = '<div class="about-visual" style="background:linear-gradient(160deg,#0e2a1e,#028b00 50%,#0c0c0e)">' +
+      '<img src="' + esc(a.photo) + '" alt="About" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0" onerror="this.style.display=\'none\'">' +
+    '</div>';
+  } else {
+    visualContent = '<div class="about-visual" style="background:linear-gradient(160deg,#0e2a1e,#028b00 50%,#0c0c0e)">' +
       '<div style="font-size:12rem;font-weight:900;opacity:.04;position:absolute;letter-spacing:-.05em">S</div>' +
       '<div style="text-align:center;z-index:1">' +
         '<div style="width:110px;height:110px;border-radius:50%;background:rgba(255,255,255,.06);backdrop-filter:blur(10px);margin:0 auto 16px;display:flex;align-items:center;justify-content:center;font-size:2.4rem;border:1px solid rgba(255,255,255,.08)">\u{1f468}\u200d\u{1f3a8}</div>' +
         '<div style="font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:rgba(255,255,255,.35)">Creative Designer</div>' +
       '</div>' +
-    '</div>' +
+    '</div>';
+  }
+
+  var html = '<div class="about-card sr">' +
+    visualContent +
     '<div class="about-text">' +
       '<h2>' + esc(a.headline).replace(/\n/g, '<br>') + '</h2>' +
       '<p>' + esc(a.text1) + '</p>' +
@@ -1037,7 +1073,8 @@ function renderSocials(data) {
   var socials = data.socials;
   var h = '';
   for (var i = 0; i < socials.length; i++) {
-    h += '<a href="' + esc(socials[i].url) + '" class="social-pill" target="_blank" rel="noopener">' + esc(socials[i].platform) + '</a>';
+    var iconHtml = socials[i].icon ? '<img src="' + esc(socials[i].icon) + '" alt="" style="width:16px;height:16px;object-fit:contain;vertical-align:middle;margin-right:6px">' : '';
+    h += '<a href="' + esc(socials[i].url) + '" class="social-pill" target="_blank" rel="noopener">' + iconHtml + esc(socials[i].platform) + '</a>';
   }
   document.getElementById('socialsContainer').innerHTML = h;
   // CTA link stays as Google Form (hardcoded)
@@ -1045,6 +1082,74 @@ function renderSocials(data) {
 
 function renderFooter(data) {
   // Footer brand already handled by renderBrandName
+}
+
+function renderSEO(data) {
+  var seo = data.seo;
+  if (!seo) return;
+
+  // Helper to set or create meta tag
+  function setMeta(attr, attrVal, content) {
+    var sel = 'meta[' + attr + '="' + attrVal + '"]';
+    var el = document.querySelector(sel);
+    if (!el) {
+      el = document.createElement('meta');
+      el.setAttribute(attr, attrVal);
+      document.head.appendChild(el);
+    }
+    el.setAttribute('content', content);
+  }
+
+  // Title
+  if (seo.metaTitle) document.title = seo.metaTitle;
+
+  // Basic meta
+  if (seo.metaDescription) setMeta('name', 'description', seo.metaDescription);
+  if (seo.metaKeywords) setMeta('name', 'keywords', seo.metaKeywords);
+  if (seo.robotsIndex || seo.robotsFollow) {
+    setMeta('name', 'robots', (seo.robotsIndex || 'index') + ', ' + (seo.robotsFollow || 'follow'));
+  }
+
+  // Canonical
+  if (seo.canonicalUrl) {
+    var canon = document.querySelector('link[rel="canonical"]');
+    if (!canon) {
+      canon = document.createElement('link');
+      canon.setAttribute('rel', 'canonical');
+      document.head.appendChild(canon);
+    }
+    canon.setAttribute('href', seo.canonicalUrl);
+  }
+
+  // Open Graph
+  if (seo.ogTitle) setMeta('property', 'og:title', seo.ogTitle);
+  if (seo.ogDescription) setMeta('property', 'og:description', seo.ogDescription);
+  if (seo.ogImage) setMeta('property', 'og:image', seo.ogImage);
+  if (seo.canonicalUrl) setMeta('property', 'og:url', seo.canonicalUrl);
+
+  // Twitter Card
+  if (seo.twitterCard) setMeta('name', 'twitter:card', seo.twitterCard);
+  if (seo.twitterTitle) setMeta('name', 'twitter:title', seo.twitterTitle);
+  if (seo.twitterDescription) setMeta('name', 'twitter:description', seo.twitterDescription);
+  if (seo.twitterImage) setMeta('name', 'twitter:image', seo.twitterImage);
+
+  // Structured Data (JSON-LD)
+  var ldEl = document.querySelector('script[type="application/ld+json"]');
+  if (ldEl && (seo.schemaName || seo.schemaDescription)) {
+    var ld = {
+      "@context": "https://schema.org",
+      "@type": "ProfessionalService",
+      "name": seo.schemaName || data.siteSettings.brandName,
+      "description": seo.schemaDescription || "",
+      "url": seo.canonicalUrl || window.location.origin,
+      "image": seo.ogImage || "",
+      "priceRange": seo.schemaPriceRange || "$$",
+      "areaServed": seo.schemaAreaServed || "Worldwide",
+      "serviceType": seo.schemaServiceType || "",
+      "knowsAbout": ["YouTube Thumbnails", "Graphic Design", "3D Rendering", "Blender", "CTR Optimization"]
+    };
+    ldEl.textContent = JSON.stringify(ld, null, 2);
+  }
 }
 
 // ===== MAIN RENDER =====
@@ -1061,6 +1166,7 @@ function renderSite(data) {
   renderFAQ(data);
   renderSocials(data);
   renderFooter(data);
+  renderSEO(data);
   // Re-initialize interactive behaviors
   initInteractions();
 }

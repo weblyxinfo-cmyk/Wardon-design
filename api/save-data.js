@@ -10,6 +10,7 @@ const REQUIRED_KEYS = [
   "about",
   "socials",
   "siteSettings",
+  "seo",
 ];
 
 module.exports = async function handler(req, res) {
