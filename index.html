@@ -739,6 +739,21 @@ footer .footer-links a:hover{color:var(--accent)}
   <div class="made-by">Made by <a href="https://weblyx.cz" target="_blank" rel="noopener">Weblyx</a></div>
 </footer>
 
+<!-- ===== COOKIE BANNER ===== -->
+<div id="cookieBanner" style="display:none;position:fixed;bottom:20px;left:50%;transform:translateX(-50%);z-index:99999;background:rgba(20,20,22,.95);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:20px 28px;max-width:480px;width:calc(100% - 32px);box-shadow:0 20px 60px rgba(0,0,0,.5)">
+  <div style="font-weight:700;font-size:.9rem;margin-bottom:8px;color:#fff">Cookies</div>
+  <p style="font-size:.78rem;color:#94929d;line-height:1.6;margin-bottom:16px">Tento web používá cookies pro zajištění správného fungování a analýzu návštěvnosti. Používáním webu souhlasíte s jejich využitím.</p>
+  <div style="display:flex;gap:10px">
+    <button onclick="acceptCookies()" style="flex:1;padding:10px 20px;border-radius:100px;border:1.5px solid #00eb00;background:rgba(0,235,0,.12);color:#fff;font-family:inherit;font-size:.78rem;font-weight:700;cursor:pointer;transition:all .3s">Přijmout</button>
+    <button onclick="declineCookies()" style="flex:1;padding:10px 20px;border-radius:100px;border:1px solid rgba(255,255,255,.1);background:transparent;color:#94929d;font-family:inherit;font-size:.78rem;font-weight:600;cursor:pointer;transition:all .3s">Odmítnout</button>
+  </div>
+</div>
+<script>
+function acceptCookies(){document.getElementById('cookieBanner').style.display='none';localStorage.setItem('cookies-accepted','yes')}
+function declineCookies(){document.getElementById('cookieBanner').style.display='none';localStorage.setItem('cookies-accepted','no')}
+if(!localStorage.getItem('cookies-accepted')){document.getElementById('cookieBanner').style.display='block'}
+</script>
+
 <script>
 // ===== SHARED CONSTANTS =====
 var GRADIENTS = [

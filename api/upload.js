@@ -1,6 +1,11 @@
 const { put } = require("@vercel/blob");
 const { db, verifyAuth } = require("./_db");
 
+// Disable body parsing so we get raw stream for file upload
+module.exports.config = {
+  api: { bodyParser: false },
+};
+
 module.exports = async function handler(req, res) {
   if (req.method === "OPTIONS") {
     res.setHeader("Access-Control-Allow-Origin", "*");
@@ -20,7 +25,7 @@ module.exports = async function handler(req, res) {
       return res.status(401).json({ error: "Unauthorized" });
     }
 
-    const filename = req.headers["x-filename"] || "image-" + Date.now() + ".png";
+    const filename = "wardon/" + Date.now() + "-" + (req.headers["x-filename"] || "image.png").replace(/[^a-zA-Z0-9._-]/g, "_");
     const contentType = req.headers["content-type"] || "image/png";
 
     const blob = await put(filename, req, {
@@ -32,6 +37,6 @@ module.exports = async function handler(req, res) {
     return res.status(200).json({ url: blob.url });
   } catch (err) {
     console.error("upload error:", err);
-    return res.status(500).json({ error: "Upload failed" });
+    return res.status(500).json({ error: "Upload failed: " + err.message });
   }
 };

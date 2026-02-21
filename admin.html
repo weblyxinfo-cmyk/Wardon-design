@@ -780,7 +780,6 @@ function ModalForm({ modal, close, addItem, updateItem }) {
             <Field label="Kanál" value={form.channel} onChange={v => set("channel", v)} placeholder="např. GamerPro" />
             <Field label="Iniciály kanálu" value={form.channelAvatar} onChange={v => set("channelAvatar", v)} placeholder="např. GP (zobrazí se v avataru)" />
             <Field label="Views" value={form.views} onChange={v => set("views", v)} placeholder="např. 1.2M" />
-            <Field label="Ikona (emoji, záložní)" value={form.icon} onChange={v => set("icon", v)} placeholder="Zobrazí se jen když není obrázek" />
             <div>
               <div style={labelStyle}>Kategorie</div>
               <div style={{ display: "flex", gap: 8 }}>
@@ -789,18 +788,17 @@ function ModalForm({ modal, close, addItem, updateItem }) {
                 ))}
               </div>
             </div>
-            <GradientPicker value={form.gradient} onChange={v => set("gradient", v)} />
           </>}
           {type === "creator" && <>
             <Field label="Jméno" value={form.name} onChange={v => set("name", v)} placeholder="např. Martin K." />
             <ImageUpload label="Foto / Avatar" value={form.avatar || ""} onChange={v => set("avatar", v)} rounded />
             <Field label="Iniciály" value={form.initials} onChange={v => set("initials", v)} placeholder="např. MK (záložní, když není foto)" />
             <Field label="Odběratelé" value={form.subs} onChange={v => set("subs", v)} placeholder="např. 1.2M" />
-            <ColorPicker value={form.color} onChange={v => set("color", v)} />
           </>}
           {type === "review" && <>
             <Field label="Text recenze" value={form.text} onChange={v => set("text", v)} textarea placeholder="Citace klienta, např. Absolutely incredible work..." />
             <Field label="Autor" value={form.author} onChange={v => set("author", v)} placeholder="Celé jméno autora recenze" />
+            <ImageUpload label="Avatar autora" value={form.avatar || ""} onChange={v => set("avatar", v)} rounded />
             <Field label="Handle" value={form.handle} onChange={v => set("handle", v)} placeholder="např. @MartinK (sociální síť)" />
             <Field label="Odběratelé" value={form.subs} onChange={v => set("subs", v)} placeholder="např. 1.2M" />
             <div>
@@ -811,7 +809,6 @@ function ModalForm({ modal, close, addItem, updateItem }) {
                 ))}
               </div>
             </div>
-            <ColorPicker value={form.color} onChange={v => set("color", v)} />
           </>}
           {type === "stat" && <>
             <Field label="Hodnota" value={form.value} onChange={v => set("value", v)} placeholder="200M+" />
@@ -949,7 +946,7 @@ function getDefaults(type) {
   const d = {
     thumbnail: { title: "", channel: "", channelAvatar: "", views: "", icon: "\u{1f3ae}", gradient: 0, category: "showcase1", image: "" },
     creator: { name: "", initials: "", subs: "", color: 0, avatar: "" },
-    review: { text: "", author: "", handle: "", subs: "", color: 0, rating: 5 },
+    review: { text: "", author: "", handle: "", subs: "", color: 0, rating: 5, avatar: "" },
     stat: { value: "", label: "" },
     process: { title: "", desc: "", img: "" },
     faq: { q: "", a: "" },
