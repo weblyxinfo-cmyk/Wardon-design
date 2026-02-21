@@ -525,12 +525,12 @@ footer .footer-links a:hover{color:var(--accent)}
 
 /* ===== MOBILE ===== */
 @media(max-width:768px){
-  /* Nav - same as desktop, scaled to fit */
-  .nav{top:10px;padding:6px 6px;gap:12px;max-width:96vw}
+  /* Nav - hide links, show hamburger */
+  .nav{top:10px;padding:6px 12px;gap:10px;max-width:96vw}
   .nav-pfp{width:28px;height:28px}
-  .nav-links{gap:12px}
-  .nav-links a{font-size:.65rem}
-  .nav-cta{font-size:.65rem;padding:6px 14px}
+  .nav-links{display:none}
+  .nav-cta{display:none}
+  .hamburger{display:flex}
 
   /* Hero */
   .hero{padding:100px 20px 30px}
