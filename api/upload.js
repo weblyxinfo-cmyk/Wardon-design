@@ -1,11 +1,16 @@
 const { put } = require("@vercel/blob");
 const { db, verifyAuth } = require("./_db");
 
+function cors(res) {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization, X-Filename");
+}
+
 async function handler(req, res) {
+  cors(res);
+
   if (req.method === "OPTIONS") {
-    res.setHeader("Access-Control-Allow-Origin", "*");
-    res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
-    res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization, X-Filename");
     return res.status(204).end();
   }
 
@@ -29,7 +34,6 @@ async function handler(req, res) {
       contentType: contentType,
     });
 
-    res.setHeader("Access-Control-Allow-Origin", "*");
     return res.status(200).json({ url: blob.url });
   } catch (err) {
     console.error("upload error:", err);
