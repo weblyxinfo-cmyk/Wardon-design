@@ -369,7 +369,7 @@ function ThumbnailsTab({ data, subFilter, setSubFilter, onDelete, onAdd, onEdit,
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 8 }}>
         <div>
           <h1 style={{ fontSize: 22, fontWeight: 800, marginBottom: 4 }}>Thumbnaily / Portfolio</h1>
-          <p style={{ fontSize: 13, color: "#8a8a9a" }}>Showcase #1 (s profilkou) · Showcase #2 (jen obrázky)</p>
+          <p style={{ fontSize: 13, color: "#8a8a9a" }}>Showcase #1 = horní scrollující pás (karta s profilkou kanálu + název) · Showcase #2 = velká galerie dole (jen obrázky thumbnailů)</p>
         </div>
         <button onClick={() => setModal({ type: "thumbnail" })} style={addBtnStyle}>{Icons.plus} Přidat</button>
       </div>
@@ -783,7 +783,7 @@ function ModalForm({ modal, close, addItem, updateItem }) {
             <div>
               <div style={labelStyle}>Kategorie</div>
               <div style={{ display: "flex", gap: 8 }}>
-                {[["showcase1","Showcase #1 (s profilkou)"],["showcase2","Showcase #2 (jen obrázky)"]].map(([k,l]) => (
+                {[["showcase1","Showcase #1 (horní pás s profilkou)"],["showcase2","Showcase #2 (velká galerie dole)"]].map(([k,l]) => (
                   <button key={k} onClick={() => set("category", k)} style={{ flex: 1, padding: "10px", borderRadius: 8, border: "1px solid " + (form.category === k ? "#00eb00" : "rgba(255,255,255,.06)"), background: form.category === k ? "rgba(0,235,0,.1)" : "transparent", color: form.category === k ? "#00eb00" : "#8a8a9a", cursor: "pointer", fontFamily: "inherit", fontSize: 12, fontWeight: 600 }}>{l}</button>
                 ))}
               </div>
