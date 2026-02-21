@@ -1064,7 +1064,9 @@ function renderTestimonials(data) {
       '<div class="stars">' + '\u2605'.repeat(r.rating) + '\u2606'.repeat(5 - r.rating) + '</div>' +
       '<blockquote>"\u200b' + esc(r.text) + '"</blockquote>' +
       '<div class="au">' +
-        '<div class="aa" style="background:' + color + '">' + esc(initials) + '</div>' +
+        (r.avatar
+          ? '<div class="aa" style="overflow:hidden"><img src="' + esc(r.avatar) + '" alt="' + esc(r.author) + '" style="width:100%;height:100%;object-fit:cover;border-radius:50%"></div>'
+          : '<div class="aa" style="background:' + color + '">' + esc(initials) + '</div>') +
         '<div class="ai"><h4>' + esc(r.author) + '</h4><p>' + esc(r.handle) + ' \u00b7 ' + esc(r.subs) + ' subs</p></div>' +
       '</div>' +
     '</div>';
