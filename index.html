@@ -528,15 +528,15 @@ footer .footer-links a:hover{color:var(--accent)}
 
 /* ===== MOBILE ===== */
 @media(max-width:768px){
-  /* Nav - compact inline links on mobile */
-  .nav{top:10px;padding:6px 10px;gap:4px;position:fixed;justify-content:center;max-width:calc(100% - 16px)}
-  .nav-pfp{width:22px;height:22px;border-width:1.5px}
-  .nav-links{gap:4px}
-  .nav-links a{font-size:.6rem}
+  /* Nav - wide badge on mobile */
+  .nav{top:10px;padding:8px 16px;gap:8px;position:fixed;justify-content:center;width:calc(100% - 24px);max-width:calc(100% - 24px)}
+  .nav-pfp{width:24px;height:24px;border-width:1.5px}
+  .nav-links{gap:8px;flex:1;justify-content:center}
+  .nav-links a{font-size:.65rem}
   .nav-cta{display:none}
 
   /* Hero */
-  .hero{padding:100px 16px 30px}
+  .hero{padding:100px 16px 30px;overflow:hidden}
   .hero h1{font-size:2.2rem;letter-spacing:-.03em}
   .hero-sub{font-size:.88rem;margin-bottom:24px}
   .hero-btns{flex-direction:column;gap:10px;width:100%;max-width:280px}
@@ -562,11 +562,11 @@ footer .footer-links a:hover{color:var(--accent)}
   .sec-sub{font-size:.82rem}
 
   /* Process */
-  .process-steps{grid-template-columns:repeat(3,1fr);gap:10px}
-  .step{padding:14px 10px}
-  .step-num{width:32px;height:32px;font-size:.75rem;margin-bottom:10px}
-  .step h3{font-size:.75rem;margin-bottom:10px}
-  .step p{font-size:.65rem}
+  .process-steps{grid-template-columns:1fr;gap:12px}
+  .step{padding:20px 16px}
+  .step-num{width:36px;height:36px;font-size:.8rem;margin-bottom:10px}
+  .step h3{font-size:.9rem;margin-bottom:10px}
+  .step p{font-size:.78rem}
 
   /* About */
   .about-card{grid-template-columns:1fr;padding:24px;gap:28px;border-radius:14px}
@@ -597,10 +597,9 @@ footer .footer-links a:hover{color:var(--accent)}
 }
 
 @media(max-width:480px){
-  .nav{padding:5px 8px;gap:3px}
-  .nav-pfp{width:20px;height:20px}
-  .nav-links{gap:3px}
-  .nav-links a{font-size:.52rem}
+  .nav{padding:7px 12px;gap:6px}
+  .nav-links{gap:5px}
+  .nav-links a{font-size:.58rem}
   .hero h1{font-size:1.8rem}
   .stats-grid{flex-direction:column;gap:20px}
   .stat-divider{width:60px;height:1px;align-self:center}
