@@ -528,12 +528,12 @@ footer .footer-links a:hover{color:var(--accent)}
 
 /* ===== MOBILE ===== */
 @media(max-width:768px){
-  /* Nav - hamburger menu on mobile */
-  .nav{top:10px;padding:8px 16px;gap:10px;position:fixed;justify-content:space-between;width:auto;max-width:calc(100% - 32px)}
-  .nav-pfp{width:28px;height:28px}
-  .nav-links{display:none}
+  /* Nav - compact inline links on mobile */
+  .nav{top:10px;padding:6px 10px;gap:4px;position:fixed;justify-content:center;max-width:calc(100% - 16px)}
+  .nav-pfp{width:22px;height:22px;border-width:1.5px}
+  .nav-links{gap:4px}
+  .nav-links a{font-size:.6rem}
   .nav-cta{display:none}
-  .hamburger{display:flex}
 
   /* Hero */
   .hero{padding:100px 20px 30px}
@@ -597,6 +597,10 @@ footer .footer-links a:hover{color:var(--accent)}
 }
 
 @media(max-width:480px){
+  .nav{padding:5px 8px;gap:3px}
+  .nav-pfp{width:20px;height:20px}
+  .nav-links{gap:3px}
+  .nav-links a{font-size:.52rem}
   .hero h1{font-size:2rem}
   .stats-grid{flex-direction:column;gap:20px}
   .stat-divider{width:60px;height:1px;align-self:center}
