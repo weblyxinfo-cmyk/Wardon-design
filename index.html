@@ -529,11 +529,12 @@ footer .footer-links a:hover{color:var(--accent)}
 /* ===== MOBILE ===== */
 @media(max-width:768px){
   /* Nav - wide badge on mobile */
-  .nav{top:6px;padding:10px 40px;gap:0;position:fixed;justify-content:center;width:calc(100% - 24px);max-width:calc(100% - 24px)}
+  .nav{top:6px;padding:10px 16px;gap:0;position:fixed;justify-content:center;width:calc(100% - 24px);max-width:calc(100% - 24px)}
   .nav-pfp{width:24px;height:24px;border-width:1.5px;position:absolute;left:10px;top:50%;transform:translateY(-50%)}
-  .nav-links{gap:16px;justify-content:center}
+  .nav-links{gap:16px;justify-content:center;flex:1}
   .nav-links a{font-size:.7rem}
-  .nav-cta{display:none}
+  .nav-cta{display:none !important}
+  .hamburger{display:none !important}
 
   /* Hero */
   .hero{padding:100px 16px 30px;overflow:hidden}
